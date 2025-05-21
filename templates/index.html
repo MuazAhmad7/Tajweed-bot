@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tajweed Teacher</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+
+    <div class="header">
+        <h1>AI Tajweed Teacher</h1>
+        <h2>Surah Al-Fatiha</h2>
+    </div>
+
+    <div class="container">
+        <div class="tajweed-legend">
+            <h3>Tajweed Rules Guide</h3>
+            <div class="legend-items">
+                <div class="legend-item" data-tooltip="A nasal sound made for 2 counts when certain letters have a shaddah">
+                    <div class="color-box" style="background-color: var(--ghunnah-color)"></div>
+                    <span>Ghunnah</span>
+                </div>
+                <div class="legend-item" data-tooltip="When one letter merges into another, creating a doubled/emphasized sound">
+                    <div class="color-box" style="background-color: var(--idghaam-color)"></div>
+                    <span>Idghaam</span>
+                </div>
+                <div class="legend-item" data-tooltip="A bouncing sound that occurs on certain letters when they have a sukoon or stop on them">
+                    <div class="color-box" style="background-color: var(--qalqalah-color)"></div>
+                    <span>Qalqalah</span>
+                </div>
+                <div class="legend-item" data-tooltip="Elongation of certain vowel sounds for 2, 4, or 6 counts">
+                    <div class="color-box" style="background-color: var(--madd-color)"></div>
+                    <span>Madd</span>
+                </div>
+                <div class="legend-item" data-tooltip="Partial concealment of noon sakinah or tanween when followed by certain letters">
+                    <div class="color-box" style="background-color: var(--ikhfa-color)"></div>
+                    <span>Ikhfa</span>
+                </div>
+                <div class="legend-item" data-tooltip="Converting noon sakinah or tanween into a hidden meem sound when followed by ba">
+                    <div class="color-box" style="background-color: var(--iqlab-color)"></div>
+                    <span>Iqlab</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="surah-container">
+            <div class="ayah" data-ayah="0" data-text="بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ">
+                <div class="ayah-number">٠</div>
+                <div class="ayah-content">
+                    <p class="arabic">
+                        <span class="word" data-word="بِسْمِ">بِسْمِ</span>
+                        <span class="word" data-word="ٱللَّهِ">ٱللَّهِ</span>
+                        <span class="word" data-word="ٱلرَّحْمَٰنِ">ٱلرَّحْمَٰنِ</span>
+                        <span class="word" data-word="ٱلرَّحِيمِ">ٱلرَّحِيمِ</span>
+                    </p>
+                    <p class="translation">In the name of Allah, the Most Gracious, the Most Merciful</p>
+                    <p class="transliteration">Bismillāhi r-raḥmāni r-raḥīm</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="1">
+                <div class="ayah-number">١</div>
+                <div class="ayah-content">
+                    <p class="arabic">
+                        ٱلْحَمْدُ لِلَّهِ رَبِّ 
+                        <span class="madd">ٱلْعَٰلَمِينَ</span>
+                    </p>
+                    <p class="translation">All praise is due to Allah, Lord of the worlds</p>
+                    <p class="transliteration">Al-ḥamdu lillāhi rabbi l-ʿālamīn</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="2">
+                <div class="ayah-number">٢</div>
+                <div class="ayah-content">
+                    <p class="arabic">ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
+                    <p class="translation">The Most Gracious, the Most Merciful</p>
+                    <p class="transliteration">Ar-raḥmāni r-raḥīm</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="3">
+                <div class="ayah-number">٣</div>
+                <div class="ayah-content">
+                    <p class="arabic">
+                        <span class="qalqalah">مَٰلِكِ</span> 
+                        يَوْمِ ٱلدِّينِ
+                    </p>
+                    <p class="translation">Master of the Day of Judgment</p>
+                    <p class="transliteration">Māliki yawmi d-dīn</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="4">
+                <div class="ayah-number">٤</div>
+                <div class="ayah-content">
+                    <p class="arabic">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</p>
+                    <p class="translation">You alone we worship, and You alone we ask for help</p>
+                    <p class="transliteration">Iyyāka naʿbudu wa-iyyāka nastaʿīn</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="5">
+                <div class="ayah-number">٥</div>
+                <div class="ayah-content">
+                    <p class="arabic">ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</p>
+                    <p class="translation">Guide us to the straight path</p>
+                    <p class="transliteration">Ihdinā ṣ-ṣirāṭa l-mustaqīm</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+            <div class="ayah" data-ayah="6">
+                <div class="ayah-number">٦</div>
+                <div class="ayah-content">
+                    <p class="arabic">
+                        صِرَٰطَ 
+                        <span class="ghunnah">ٱلَّذِينَ</span> 
+                        أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ 
+                        <span class="idghaam">عَلَيْهِمْ</span> 
+                        وَلَا ٱلضَّآلِّينَ
+                    </p>
+                    <p class="translation">The path of those upon whom You have bestowed favor, not of those who have earned anger or of those who have gone astray</p>
+                    <p class="transliteration">Ṣirāṭa l-laḏīna anʿamta ʿalayhim ġayri l-maġḍūbi ʿalayhim wa-lā ḍ-ḍāllīn</p>
+                </div>
+                <div class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="recordButton" class="record-btn">
+                <span class="icon">🎙️</span>
+                <span class="text">Start Recording</span>
+            </button>
+            <div id="recordingStatus" class="status"></div>
+        </div>
+
+        <div id="feedback" class="feedback-container"></div>
+    </div>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        
+        // Set initial theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDarkScheme.matches)) {
+            document.body.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // Recording functionality
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+        let currentAyah = null;
+        let currentWord = null;
+
+        // Function to highlight active ayah and word
+        function highlightAyah(ayahNumber, word = null) {
+            // Remove previous highlights
+            document.querySelectorAll('.ayah.active').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.word.active').forEach(el => el.classList.remove('active'));
+            
+            // Highlight new ayah
+            const ayah = document.querySelector(`.ayah[data-ayah="${ayahNumber}"]`);
+            if (ayah) {
+                ayah.classList.add('active');
+                
+                // Scroll to ayah smoothly
+                ayah.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Highlight specific word if provided
+                if (word) {
+                    const wordEl = ayah.querySelector(`.word[data-word="${word}"]`);
+                    if (wordEl) {
+                        wordEl.classList.add('active');
+                    }
+                }
+            }
+        }
+
+        document.getElementById('recordButton').addEventListener('click', async () => {
+            const button = document.getElementById('recordButton');
+            const status = document.getElementById('recordingStatus');
+            const buttonText = button.querySelector('.text');
+            const buttonIcon = button.querySelector('.icon');
+
+            if (!isRecording) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    audioChunks = [];
+
+                    // Set up WebSocket connection for real-time transcription
+                    const ws = new WebSocket(`ws://${window.location.host}/ws`);
+                    
+                    ws.onmessage = function(event) {
+                        const data = JSON.parse(event.data);
+                        if (data.ayah) {
+                            highlightAyah(data.ayah, data.word);
+                        }
+                    };
+
+                    mediaRecorder.ondataavailable = async (event) => {
+                        audioChunks.push(event.data);
+                        
+                        // Send audio chunk for real-time processing
+                        if (ws.readyState === WebSocket.OPEN) {
+                            const chunk = new Blob([event.data], { type: 'audio/webm' });
+                            ws.send(await chunk.arrayBuffer());
+                        }
+                    };
+
+                    mediaRecorder.onstop = async () => {
+                        ws.close();
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        await sendAudioToServer(audioBlob);
+                    };
+
+                    // Start recording with smaller time slices for more frequent updates
+                    mediaRecorder.start(100);
+                    isRecording = true;
+                    buttonIcon.textContent = '⏹';
+                    buttonText.textContent = 'Stop Recording';
+                    button.classList.add('recording');
+                    status.textContent = 'Recording...';
+                } catch (err) {
+                    console.error('Error accessing microphone:', err);
+                    status.textContent = 'Error: Cannot access microphone';
+                }
+            } else {
+                mediaRecorder.stop();
+                isRecording = false;
+                buttonIcon.textContent = '🎙️';
+                buttonText.textContent = 'Start Recording';
+                button.classList.remove('recording');
+                status.textContent = 'Processing...';
+            }
+        });
+
+        async function sendAudioToServer(audioBlob) {
+            const formData = new FormData();
+            formData.append('audio', audioBlob, 'recording.wav');
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('feedback').innerHTML = `
+                        <h3>Recorded Recitation:</h3>
+                        <p dir="rtl" class="arabic">${result.transcription}</p>
+                        <h3>Tajweed Feedback:</h3>
+                        <p>${result.feedback}</p>
+                    `;
+                } else {
+                    document.getElementById('feedback').innerHTML = `
+                        <p class="error">Error: ${result.error}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error sending audio:', error);
+                document.getElementById('feedback').innerHTML = `
+                    <p class="error">Error sending recording to server</p>
+                `;
+            } finally {
+                document.getElementById('recordingStatus').textContent = '';
+            }
+        }
+    </script>
+
+    <style>
+        .legend-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: help;
+        }
+
+        .legend-item:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 12px;
+            background-color: var(--tooltip-bg, rgba(255, 255, 255, 0.95));
+            color: var(--tooltip-text, #333);
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.4;
+            white-space: normal;
+            z-index: 1000;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme='dark'] .legend-item:hover::after {
+            background-color: var(--tooltip-bg-dark, rgba(50, 50, 50, 0.95));
+            color: var(--tooltip-text-dark, #fff);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-item:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            border-color: var(--tooltip-bg, rgba(255, 255, 255, 0.95)) transparent transparent transparent;
+            z-index: 1001;
+        }
+
+        [data-theme='dark'] .legend-item:hover::before {
+            border-top-color: var(--tooltip-bg-dark, rgba(50, 50, 50, 0.95));
+        }
+
+        .ayah {
+            margin: 20px 0;
+            text-align: center;
+            direction: rtl;
+        }
+
+        .ayah-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 32px;
+            line-height: 2;
+            margin: 10px 0;
+            text-align: center;
+            direction: rtl;
+        }
+
+        .word {
+            display: inline-block;
+            padding: 0 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .translation, .transliteration {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin: 5px 0;
+            text-align: center;
+        }
+
+        .ayah-number {
+            font-family: 'Amiri', serif;
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+    </style>
+</body>
+</html> 

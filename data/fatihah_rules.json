@@ -1,0 +1,49 @@
+{
+    "rules": [
+        {
+            "ayah": 1,
+            "rules": [
+                {
+                    "type": "idghaam",
+                    "word": "بِسْمِ",
+                    "description": "Merge the 'م' with the following letter"
+                }
+            ]
+        },
+        {
+            "ayah": 2,
+            "rules": [
+                {
+                    "type": "madd",
+                    "word": "ٱلْعَٰلَمِينَ",
+                    "description": "Elongate the alif for 2 counts"
+                }
+            ]
+        },
+        {
+            "ayah": 4,
+            "rules": [
+                {
+                    "type": "qalqalah",
+                    "word": "مَٰلِكِ",
+                    "description": "Clear pronunciation of the 'ك' with a slight bounce"
+                }
+            ]
+        },
+        {
+            "ayah": 7,
+            "rules": [
+                {
+                    "type": "ghunnah",
+                    "word": "ٱلَّذِينَ",
+                    "description": "Nasalization for 2 counts on the 'ن'"
+                },
+                {
+                    "type": "idghaam",
+                    "word": "عَلَيْهِمْ",
+                    "description": "Merge the 'م' with the following letter"
+                }
+            ]
+        }
+    ]
+} 
