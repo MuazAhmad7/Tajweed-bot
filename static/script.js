@@ -13,7 +13,12 @@ function initializeWebSocket() {
         const response = JSON.parse(event.data);
         if (response.type === 'transcription') {
             handleTranscription(response.text, response.ayah_number, response.word_index, response.has_error);
+        } else if (response.type === 'error') {
+            console.error('Server error:', response.message);
         }
+    };
+    ws.onerror = function(error) {
+        console.error('WebSocket error:', error);
     };
 }
 
@@ -22,7 +27,7 @@ function handleTranscription(text, ayahNumber, wordIndex, hasError) {
     console.log('Transcription:', text, 'Ayah:', ayahNumber, 'Word:', wordIndex, 'Error:', hasError);
     
     // Only remove highlights if we have a new valid match
-    if (ayahNumber && wordIndex !== undefined) {
+    if (ayahNumber !== null && wordIndex !== null) {
         // Remove previous highlights
         if (currentAyah !== ayahNumber || currentWord !== wordIndex) {
             document.querySelectorAll('.word.active').forEach(el => el.classList.remove('active'));
@@ -60,8 +65,25 @@ function handleTranscription(text, ayahNumber, wordIndex, hasError) {
 // Start recording function
 async function startRecording() {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        mediaRecorder = new MediaRecorder(stream);
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                channelCount: 1,
+                sampleRate: 16000
+            } 
+        });
+        
+        // Create audio context for processing
+        const audioContext = new AudioContext({
+            sampleRate: 16000
+        });
+        const source = audioContext.createMediaStreamSource(stream);
+        
+        // Create a buffer of reasonable size
+        const bufferSize = 2048;  // Must be a power of 2
+        const processor = audioContext.createScriptProcessor(bufferSize, 1, 1);
+        
+        source.connect(processor);
+        processor.connect(audioContext.destination);
         
         // Reset current position
         currentAyah = null;
@@ -69,17 +91,30 @@ async function startRecording() {
         
         // Initialize WebSocket connection
         initializeWebSocket();
-
-        mediaRecorder.ondataavailable = (event) => {
-            if (event.data.size > 0) {
-                // Send audio chunk to server
-                if (ws && ws.readyState === WebSocket.OPEN) {
-                    ws.send(event.data);
+        
+        // Process audio data
+        processor.onaudioprocess = (e) => {
+            if (ws && ws.readyState === WebSocket.OPEN && isRecording) {
+                // Get raw audio data
+                const inputData = e.inputBuffer.getChannelData(0);
+                
+                // Convert float32 to int16
+                const int16Data = new Int16Array(inputData.length);
+                for (let i = 0; i < inputData.length; i++) {
+                    // Convert float32 to int16
+                    const s = Math.max(-1, Math.min(1, inputData[i]));
+                    int16Data[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+                }
+                
+                // Send the audio data
+                try {
+                    ws.send(int16Data.buffer);
+                } catch (error) {
+                    console.error('Error sending audio data:', error);
                 }
             }
         };
-
-        mediaRecorder.start(100); // Collect data every 100ms
+        
         isRecording = true;
         
         // Update UI
@@ -91,6 +126,16 @@ async function startRecording() {
         document.querySelectorAll('.ayah.active').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.word.error').forEach(el => el.classList.remove('error'));
         
+        // Store cleanup function
+        window.audioCleanup = () => {
+            if (processor && audioContext) {
+                processor.disconnect();
+                source.disconnect();
+                stream.getTracks().forEach(track => track.stop());
+                audioContext.close();
+            }
+        };
+        
     } catch (err) {
         console.error('Error starting recording:', err);
         alert('Error accessing microphone. Please ensure microphone permissions are granted.');
@@ -99,9 +144,12 @@ async function startRecording() {
 
 // Stop recording function
 function stopRecording() {
-    if (mediaRecorder && isRecording) {
-        mediaRecorder.stop();
-        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    if (isRecording) {
+        // Clean up audio processing
+        if (window.audioCleanup) {
+            window.audioCleanup();
+        }
+        
         isRecording = false;
         
         // Close WebSocket connection
