@@ -129,6 +129,33 @@
             </div>
         </div>
 
+        <!-- Add Reference Audio Player Section -->
+        <div class="reference-audio" style="margin: 20px 0; padding: 20px; background: var(--container-bg); border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3 style="margin-bottom: 15px;">Listen to Reference Recitation</h3>
+            <div class="reference-controls" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <select id="reciterSelect" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);">
+                    <option value="ayyoub">Sheikh Mohammad Ayyoub</option>
+                    <option value="hudhaify">Sheikh Ali Al-Hudhaify</option>
+                    <option value="maher">Sheikh Maher Al-Muaiqly</option>
+                    <option value="minshawy">Sheikh Mohamed Siddiq El-Minshawi</option>
+                    <option value="mishary">Sheikh Mishary Rashid Alafasy</option>
+                </select>
+                <select id="ayahSelect" style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color);">
+                    <option value="1">Ayah 1 - بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</option>
+                    <option value="2">Ayah 2 - ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ</option>
+                    <option value="3">Ayah 3 - ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</option>
+                    <option value="4">Ayah 4 - مَٰلِكِ يَوْمِ ٱلدِّينِ</option>
+                    <option value="5">Ayah 5 - إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ</option>
+                    <option value="6">Ayah 6 - ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ</option>
+                    <option value="7">Ayah 7 - صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ</option>
+                </select>
+                <button id="playReference" style="padding: 8px 16px; border-radius: 5px; background: var(--primary-color); color: white; border: none; cursor: pointer;">
+                    <span class="icon">▶️</span> Play
+                </button>
+                <audio id="referenceAudio" style="display: none;"></audio>
+            </div>
+        </div>
+
         <div class="controls">
             <button id="recordButton" class="record-btn">
                 <span class="icon">🎙️</span>
@@ -170,6 +197,53 @@
         let currentAyah = null;
         let currentWord = null;
         
+        // Reference Audio Player functionality
+        const playReferenceBtn = document.getElementById('playReference');
+        const referenceAudio = document.getElementById('referenceAudio');
+        const reciterSelect = document.getElementById('reciterSelect');
+        const ayahSelect = document.getElementById('ayahSelect');
+        
+        playReferenceBtn.addEventListener('click', () => {
+            const reciter = reciterSelect.value;
+            const ayah = ayahSelect.value;
+            const audioUrl = `/reference-audio/${reciter}/${ayah}`;
+            
+            // Update button state
+            if (referenceAudio.paused) {
+                referenceAudio.src = audioUrl;
+                referenceAudio.play()
+                    .then(() => {
+                        playReferenceBtn.innerHTML = '<span class="icon">⏸️</span> Pause';
+                    })
+                    .catch(error => {
+                        console.error('Error playing audio:', error);
+                        alert('Error playing audio. Please try again.');
+                    });
+            } else {
+                referenceAudio.pause();
+                playReferenceBtn.innerHTML = '<span class="icon">▶️</span> Play';
+            }
+        });
+        
+        referenceAudio.addEventListener('ended', () => {
+            playReferenceBtn.innerHTML = '<span class="icon">▶️</span> Play';
+        });
+        
+        // When user changes reciter or ayah while playing, restart the audio
+        reciterSelect.addEventListener('change', () => {
+            if (!referenceAudio.paused) {
+                playReferenceBtn.click(); // Stop current playback
+                setTimeout(() => playReferenceBtn.click(), 100); // Start new playback
+            }
+        });
+        
+        ayahSelect.addEventListener('change', () => {
+            if (!referenceAudio.paused) {
+                playReferenceBtn.click(); // Stop current playback
+                setTimeout(() => playReferenceBtn.click(), 100); // Start new playback
+            }
+        });
+
         // Function to highlight active ayah and word
         function highlightAyah(ayahNumber, word = null) {
             // Remove previous highlights
