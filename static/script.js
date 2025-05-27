@@ -380,6 +380,16 @@ async function startRecording(ayah) {
         // Initialize WebSocket first
         initializeWebSocket();
         
+        // Wait for WebSocket connection to be established
+        while (ws.readyState !== WebSocket.OPEN) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
+        
+        // Send target ayah number
+        ws.send(JSON.stringify({
+            target_ayah: ayah.dataset.ayah
+        }));
+        
         // Request microphone permission with specific constraints
         console.log('Requesting microphone access...');
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -419,17 +429,73 @@ async function startRecording(ayah) {
             if (event.data.size > 0) {
                 audioChunks.push(event.data);
                 
-                // Send audio chunk for real-time processing
+                // Convert WebM chunk to WAV before sending
+                const audioContext = new AudioContext();
+                const arrayBuffer = await event.data.arrayBuffer();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                // Create WAV file
+                const wavData = audioBufferToWav(audioBuffer);
+                const wavBlob = new Blob([wavData], { type: 'audio/wav' });
+                
+                // Send WAV data through WebSocket
                 if (ws && ws.readyState === WebSocket.OPEN) {
-                    const chunk = new Blob([event.data], { type: 'audio/webm' });
-                    const buffer = await chunk.arrayBuffer();
-                    console.log('Sending audio chunk, size:', buffer.byteLength);
+                    const buffer = await wavBlob.arrayBuffer();
+                    console.log('Sending WAV audio chunk, size:', buffer.byteLength);
                     ws.send(buffer);
                 } else {
                     console.warn('WebSocket not ready, chunk not sent');
                 }
             }
         };
+
+        // Function to convert AudioBuffer to WAV format
+        function audioBufferToWav(buffer) {
+            const numOfChan = buffer.numberOfChannels;
+            const length = buffer.length * numOfChan * 2;
+            const sampleRate = buffer.sampleRate;
+            const data = new DataView(new ArrayBuffer(44 + length));
+            
+            // WAV Header
+            writeString(data, 0, 'RIFF');
+            data.setUint32(4, 36 + length, true);
+            writeString(data, 8, 'WAVE');
+            writeString(data, 12, 'fmt ');
+            data.setUint32(16, 16, true);
+            data.setUint16(20, 1, true);
+            data.setUint16(22, numOfChan, true);
+            data.setUint32(24, sampleRate, true);
+            data.setUint32(28, sampleRate * numOfChan * 2, true);
+            data.setUint16(32, numOfChan * 2, true);
+            data.setUint16(34, 16, true);
+            writeString(data, 36, 'data');
+            data.setUint32(40, length, true);
+            
+            // Write audio data
+            const offset = 44;
+            const channelData = [];
+            for (let i = 0; i < numOfChan; i++) {
+                channelData.push(buffer.getChannelData(i));
+            }
+            
+            let pos = 0;
+            while (pos < buffer.length) {
+                for (let i = 0; i < numOfChan; i++) {
+                    const sample = Math.max(-1, Math.min(1, channelData[i][pos]));
+                    data.setInt16(offset + (pos * numOfChan + i) * 2, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+                }
+                pos++;
+            }
+            
+            return data.buffer;
+        }
+
+        // Helper function to write strings to DataView
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
 
         // Handle recording stop
         mediaRecorder.onstop = async () => {
@@ -631,4 +697,15 @@ async function sendAudioToServer(audioBlob) {
             </div>
         `;
     }
+}
+
+// Show toast message function
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
 } 

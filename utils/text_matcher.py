@@ -2,20 +2,20 @@ from difflib import SequenceMatcher
 
 import re
 
-# Fatiha verses with their word-by-word text
+# Fatiha verses with their word-by-word text, including ASR-friendly variations
 FATIHA_VERSES = {
-    0: ["بِسْمِ", "ٱللَّهِ", "ٱلرَّحْمَٰنِ", "ٱلرَّحِيمِ"],
-    1: ["ٱلْحَمْدُ", "لِلَّهِ", "رَبِّ", "ٱلْعَٰلَمِينَ"],
-    2: ["ٱلرَّحْمَٰنِ", "ٱلرَّحِيمِ"],
-    3: ["مَٰلِكِ", "يَوْمِ", "ٱلدِّينِ"],
-    4: ["إِيَّاكَ", "نَعْبُدُ", "وَإِيَّاكَ", "نَسْتَعِينُ"],
-    5: ["ٱهْدِنَا", "ٱلصِّرَٰطَ", "ٱلْمُسْتَقِيمَ"],
-    6: ["صِرَٰطَ", "ٱلَّذِينَ", "أَنْعَمْتَ", "عَلَيْهِمْ", "غَيْرِ", "ٱلْمَغْضُوبِ", "عَلَيْهِمْ", "وَلَا", "ٱلضَّآلِّينَ"]
+    0: ["بسم", "الله", "الرحمن", "الرحيم"],  # Simplified without diacritics
+    1: ["الحمد", "لله", "رب", "العالمين"],
+    2: ["الرحمن", "الرحيم"],
+    3: ["مالك", "مٰلك", "يوم", "الدين"],  # Added both forms of Maliki
+    4: ["اياك", "نعبد", "واياك", "نستعين"],
+    5: ["اهدنا", "الصراط", "المستقيم"],
+    6: ["صراط", "الذين", "انعمت", "عليهم", "غير", "المغضوب", "عليهم", "ولا", "الضالين"]
 }
 
 # Phonetic mapping for common variations
 PHONETIC_MAPPING = {
-    'ا': ['ى', 'آ', 'أ', 'إ'],
+    'ا': ['ى', 'آ', 'أ', 'إ', 'ٱ', 'ٰ'],  # Added superscript alif
     'ه': ['ة'],
     'ي': ['ى', 'ئ'],
     'و': ['ؤ'],
@@ -25,46 +25,68 @@ PHONETIC_MAPPING = {
     'د': ['ض'],
     'ح': ['ه'],
     'ك': ['ق'],
+    'م': ['مٰ', 'مَٰ']  # Added madd variations for meem
+}
+
+# Add specific mappings for words with madd
+MADD_WORD_MAPPING = {
+    # Bismillah (Ayah 0)
+    'الرحمن': ['الرحمٰن', 'الرحمان'],
+    'الرحيم': ['الرحيم'],  # No madd variation but included for completeness
+    
+    # Al-Hamd (Ayah 1)
+    'العالمين': ['العٰلمين', 'العالمين'],
+    
+    # Ar-Rahman Ar-Raheem (Ayah 2)
+    # Already covered in Ayah 0
+    
+    # Maaliki Yawm id-Deen (Ayah 3)
+    'مالك': ['مٰلك', 'مالك'],
+    
+    # Iyyaka Na'budu (Ayah 4)
+    # No madd variations
+    
+    # Ihdina (Ayah 5)
+    'الصراط': ['الصرٰط', 'الصراط'],
+    'المستقيم': ['المستقيم'],  # Has madd in ي but that's handled differently
+    
+    # Siratal-ladhina (Ayah 6)
+    'صراط': ['صرٰط', 'صراط'],
+    'الذين': ['الذين'],  # Has madd in ي but that's handled differently
+    'الضالين': ['الضٰلين', 'الضالين', 'الضآلين']  # Also handle آ form
 }
 
 def normalize_arabic_text(text):
     """Normalize Arabic text by removing diacritics and normalizing letters."""
-    # Special cases mapping (before diacritic removal)
-    special_cases = {
-        'صِرَٰطَ': 'صراط',
-        'ٱلصِّرَٰطَ': 'الصراط',
-        'صِرَٰطَ': 'صراط',
-        'صِرَط': 'صراط',
-        'صرط': 'صراط'
-    }
+    # First normalize madd and special characters
+    text = re.sub('[آٱأإا]', 'ا', text)  # Normalize all alif forms
+    text = re.sub('ـٰ', 'ا', text)        # Convert standalone madd to alif
+    text = re.sub('ٰ', 'ا', text)         # Convert superscript alif to regular alif
     
-    # First handle special cases
-    for case, replacement in special_cases.items():
-        text = text.replace(case, replacement)
+    # Handle specific words with madd
+    normalized = text
+    for base_word, variations in MADD_WORD_MAPPING.items():
+        pattern = '|'.join(map(re.escape, variations))
+        normalized = re.sub(pattern, base_word, normalized)
     
-    # Remove diacritics (harakat)
-    text = re.sub(r'[\u064B-\u065F\u0670]', '', text)
+    # Handle ya with madd (ي) separately since it's a different case
+    normalized = re.sub('يْ', 'ي', normalized)  # Remove sukoon from ya
+    normalized = re.sub('يِّ', 'ي', normalized)  # Remove shadda and kasra from ya
     
-    # Remove tatweel (elongation character)
-    text = re.sub('\u0640', '', text)
+    # Remove ALL diacritical marks
+    normalized = re.sub(r'[\u064B-\u065F\u0670]', '', normalized)  # Remove all tashkeel
+    normalized = re.sub('ـ', '', normalized)                       # Remove tatweel
     
-    # Normalize alef variations
-    text = re.sub('[آأإٱا]', 'ا', text)
+    # Normalize other letters
+    normalized = re.sub('ة', 'ه', normalized)    # Normalize taa marbouta
+    normalized = re.sub('[ىئ]', 'ي', normalized)  # Normalize ya variations
+    normalized = re.sub('ؤ', 'و', normalized)     # Normalize waw
     
-    # Normalize other common variations
-    text = re.sub('ة', 'ه', text)
-    text = re.sub('[ىئ]', 'ي', text)
-    text = re.sub('ؤ', 'و', text)
+    # Remove any non-Arabic characters
+    normalized = re.sub(r'[^\u0600-\u06FF\s]', '', normalized)
     
-    # Remove any non-Arabic characters and extra spaces
-    text = re.sub(r'[^\u0600-\u06FF\s]', '', text)
-    text = ' '.join(text.split())
-    
-    # Final check for special cases (after normalization)
-    for case, replacement in special_cases.items():
-        text = text.replace(normalize_without_special_cases(case), replacement)
-    
-    return text
+    # Remove extra spaces and return
+    return ' '.join(normalized.split())
 
 def normalize_without_special_cases(text):
     """Normalize text without applying special case rules."""
@@ -94,9 +116,20 @@ def get_phonetic_variations(word):
 
 def similar(a, b):
     """Calculate similarity ratio between two strings."""
-    # Compare normalized versions
+    # First normalize both strings
     a_norm = normalize_arabic_text(a)
     b_norm = normalize_arabic_text(b)
+    
+    # Direct comparison after normalization
+    if a_norm == b_norm:
+        return 1.0
+    
+    # Special handling for common words with more lenient matching
+    common_words = ['بسم', 'الله', 'الرحمن', 'الرحيم']
+    if a_norm in common_words or b_norm in common_words:
+        base_similarity = SequenceMatcher(None, a_norm, b_norm).ratio()
+        if base_similarity > 0.7:  # More lenient threshold for common words
+            return 1.0
     
     # Get base similarity
     base_similarity = SequenceMatcher(None, a_norm, b_norm).ratio()
@@ -109,65 +142,83 @@ def similar(a, b):
     max_similarity = base_similarity
     for var_a in a_variations:
         for var_b in b_variations:
+            # Check exact match first
+            if var_a == var_b:
+                return 1.0
+            # Then check similarity
             similarity = SequenceMatcher(None, var_a, var_b).ratio()
             max_similarity = max(max_similarity, similarity)
+    
+    # Be more lenient with the similarity threshold
+    # If the strings are very close (>0.8), consider them a match
+    if max_similarity > 0.8:
+        return 1.0
     
     return max_similarity
 
 def match_ayah_and_word(transcribed_text):
-    """
-    Match transcribed text with Fatiha verses and identify the current ayah and word.
-    
-    Args:
-        transcribed_text (str): The transcribed Arabic text from Whisper
-        
-    Returns:
-        tuple: (ayah_number, word_index) or (None, None) if no match found
-    """
-    best_match = (None, None)
-    highest_similarity = 0.5  # Threshold for matching
-    
+    """Match transcribed text with Fatiha verses and identify the current ayah and word."""
     # Clean up and normalize the transcribed text
     transcribed_text = normalize_arabic_text(transcribed_text.strip())
     transcribed_words = transcribed_text.split()
     
+    print(f"DEBUG: Normalized transcribed text: {transcribed_text}")
+    print(f"DEBUG: Transcribed words: {transcribed_words}")
+    
     # If no words were transcribed, return no match
     if not transcribed_words:
+        print("DEBUG: No words transcribed")
         return (None, None)
     
-    # For each ayah, try to find the best matching word sequence
-    for ayah_num, ayah_words in FATIHA_VERSES.items():
-        # Normalize each word in the ayah
-        normalized_ayah_words = [normalize_arabic_text(word) for word in ayah_words]
-        ayah_text = ' '.join(normalized_ayah_words)
-        
-        # Try matching the full transcribed text against the full ayah
-        full_similarity = similar(transcribed_text, ayah_text)
-        if full_similarity > 0.8:  # High confidence full ayah match
-            return (ayah_num, 0)
-        
-        # Try matching word sequences
-        for i in range(len(normalized_ayah_words)):
-            # Try different window sizes
-            for window_size in range(1, min(len(transcribed_words) + 1, len(normalized_ayah_words) - i + 1)):
-                ayah_window = ' '.join(normalized_ayah_words[i:i + window_size])
-                
-                # Try matching against different parts of the transcribed text
-                for j in range(len(transcribed_words) - window_size + 1):
-                    transcribed_window = ' '.join(transcribed_words[j:j + window_size])
-                    similarity = similar(transcribed_window, ayah_window)
-                    
-                    if similarity > highest_similarity:
-                        highest_similarity = similarity
-                        best_match = (ayah_num, i)
-                        
-                        # If we have a very good match, return immediately
-                        if similarity > 0.9:
-                            return best_match
+    # Special case: Check if this is Ar-Rahmani Raheem (ayah 2)
+    norm_trans = ' '.join(transcribed_words)
+    print(f"DEBUG: Checking Ar-Rahmani Raheem case. Text: {norm_trans}")
+    print(f"DEBUG: Contains رحمن/رحمان: {'رحمن' in norm_trans or 'رحمان' in norm_trans}")
+    print(f"DEBUG: Contains الرحمن/الرحمان: {'الرحمن' in norm_trans or 'الرحمان' in norm_trans}")
+    print(f"DEBUG: Contains رحيم: {'رحيم' in norm_trans}")
+    print(f"DEBUG: Contains الرحيم: {'الرحيم' in norm_trans}")
+    print(f"DEBUG: Contains بسم: {'بسم' in norm_trans}")
+    print(f"DEBUG: Contains الله: {'الله' in norm_trans}")
     
-    # Only return matches that meet our minimum threshold
-    if highest_similarity > 0.5:
-        return best_match
+    if len(transcribed_words) <= 3:  # Allow for slight ASR variations
+        if ('رحمن' in norm_trans or 'الرحمن' in norm_trans or 'رحمان' in norm_trans or 'الرحمان' in norm_trans) and \
+           ('رحيم' in norm_trans or 'الرحيم' in norm_trans):
+            # Make sure it's not Bismillah by checking for absence of بسم and الله
+            if 'بسم' not in norm_trans and 'الله' not in norm_trans:
+                print("DEBUG: Matched as Ar-Rahmani Raheem (ayah 2)")
+                return (2, 0)
+
+    # First try exact matches for key words that uniquely identify ayahs
+    unique_identifiers = {
+        0: [["بسم", "الله"]],  # Must have BOTH for Bismillah
+        1: ["الحمد"],  # Only appears in ayah 1
+        2: [["الرحمن", "الرحمان"], ["الرحيم"]],  # Must have both Rahman/Rahman AND Raheem
+        3: ["مالك", "يوم", "الدين"],  # Only appears in ayah 3
+        4: ["نعبد", "نستعين"],  # Only appears in ayah 4
+        5: ["اهدنا", "الصراط"],  # Only appears in ayah 5
+        6: ["انعمت", "المغضوب", "الضالين"]  # Only appears in ayah 6
+    }
+    
+    # Check for unique identifiers first
+    for ayah_num, identifiers in unique_identifiers.items():
+        print(f"DEBUG: Checking ayah {ayah_num} identifiers")
+        if isinstance(identifiers[0], list):
+            # For cases where we need ALL words to match (like Bismillah)
+            matches_all = True
+            for required_group in identifiers:
+                if not any(normalize_arabic_text(word) in norm_trans for word in required_group):
+                    matches_all = False
+                    break
+            if matches_all:
+                print(f"DEBUG: Matched all required words for ayah {ayah_num}")
+                return (ayah_num, 0)
+        else:
+            # For cases where ANY word can match
+            if any(normalize_arabic_text(word) in norm_trans for word in identifiers):
+                print(f"DEBUG: Matched identifier for ayah {ayah_num}")
+                return (ayah_num, 0)
+    
+    print("DEBUG: No match found")
     return (None, None)
 
 def get_context(ayah_number, word_index, window=2):
