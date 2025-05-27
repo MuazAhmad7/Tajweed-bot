@@ -3,25 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tajweed Teacher</title>
+    <title>AI Tajweed Teacher - Quran Practice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Quran page specific theme colors */
+        :root {
+            --background-color: #FFFFFF;
+            --card-background: #FFFFFF;
+            --text-color: #2D2D2D;
+            --border-color: #E5E7EB;
+        }
+
+        [data-theme="dark"] {
+            --background-color: #1C1410; /* Deep, rich brown background */
+            --card-background: #2C1F14; /* Slightly lighter brown for cards */
+            --text-color: #E8D5C4; /* Warm, light brown text */
+            --border-color: #3D2B1F; /* Medium brown for borders */
+            --header-bg: transparent;
+            --header-text: #E8D5C4;
+        }
+
+        /* Enhance card contrast in dark mode */
+        [data-theme="dark"] .ayah,
+        [data-theme="dark"] .feedback-card,
+        [data-theme="dark"] .tajweed-legend {
+            background: var(--card-background);
+            border: 2px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .options-content {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+            background-color: rgba(232, 213, 196, 0.1); /* Subtle hover effect */
+        }
+
+        /* Navigation styles */
+        .nav-trigger {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            z-index: 998;
+            display: none;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            background: transparent;
+            z-index: 999;
+            transition: all 0.3s ease;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .nav-logo {
+            height: 50px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        /* Desktop-only hover navigation */
+        @media (min-width: 1024px) {
+            .nav-trigger {
+                display: block;
+            }
+
+            .top-nav {
+                background: transparent;
+                border-bottom: none;
+            }
+
+            .nav-trigger:hover + .top-nav,
+            .top-nav:hover {
+                transform: translateY(25px);
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        /* Responsive adjustments for logo */
+        @media (max-width: 767px) {
+            .nav-logo {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .nav-logo {
+                height: 35px;
+            }
+        }
+
+        /* Add the switch styles */
+        .switch {
+            font-size: 0.85rem;
+            position: relative;
+            display: inline-block;
+            width: 3.8em;
+            height: 2em;
+            margin-left: 1rem;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #F5ECD9;
+            transition: 0.4s;
+            border-radius: 0.5em;
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.2);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 1.5em;
+            width: 1.4em;
+            border-radius: 0.3em;
+            left: 0.3em;
+            bottom: 0.7em;
+            background-color: #D4AF37;
+            transition: 0.4s;
+            box-shadow: 0 0.4em rgba(212, 175, 55, 0.3);
+        }
+
+        .slider:hover::before {
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.3);
+            bottom: 0.5em;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(2em);
+            background: #C5A028;
+        }
+
+        [data-theme="dark"] .slider {
+            background-color: #2C1F14;
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .slider:before {
+            box-shadow: 0 0.4em rgba(212, 175, 55, 0.2);
+        }
+
+        [data-theme="dark"] .slider:hover::before {
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .switch {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="root-tooltip" class="root-tooltip"></div>
-    <div class="header">
-        <h1>AI Tajweed Teacher</h1>
-        <h2>Surah Al-Fatiha</h2>
-    </div>
+    <div class="nav-trigger"></div>
     <nav class="top-nav">
         <div class="nav-content">
+            <a href="/" class="nav-logo-link">
+                <img src="/static/images/logo1.png" alt="Tajweed Bot Logo" class="nav-logo">
+            </a>
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
                 <a href="/demo" class="nav-link">Quran</a>
                 <a href="/tajweed" class="nav-link">Tajweed</a>
-                <a href="/pricing" class="nav-link">Pricing</a>
+                <a href="/#pricing" class="nav-link">Pricing</a>
             </div>
-            <button class="theme-toggle" id="themeToggle" title="Toggle dark mode">🌙</button>
+            <label class="switch" title="Toggle dark mode">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
         </div>
     </nav>
 
@@ -339,5 +564,29 @@
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Set initial state based on saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
