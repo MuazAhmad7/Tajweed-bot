@@ -1,48 +1,66 @@
 /* Theme Colors - Edit these to change the color scheme */
 :root {
     /* Light Theme Colors */
-    --primary-color: #2c3e50;      /* Main color for headers and important elements */
-    --secondary-color: #27ae60;     /* Color for buttons and interactive elements */
-    --error-color: #e74c3c;        /* Color for error messages */
-    --background-color: #f0f2f5;    /* Page background color */
-    --card-background: white;       /* Background color for cards/bubbles */
-    --text-color: #2c3e50;         /* Main text color */
-    --header-bg: #2c3e50;          /* Header background color */
-    --header-text: white;          /* Header text color */
+    --primary-color: #41A5F6;      /* Primary Accent - elegant blue */
+    --secondary-color: #10B981;    /* Call to Action - calm emerald green */
+    --error-color: #EF4444;        /* Error - gentle red */
+    --background-color: #F9FAFB;   /* Background - very soft white */
+    --card-background: #FFFFFF;    /* Surface - clean white */
+    --text-color: #1F2937;         /* Primary Text - rich charcoal gray */
+    --secondary-text: #6B7280;     /* Secondary Text - muted cool gray */
+    --border-color: #E5E7EB;       /* Border/Lines - subtle light gray */
+    --header-bg: #FFFFFF;          /* Header background */
+    --header-text: #1F2937;        /* Header text */
     --bubble-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);  /* Shadow for cards/bubbles */
-    --highlight-bg: rgba(39, 174, 96, 0.1);  /* Background color for active ayah */
-    --word-highlight: rgba(39, 174, 96, 0.2); /* Background color for active word */
+    --highlight-bg: rgba(16, 185, 129, 0.1);  /* Background color for active ayah */
+    --word-highlight: rgba(16, 185, 129, 0.2); /* Background color for active word */
     
     /* Font for Arabic text - Add more fallback fonts if needed */
     --arabic-font: "Scheherazade New", "Traditional Arabic", "Amiri", serif;
     
-    /* Tajweed Rule Colors - Edit these to change specific rule highlighting */
-    --ghunnah-color: #FF7F7F;      /* Light red for Ghunnah */
-    --idghaam-color: #92D050;      /* Green for Idghaam */
-    --qalqalah-color: #FFC000;     /* Gold for Qalqalah */
-    --madd-color: #00B0F0;         /* Blue for Madd */
-    --ikhfa-color: #7030A0;        /* Purple for Ikhfa */
-    --iqlab-color: #4472C4;        /* Dark blue for Iqlab */
-    --highlight-color: rgba(76, 175, 80, 0.3);
-    --error-color: rgba(244, 67, 54, 0.3);
+    /* Updated Natural Tajweed Rule Colors */
+    --madd-color: #c41e3a;         /* Burgundy Red for Madd */
+    --ghunnah-color: #006400;      /* Dark Green for Ghunnah */
+    --qalqalah-color: #1e90ff;     /* Dodger Blue for Qalqalah */
+    --ikhfa-color: #87ceeb;        /* Sky Blue for Ikhfa */
+    --ikhfa-meem-color: #dda0dd;   /* Plum for Ikhfa Meem */
+    --idghaam-color: #daa520;      /* Goldenrod for Idgham */
+    --silent-color: #708090;       /* Slate Gray for Silent Letters */
+    --tafkheem-color: #8b4513;     /* Saddle Brown for Heavy Letters */
+    
+    --highlight-color: rgba(16, 185, 129, 0.3);
+    --error-highlight: rgba(239, 68, 68, 0.3);
     --word-transition: 0.3s ease;
 }
 
 /* Dark Theme Colors - Edit these to customize dark mode */
 [data-theme="dark"] {
-    --primary-color: #8ab4f8;
-    --secondary-color: #81c995;
-    --error-color: #f28b82;
-    --background-color: #202124;
-    --card-background: #292a2d;
-    --text-color: #e8eaed;
-    --header-bg: #292a2d;
-    --header-text: #e8eaed;
+    --primary-color: #41A5F6;      /* Primary Accent - same blue */
+    --secondary-color: #10B981;    /* Call to Action - emerald green */
+    --error-color: #F87171;        /* Error - softer red */
+    --background-color: #111827;   /* Background - deep navy-gray */
+    --card-background: #1F2937;    /* Surface - dark charcoal */
+    --text-color: #F9FAFB;         /* Primary Text - soft white */
+    --secondary-text: #9CA3AF;     /* Secondary Text - soft gray */
+    --border-color: #374151;       /* Border/Lines - dark gray */
+    --header-bg: #1F2937;          /* Header background */
+    --header-text: #F9FAFB;        /* Header text */
     --bubble-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    --highlight-bg: rgba(139, 195, 74, 0.1);
-    --word-highlight: rgba(139, 195, 74, 0.15);
-    --highlight-color: rgba(129, 199, 132, 0.3);
-    --error-color: rgba(229, 115, 115, 0.3);
+    --highlight-bg: rgba(16, 185, 129, 0.15);
+    --word-highlight: rgba(16, 185, 129, 0.25);
+    
+    /* Dark Theme Tajweed Colors - Slightly lighter shades for dark mode */
+    --madd-color: #ff6b6b;         /* Lighter Red for Madd */
+    --ghunnah-color: #2e8b57;      /* Sea Green for Ghunnah */
+    --qalqalah-color: #87cefa;     /* Light Sky Blue for Qalqalah */
+    --ikhfa-color: #add8e6;        /* Light Blue for Ikhfa */
+    --ikhfa-meem-color: #dda0dd;   /* Plum for Ikhfa Meem */
+    --idghaam-color: #f0e68c;      /* Khaki for Idgham */
+    --silent-color: #a9a9a9;       /* Dark Gray for Silent Letters */
+    --tafkheem-color: #deb887;     /* Burlywood for Heavy Letters */
+    
+    --highlight-color: rgba(16, 185, 129, 0.3);
+    --error-highlight: rgba(248, 113, 113, 0.3);
 }
 
 /* Basic page setup */
@@ -54,20 +72,31 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     transition: background-color 0.5s ease; /* Smooth transition for dark mode */
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
 }
 
+/* Main content layout */
 .container {
-    max-width: 900px;
+    width: 100%;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 1rem;
+    display: grid;
+    grid-template-columns: minmax(auto, 800px) 350px;
+    gap: 2rem;
+    align-items: start;
+    justify-content: center;
+    overflow-x: hidden;
 }
 
 /* Header Styling */
 .header {
-    background-color: var(--header-bg);
+    background-color: transparent;
     padding: 2rem 0;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
 }
 
 .header h1, .header h2 {
@@ -82,32 +111,80 @@ body {
     font-family: var(--arabic-font);
 }
 
-/* Dark Mode Toggle Button - Fixed in top-right corner */
-.theme-toggle {
+/* Dropdown Navigation */
+.top-nav {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
-    background: var(--card-background);
+    top: -60px;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    transition: transform 0.3s ease;
+    z-index: 999;
+}
+
+.nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background: transparent;
+    border-bottom: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    background-color: var(--pattern-color);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: transparent;
     border: none;
     padding: 0.5rem;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     cursor: pointer;
-    box-shadow: var(--bubble-shadow);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     transition: transform 0.3s ease;
+    color: var(--text-color);
 }
 
 .theme-toggle:hover {
     transform: scale(1.1);
+    color: var(--primary-color);
+}
+
+.header:hover + .top-nav,
+.top-nav:hover {
+    transform: translateY(60px);
 }
 
 /* Tajweed Rules Legend Section */
 .tajweed-legend {
+    grid-column: 1 / -1;
     background: var(--card-background);
     border-radius: 15px;
     padding: 1.5rem;
@@ -155,143 +232,144 @@ body {
 .surah-container {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
-    padding: 1.5rem;
+    gap: 1rem;
+    padding: 0;
+    width: 100%;
+    margin: 0 auto;
 }
 
-/* Ayah Bubble Styling - Edit transition duration to adjust animation speed */
+/* Ayah Bubble Styling */
 .ayah {
     background: var(--card-background);
-    border-radius: 20px;
-    padding: 2rem;
+    border-radius: 15px;
+    padding: 0.85rem;
     position: relative;
     box-shadow: var(--bubble-shadow);
     cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth easing for animations */
-}
-
-/* Hover effect for ayah bubbles */
-.ayah:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 2px solid transparent;
+    overflow: visible;
+    z-index: 1;
+    margin-bottom: 0.35rem;
 }
 
 .ayah-content {
     text-align: center;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 65px; /* Slightly increased minimum height */
+    justify-content: center;
 }
 
 /* Arabic text styling */
 .arabic {
     font-family: var(--arabic-font);
-    font-size: 2rem;
-    line-height: 2.2;
+    font-size: 1.8rem;
+    line-height: 2;
     margin: 0;
     color: var(--text-color);
+    text-align: center;
+    direction: rtl;
+    unicode-bidi: bidi-override;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.2em;
 }
 
-/* Translation and Transliteration - Smooth fade in/out */
+/* Translation and Transliteration */
 .translation, .transliteration {
     opacity: 0;
     max-height: 0;
     overflow: hidden;
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     margin: 0;
+    position: absolute;
+    width: 100%;
+    left: 0;
 }
 
 .translation {
-    font-size: 1.1rem;
-    color: var(--text-color);
+    top: 100%;
 }
 
 .transliteration {
-    font-size: 1rem;
-    color: var(--text-color);
-    opacity: 0.8;
-    font-style: italic;
+    top: calc(100% + 1.5rem);
 }
 
 /* Show translation and transliteration on hover */
 .ayah:hover .translation,
 .ayah:hover .transliteration {
     opacity: 1;
-    max-height: 200px; /* Adjust this value based on your content */
-    margin-top: 1rem;
+    max-height: 200px;
+    position: static;
+    margin-top: 0.5rem;
+}
+
+/* Hover effect - expand padding and add elevation */
+.ayah:not(.recording):hover {
+    transform: translateY(-2px);
+    border-color: var(--secondary-color);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.2);
+    padding: 1.5rem;
+    margin-bottom: 0.75rem;
+    background-color: var(--card-background);
+    z-index: 2;
+}
+
+/* Recording state */
+.ayah.recording {
+    border: 2px solid var(--error-color) !important;
+    transform: translateY(-2px);
+    animation: recording-pulse 2s infinite;
+    box-shadow: 0 8px 30px rgba(239, 68, 68, 0.2);
+    background-color: var(--card-background) !important;
+}
+
+/* Recording pulse animation */
+@keyframes recording-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .ayah:not(.recording):hover {
+    border-color: #059669;
+    box-shadow: 0 8px 30px rgba(5, 150, 105, 0.2);
+}
+
+[data-theme="dark"] .ayah.recording {
+    border: 2px solid var(--error-color) !important;
+    box-shadow: 0 8px 30px rgba(248, 113, 113, 0.2);
+}
+
+/* Remove old recording controls */
+.controls, .record-btn, .mic-on, .mic-off, #checkbox, .record-area {
+    display: none !important;
 }
 
 /* Ayah number bubble */
 .ayah-number {
-    position: absolute;
-    left: -15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    background-color: var(--primary-color);
-    color: var(--card-background);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    box-shadow: var(--bubble-shadow);
+    display: none;
 }
 
-/* Recording Controls */
-.controls {
-    text-align: center;
-    margin: 2rem 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-}
-
-/* Record Button Styling */
-.record-btn {
-    background-color: var(--secondary-color);
-    color: var(--card-background);
-    border: none;
-    padding: 1rem 2.5rem;
-    font-size: 1.2rem;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.2);
-}
-
-.record-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(39, 174, 96, 0.3);
-}
-
-/* Recording state styling */
-.record-btn.recording {
-    background-color: var(--error-color);
-    animation: pulse 2s infinite;
-}
-
-/* Recording pulse animation */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-}
-
-.status {
-    color: var(--text-color);
-    font-weight: 500;
-}
-
-/* Feedback Section */
+/* Feedback Container */
 .feedback-container {
-    background: var(--card-background);
-    border-radius: 15px;
-    padding: 2rem;
-    box-shadow: var(--bubble-shadow);
-    margin-top: 2rem;
+    padding: 0;
+    position: relative;
+    height: 100%;
 }
 
 .feedback-container h3 {
@@ -313,12 +391,30 @@ body {
 }
 
 /* Tajweed Color Classes */
-.ghunnah { color: var(--ghunnah-color); }
-.idghaam { color: var(--idghaam-color); }
-.qalqalah { color: var(--qalqalah-color); }
+.madd, .ghunnah, .qalqalah, .ikhfa, .ikhfa-meem, .idghaam, .silent, .tafkheem {
+    transition: color 0.3s ease;
+}
+
 .madd { color: var(--madd-color); }
+.ghunnah { color: var(--ghunnah-color); }
+.qalqalah { color: var(--qalqalah-color); }
 .ikhfa { color: var(--ikhfa-color); }
-.iqlab { color: var(--iqlab-color); }
+.ikhfa-meem { color: var(--ikhfa-meem-color); }
+.idghaam { color: var(--idghaam-color); }
+.silent { color: var(--silent-color); }
+.tafkheem { color: var(--tafkheem-color); }
+
+/* Add hover effect to make the rules more noticeable on interaction */
+.word:hover .madd,
+.word:hover .ghunnah,
+.word:hover .qalqalah,
+.word:hover .ikhfa,
+.word:hover .ikhfa-meem,
+.word:hover .idghaam,
+.word:hover .silent,
+.word:hover .tafkheem {
+    filter: brightness(1.2);
+}
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
@@ -342,39 +438,79 @@ body {
     .ayah {
         padding: 1.5rem;
     }
+
+    .nav-content {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
 
-/* Active ayah and word highlighting */
+/* Remove old active state styles */
 .ayah.active {
-    background-color: var(--highlight-bg);
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: none;
+    background-color: var(--card-background) !important;
 }
 
-/* Word highlighting styles */
+.ayah.active .ayah-content,
+.ayah.active .arabic,
+.ayah.active .translation,
+.ayah.active .transliteration {
+    background-color: var(--card-background) !important;
+}
+
+/* Word styling and hover effects */
 .word {
-    position: relative;
     display: inline-block;
-    padding: 2px 4px;
-    margin: 0 2px;
+    position: relative;
+    padding: 0.1em 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.word::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ffeb3b;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.word:hover::after {
+    transform: scaleX(1);
+    transform-origin: right;
+}
+
+/* Word highlight class */
+.word.word-highlight::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -4px;
+    right: -4px;
+    bottom: -2px;
+    background-color: rgba(16, 185, 129, 0.1);
     border-radius: 4px;
-    transition: all var(--word-transition);
+    z-index: -1;
 }
 
-.word.active {
-    background-color: var(--highlight-color);
-    transform: translateY(-2px);
-}
-
-.word.error {
-    background-color: var(--error-color);
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-/* Ayah active state */
-.ayah.active {
-    transform: translateX(10px);
-    transition: transform var(--word-transition);
+/* Ensure proper stacking context */
+.arabic, .translation, .transliteration {
+    position: relative;
+    z-index: 2;
+    background-color: transparent;
 }
 
 /* Error animation */
@@ -390,5 +526,638 @@ body {
     }
     40%, 60% {
         transform: translate3d(2px, 0, 0);
+    }
+}
+
+/* Remove wave-related styles */
+.wave-container {
+    display: none;
+}
+
+/* Root word tooltip */
+.root-tooltip {
+    position: fixed;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+    min-width: 200px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.root-tooltip.show {
+    display: block;
+    opacity: 1;
+}
+
+.root-tooltip.fade-out {
+    opacity: 0;
+}
+
+.tooltip-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tooltip-content .root {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.tooltip-content .trans {
+    color: var(--text-color);
+}
+
+.tooltip-content .translit {
+    color: var(--secondary-text);
+    font-style: italic;
+}
+
+/* Ayah marker styling */
+.ayah-marker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0 0.2em;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+
+.ayah-marker::before {
+    content: attr(data-number);
+    font-family: var(--arabic-font);
+    font-size: 0.6em;
+    color: var(--primary-color);
+    position: absolute;
+    z-index: 2;
+}
+
+.ayah-marker::after {
+    content: "\06DD";
+    font-family: var(--arabic-font);
+    font-size: 1em;
+    color: var(--primary-color);
+    position: absolute;
+    z-index: 1;
+    opacity: 0.8;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .ayah-marker::before,
+[data-theme="dark"] .ayah-marker::after {
+    color: var(--header-text);
+}
+
+.ayah:hover .ayah-marker::after {
+    opacity: 1;
+}
+
+/* Feedback Message Types */
+.feedback-message {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.feedback-success {
+    background-color: rgba(39, 174, 96, 0.1);
+    border-left: 4px solid #27ae60;
+    color: #27ae60;
+}
+
+.feedback-warning {
+    background-color: rgba(241, 196, 15, 0.1);
+    border-left: 4px solid #f1c40f;
+    color: #d35400;
+}
+
+.feedback-error {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-left: 4px solid #e74c3c;
+    color: #c0392b;
+}
+
+.feedback-info {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left: 4px solid #3498db;
+    color: #2980b9;
+}
+
+[data-theme="dark"] .feedback-success {
+    background-color: rgba(39, 174, 96, 0.2);
+    color: #2ecc71;
+}
+
+[data-theme="dark"] .feedback-warning {
+    background-color: rgba(241, 196, 15, 0.2);
+    color: #f39c12;
+}
+
+[data-theme="dark"] .feedback-error {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+
+[data-theme="dark"] .feedback-info {
+    background-color: rgba(52, 152, 219, 0.2);
+    color: #3498db;
+}
+
+.feedback-icon {
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+/* Feedback Section Layout */
+.feedback-section {
+    position: sticky;
+    top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: calc(100vh - 2rem);
+}
+
+/* Style the scrollbar for the feedback section */
+.feedback-section::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feedback-section::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border-radius: 4px;
+}
+
+.feedback-section::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.feedback-section::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-text);
+}
+
+/* Feedback Card Styles */
+.feedback-container .feedback-card {
+    position: relative;
+    width: 100%;
+    padding: 1.25rem;
+    color: var(--text-color);
+    height: 300px;
+    margin: 0 0 1.5rem 0;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background: 
+        linear-gradient(var(--card-background), var(--card-background)) padding-box,
+        linear-gradient(135deg, #41A5F6, #38bdf8) border-box;
+    box-shadow: 0 0 12px rgba(65, 165, 246, 0.2);
+}
+
+/* Dark theme styles */
+body[data-theme="dark"] .feedback-container .feedback-card {
+    background: 
+        linear-gradient(var(--card-background), var(--card-background)) padding-box,
+        linear-gradient(135deg, #1d4ed8, #3b82f6) border-box;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Hover effects */
+.feedback-container .feedback-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(65, 165, 246, 0.2);
+}
+
+body[data-theme="dark"] .feedback-container .feedback-card:hover {
+    background: 
+        linear-gradient(var(--card-background), var(--card-background)) padding-box,
+        linear-gradient(135deg, #2563eb, #4f46e5) border-box;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+}
+
+/* Card header */
+.feedback-container .feedback-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 1.2rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    letter-spacing: .05em;
+    flex-shrink: 0;
+}
+
+/* Feedback Messages Container */
+.feedback-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    margin-right: -0.5rem;
+}
+
+/* Scrollbar styling for feedback messages */
+.feedback-messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+.feedback-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.feedback-messages::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+.feedback-messages::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondary-text);
+}
+
+/* Message styling */
+.feedback-message {
+    background: var(--background-color);
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Processing Animation */
+.processing-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    padding: 2rem;
+    font-style: italic;
+}
+
+.dots {
+    display: inline-block;
+    width: 24px;
+    text-align: left;
+}
+
+@keyframes dotAnimation {
+    0% { content: '.'; }
+    33% { content: '..'; }
+    66% { content: '...'; }
+    100% { content: ''; }
+}
+
+.dots::after {
+    content: '';
+    display: inline-block;
+    animation: dotAnimation 2s infinite steps(1);
+}
+
+/* Empty state styling - ensure it doesn't scroll */
+.empty-state {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 2.5rem);
+    text-align: center;
+    color: var(--secondary-text);
+    font-style: italic;
+    padding: 1rem;
+    margin: 0;
+    font-size: 0.95rem;
+    pointer-events: none;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .feedback-messages::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+}
+
+[data-theme="dark"] .feedback-messages::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondary-text);
+}
+
+/* Ensure feedback content stays within bounds */
+.feedback-container .feedback-card > *:not(h3) {
+    max-height: calc(100% - 4rem); /* Account for padding and header */
+    overflow-y: auto;
+}
+
+/* Arabic text in feedback */
+.feedback-container .feedback-card .arabic {
+    font-size: 1.5rem;  /* Smaller Arabic text */
+    line-height: 1.8;  /* Tighter line height */
+    margin: 0.5rem 0;  /* Reduced margin */
+}
+
+.feedback-icon {
+    font-size: 1.1rem;  /* Smaller icons */
+    line-height: 1.4;
+}
+
+/* Scrollbar adjustments */
+.feedback-messages::-webkit-scrollbar {
+    width: 4px;  /* Thinner scrollbar */
+}
+
+.feedback-messages::-webkit-scrollbar-track {
+    border-radius: 2px;
+}
+
+.feedback-messages::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    border: 1px solid transparent;
+}
+
+/* Feedback Card */
+.feedback-card h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    letter-spacing: .1em;
+}
+
+.feedback-card .arabic {
+    font-size: 1.8rem;
+    line-height: 2;
+    margin: 1rem 0;
+    text-align: center;
+    color: var(--text-color);
+}
+
+/* Message styling */
+.feedback-message {
+    background: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.5rem;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effects */
+.feedback-card:hover {
+    transform: translateY(-5px);
+}
+
+.feedback-message:hover {
+    transform: translateX(5px);
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .feedback-card {
+    border-color: #2c5364;
+    box-shadow: 0 0 15px rgba(44, 83, 100, 0.2);
+}
+
+[data-theme="dark"] .feedback-message {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+}
+
+/* Ayah Controls */
+.ayah-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 35px;
+    position: relative;
+    z-index: 1;
+}
+
+.ayah:hover .ayah-controls {
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 0.75rem;
+}
+
+/* Play Button */
+.play-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    background-color: var(--background-color);
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--highlight-bg);
+}
+
+.play-icon {
+    width: 24px;
+    height: 24px;
+    fill: var(--secondary-text);
+    transition: fill 0.2s ease;
+}
+
+.play-btn:hover .play-icon {
+    fill: var(--text-color);
+}
+
+/* Pause state */
+.play-btn.playing .play-icon {
+    transform: scale(0.9);
+}
+
+.play-btn.playing .play-path {
+    d: path("M6 4h4v16H6V4zm8 0h4v16h-4V4z");
+}
+
+/* Options Menu */
+.options-menu {
+    position: relative;
+    z-index: 3;
+    width: 35px;
+    height: 35px;
+}
+
+.options-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--secondary-text);
+    transition: all 0.2s ease;
+    background-color: var(--background-color);
+}
+
+.options-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--highlight-bg);
+    color: var(--text-color);
+}
+
+.options-content {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+    transform-origin: top right;
+    animation: fadeIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+}
+
+.options-menu.active .options-content {
+    display: block;
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .play-icon {
+    fill: var(--secondary-text);
+}
+
+[data-theme="dark"] .play-btn:hover .play-icon {
+    fill: var(--text-color);
+}
+
+/* Ensure proper stacking */
+.ayah {
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ayah:hover {
+    z-index: 2;
+}
+
+.ayah.active {
+    z-index: 3;
+}
+
+/* Animation for options menu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Reciter Select */
+.reciter-select {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.reciter-select label {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.reciter-select select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+}
+
+.reciter-select select:hover {
+    border-color: var(--primary-color);
+}
+
+.reciter-select select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(65, 165, 246, 0.2);
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .play-btn,
+[data-theme="dark"] .options-btn {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .options-content {
+    background: var(--card-background);
+    border-color: var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure the last feedback card extends to match content */
+.feedback-card:last-child {
+    height: auto;
+    min-height: 300px;
+    flex: 1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 1200px) {
+    .container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .feedback-section {
+        position: static;
+        margin-top: 2rem;
+        max-height: none;
+    }
+
+    .feedback-card {
+        height: 300px;
     }
 } 
