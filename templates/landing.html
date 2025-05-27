@@ -16,34 +16,43 @@
     </script>
     <style>
         :root {
-            --primary-color: #41A5F6;      /* Primary Accent - elegant blue */
-            --accent-color: #10B981;       /* Call to Action - calm emerald green */
-            --bg-color: #F9FAFB;           /* Background - very soft white */
+            /* Light Theme Colors */
+            --primary-color: #D4AF37;      /* Primary Accent - elegant gold */
+            --secondary-color: #C5A028;    /* Call to Action - deeper gold */
+            --error-color: #EF4444;        /* Error - keeping the same red */
+            --background-color: #F9FAFB;   /* Background - very soft white */
+            --card-background: #FFFFFF;    /* Surface - clean white */
             --text-color: #1F2937;         /* Primary Text - rich charcoal gray */
             --secondary-text: #6B7280;     /* Secondary Text - muted cool gray */
-            --pattern-color: rgba(65, 165, 246, 0.1);  /* Primary color with opacity */
-            --wave-color: #41A5F6;         /* Wave using primary color */
-            --card-background: #FFFFFF;    /* Surface - clean white */
             --border-color: #E5E7EB;       /* Border/Lines - subtle light gray */
+            --header-bg: #FFFFFF;          /* Header background */
+            --header-text: #1F2937;        /* Header text */
+            --bubble-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --object-color: var(--primary-color);
+            --object-glow: rgba(212, 175, 55, 0.2);
         }
 
         [data-theme="dark"] {
-            --primary-color: #41A5F6;      /* Primary Accent - same blue */
-            --accent-color: #10B981;       /* Call to Action - emerald green */
-            --bg-color: #111827;           /* Background - deep navy-gray */
+            --primary-color: #FFD700;      /* Primary Accent - brighter gold */
+            --secondary-color: #DAA520;    /* Call to Action - goldenrod */
+            --error-color: #F87171;        /* Error - softer red */
+            --background-color: #111827;   /* Background - deep navy-gray */
+            --card-background: #1F2937;    /* Surface - dark charcoal */
             --text-color: #F9FAFB;         /* Primary Text - soft white */
             --secondary-text: #9CA3AF;     /* Secondary Text - soft gray */
-            --pattern-color: rgba(65, 165, 246, 0.15);
-            --wave-color: #41A5F6;         /* Keep wave consistent */
-            --card-background: #1F2937;    /* Surface - dark charcoal */
             --border-color: #374151;       /* Border/Lines - dark gray */
+            --header-bg: #1F2937;          /* Header background */
+            --header-text: #F9FAFB;        /* Header text */
+            --bubble-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --object-color: var(--primary-color);
+            --object-glow: rgba(255, 215, 0, 0.3);
         }
 
         body {
             margin: 0;
             padding: 0;
             font-family: 'Space Grotesk', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--background-color);
             color: var(--text-color);
             min-height: 100vh;
             display: flex;
@@ -91,6 +100,8 @@
         .hero {
             margin: 2rem 0;
             animation: fadeIn 1s ease-out;
+            text-align: center;
+            padding: 4rem 2rem;
         }
 
         @keyframes fadeIn {
@@ -99,9 +110,9 @@
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--text-color);
+            color: var(--primary-color);
             font-weight: 700;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -122,20 +133,24 @@
         }
 
         .cta-button {
-            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
             padding: 1rem 2rem;
-            font-size: 1.2rem;
-            background-color: var(--accent-color);
-            color: #FFFFFF;
+            border-radius: 8px;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+        }
+
+        [data-theme="dark"] .cta-button:hover {
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.2);
         }
 
         .features {
@@ -150,19 +165,23 @@
         .feature-card {
             position: absolute;
             width: 100%;
-            background: var(--card-background);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--border-color);
-            transition: transform 0.6s ease, opacity 0.6s ease;
+            background: 
+                linear-gradient(var(--card-background), var(--card-background)) padding-box,
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.1);
+            transition: all 0.2s ease;
             transform: translateX(120%);
             opacity: 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         [data-theme="dark"] .feature-card {
-            border-color: var(--border-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: 
+                linear-gradient(var(--card-background), var(--card-background)) padding-box,
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+            box-shadow: 0 0 14px rgba(255, 215, 0, 0.15);
         }
 
         .feature-card.active {
@@ -192,7 +211,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background-color: var(--text-color);
+            background-color: var(--primary-color);
             opacity: 0.3;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -240,17 +259,19 @@
 
         .control-button {
             background: transparent;
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
             padding: 0.5rem 1rem;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            opacity: 0.8;
         }
 
         .control-button:hover {
+            opacity: 1;
             transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(212, 175, 55, 0.1);
         }
 
         @media (max-width: 1024px) {
@@ -355,14 +376,11 @@
             text-decoration: none;
             font-size: 1.1rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+            transition: color 0.2s ease;
         }
 
         .nav-link:hover {
             color: var(--primary-color);
-            background-color: var(--pattern-color);
         }
 
         .nav-trigger:hover + .top-nav,
@@ -391,6 +409,51 @@
             #mobileThemeToggle {
                 display: flex;
             }
+        }
+
+        /* Update wave color to match theme */
+        .wave-container svg path {
+            fill: var(--primary-color);
+            opacity: 0.1;
+        }
+
+        /* Feature cards */
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 16px rgba(212, 175, 55, 0.2);
+        }
+
+        [data-theme="dark"] .feature-card:hover {
+            box-shadow: 0 0 18px rgba(255, 215, 0, 0.25);
+        }
+
+        /* Navigation dots */
+        .nav-dot {
+            background-color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .nav-dot.active {
+            opacity: 1;
+            transform: scale(1.3);
+        }
+
+        /* Control buttons */
+        .control-button {
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            opacity: 0.8;
+            transition: all 0.2s ease;
+        }
+
+        .control-button:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .control-button:hover {
+            background: rgba(255, 215, 0, 0.15);
         }
     </style>
 </head>
@@ -546,21 +609,21 @@
 
         // Materials
         const material = new THREE.MeshPhysicalMaterial({
-            color: 0x1e88e5,
-            metalness: 0.2,
-            roughness: 0.3,
+            color: 0xD4AF37, // Gold color
+            metalness: 0.6,
+            roughness: 0.2,
             transparent: true,
-            opacity: 0.7,
+            opacity: 0.8,
             side: THREE.DoubleSide,
-            transmission: 0.3,
-            clearcoat: 0.5,
-            clearcoatRoughness: 0.25
+            transmission: 0.2,
+            clearcoat: 0.8,
+            clearcoatRoughness: 0.2
         });
 
         const lineMaterial = new THREE.LineBasicMaterial({
-            color: 0x1e88e5,
+            color: 0xD4AF37, // Gold color
             transparent: true,
-            opacity: 0.5
+            opacity: 0.6
         });
 
         // Create Tesseract
@@ -607,8 +670,8 @@
         camera.position.z = 5;
 
         // Color transition
-        let targetColor = new THREE.Color(0x1e88e5);
-        let currentColor = new THREE.Color(0x1e88e5);
+        let targetColor = new THREE.Color(0xD4AF37);
+        let currentColor = new THREE.Color(0xD4AF37);
         let transitionSpeed = 0.02;
 
         // Animation
@@ -694,9 +757,9 @@
             updateRendererBackground();
             
             // Update colors
-            targetColor = new THREE.Color(isDark ? 0x1e88e5 : 0x42a5f5);
-            pointLight1.color.setHex(isDark ? 0x1e88e5 : 0x42a5f5);
-            pointLight2.color.setHex(isDark ? 0x42a5f5 : 0x90caf9);
+            targetColor = new THREE.Color(isDark ? 0xB8860B : 0xD4AF37);
+            pointLight1.color.setHex(isDark ? 0xB8860B : 0xD4AF37);
+            pointLight2.color.setHex(isDark ? 0x996515 : 0xC5A028);
         }
 
         // Theme toggle click handlers
