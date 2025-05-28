@@ -13,6 +13,8 @@ import json
 import shutil
 from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
 import librosa
+import gc
+import psutil
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -25,12 +27,7 @@ UPLOAD_FOLDER.mkdir(exist_ok=True)
 TEMP_DIR = Path('temp_audio')
 TEMP_DIR.mkdir(exist_ok=True)
 
-# Initialize Whisper model
-whisper_processor = AutoProcessor.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
-whisper_model = AutoModelForSpeechSeq2Seq.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
-
 # Store the latest recording path
-
 latest_recording = None
 
 # Fatiha verses with their word-by-word text
@@ -45,23 +42,29 @@ FATIHA_VERSES = {
 }
 
 def transcribe_audio(audio_file):
-    """Transcribe audio using Whisper model"""
+    """Transcribe audio using Whisper model, loading model only when needed to save memory."""
     try:
+        print("[MEM] Before model load:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
+        processor = AutoProcessor.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
+        model = AutoModelForSpeechSeq2Seq.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
+        print("[MEM] After model load:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
         # Load and preprocess the audio
         speech, sr = librosa.load(audio_file, sr=16000)
         speech = speech.astype(np.float32)
-        
         # Process with Whisper model
-        inputs = whisper_processor(
+        inputs = processor(
             speech,
             sampling_rate=16000,
             return_tensors="pt"
         )
-        
         with torch.no_grad():
-            generated_ids = whisper_model.generate(inputs["input_features"])
-            transcription = whisper_processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
-        
+            generated_ids = model.generate(inputs["input_features"])
+            transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        print("[MEM] After transcription:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
+        del processor
+        del model
+        gc.collect()
+        print("[MEM] After gc.collect():", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
         return transcription.strip()
     except Exception as e:
         print(f"Detailed transcription error: {str(e)}")
@@ -83,79 +86,72 @@ def handle_websocket(ws):
     chunk_counter = 0
     temp_wav = None
     target_ayah = None  # Store the target ayah number
-    
+    audio_chunks = []
+    done = False
     try:
-        while True:
+        while not done:
             message = ws.receive()
-            
-            # Check if this is a configuration message
+            if message is None:
+                print("WebSocket closed by client.")
+                break
+            # Check if this is a configuration or done message
             if isinstance(message, str):
                 try:
                     config = json.loads(message)
                     if 'target_ayah' in config:
                         target_ayah = config['target_ayah']
                         print(f"Received target ayah: {target_ayah}")
-                    continue
+                        continue
+                    if config.get('type') == 'done':
+                        print("Received done message from client.")
+                        done = True
+                        continue
                 except json.JSONDecodeError:
                     print("Invalid JSON message received")
                     continue
-            
-            # Create a temporary WAV file for this chunk
-            temp_wav = TEMP_DIR / f'chunk_{chunk_counter}.wav'
+            # Save audio chunk in memory
+            audio_chunks.append(message)
+            chunk_counter += 1
+        # After receiving all chunks, process the audio
+        if audio_chunks:
+            temp_wav = TEMP_DIR / f'ws_recording_{os.getpid()}.wav'
             abs_temp_wav = temp_wav.absolute()
-            
             try:
-                # Save the received audio data
                 with open(temp_wav, 'wb') as f:
-                    f.write(message)
-                
-                print(f"Using absolute path for transcription: {abs_temp_wav}")
-                
-                # For the last ayah (ayah 6), we'll use a more robust approach
+                    for chunk in audio_chunks:
+                        f.write(chunk)
+                print(f"Saved full audio to {abs_temp_wav}")
+                # Transcription logic (same as before)
                 if target_ayah == "6":
                     try:
-                        # Try direct audio processing first
                         import soundfile as sf
                         audio, sr = sf.read(str(abs_temp_wav))
                         if sr != 16000:
-                            # Resample to 16kHz if needed
                             import librosa
                             audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
                     except Exception as sf_error:
                         print(f"Direct audio processing failed: {sf_error}")
-                        # Fallback to basic audio reading
                         import wave
                         with wave.open(str(abs_temp_wav), 'rb') as wf:
                             audio = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16)
-                            audio = audio.astype(np.float32) / 32768.0  # Convert to float32
-                    
-                    # Process with Whisper model
-                    inputs = whisper_processor(
+                            audio = audio.astype(np.float32) / 32768.0
+                    inputs = AutoProcessor.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")(
                         audio,
                         sampling_rate=16000,
                         return_tensors="pt"
                     )
-                    
                     with torch.no_grad():
-                        generated_ids = whisper_model.generate(inputs["input_features"])
-                        transcribed_text = whisper_processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+                        generated_ids = AutoModelForSpeechSeq2Seq.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha").generate(inputs["input_features"])
+                        transcribed_text = inputs.batch_decode(generated_ids, skip_special_tokens=True)[0]
                 else:
-                    # For other ayahs, use the standard transcription
                     transcribed_text = transcribe_audio(str(abs_temp_wav))
-                
                 print(f"Transcription result: {transcribed_text}")
-                
-                # If we have a target ayah, use it directly
                 if target_ayah is not None:
                     ayah_number = int(target_ayah)
-                    word_index = 0  # Reset word index for now
+                    word_index = 0
                 else:
-                    # Fallback to matching if no target ayah
                     ayah_number, word_index = match_ayah_and_word(transcribed_text)
-                
                 print(f"Using ayah {ayah_number}, word {word_index}")
-                
-                # Analyze using our Tajweed checker
                 if ayah_number is not None:
                     feedback = analyze_ayah(ayah_number, transcribed_text)
                 else:
@@ -163,8 +159,6 @@ def handle_websocket(ws):
                         'type': 'error',
                         'message': "Could not match recitation to any ayah of Surah Al-Fatiha"
                     }]
-                
-                # Send results back to client
                 response = {
                     'type': 'transcription',
                     'text': transcribed_text,
@@ -174,9 +168,8 @@ def handle_websocket(ws):
                 }
                 ws.send(json.dumps(response))
                 print("Sent response to client")
-                
             except Exception as e:
-                print(f"Error processing chunk: {e}")
+                print(f"Error processing audio: {e}")
                 import traceback
                 print(f"Error trace: {traceback.format_exc()}")
                 ws.send(json.dumps({
@@ -184,17 +177,13 @@ def handle_websocket(ws):
                     'message': f'Processing failed: {str(e)}'
                 }))
             finally:
-                # Clean up temporary file
                 if temp_wav and temp_wav.exists():
                     temp_wav.unlink()
-                chunk_counter += 1
-                
     except Exception as e:
         print(f"WebSocket error: {e}")
         import traceback
         print(f"WebSocket error trace: {traceback.format_exc()}")
     finally:
-        # Clean up any remaining temporary files
         if temp_wav and temp_wav.exists():
             temp_wav.unlink()
 
