@@ -500,6 +500,10 @@ async function startRecording(ayah) {
         // Handle recording stop
         mediaRecorder.onstop = async () => {
             console.log('MediaRecorder stopped');
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                // Send done message to server
+                ws.send(JSON.stringify({ type: 'done' }));
+            }
             if (ws) {
                 ws.close();
             }
