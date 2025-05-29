@@ -17,13 +17,13 @@
             --secondary-text: #777777;
             --border-color: #E5E7EB;
             
-            /* Tajweed Rule Colors */
-            --ghunnah-color: rgba(255, 127, 127, 0.9);
-            --idghaam-color: rgba(152, 251, 152, 0.9);
-            --ikhfa-color: rgba(221, 160, 221, 0.9);
-            --qalqalah-color: rgba(135, 206, 235, 0.9);
-            --iqlab-color: rgba(255, 182, 193, 0.9);
-            --idghaam-shafawi-color: rgba(240, 230, 140, 0.9);
+            /* Tajweed Rule Colors - Bright and Bold */
+            --ghunnah-color: #D92626;        /* Brighter Deep Red */
+            --idghaam-color: #2EA62E;        /* Brighter Forest Green */
+            --ikhfa-color: #9932CC;          /* Brighter Deep Purple */
+            --qalqalah-color: #0086B3;       /* Brighter Deep Blue */
+            --iqlab-color: #E66767;          /* Brighter Indian Red */
+            --idghaam-shafawi-color: #DAA520; /* Brighter Golden Rod */
         }
 
         [data-theme="dark"] {
@@ -171,10 +171,12 @@
 
         /* Theme toggle switch */
         .switch {
+            font-size: 0.85rem;
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 30px;
+            width: 3.8em;
+            height: 2em;
+            margin-left: 1rem;
         }
 
         .switch input {
@@ -186,30 +188,52 @@
         .slider {
             position: absolute;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: var(--background-color);
-            transition: .4s;
-            border-radius: 30px;
-            border: 2px solid var(--primary-color);
+            inset: 0;
+            background-color: #F5ECD9;
+            transition: 0.4s;
+            border-radius: 0.5em;
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.2);
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 2px;
-            background-color: var(--primary-color);
-            transition: .4s;
-            border-radius: 50%;
+            height: 1.5em;
+            width: 1.4em;
+            border-radius: 0.3em;
+            left: 0.3em;
+            bottom: 0.25em;
+            background-color: #D4AF37;
+            transition: 0.4s;
+            box-shadow: 0 0.4em rgba(212, 175, 55, 0.3);
+        }
+
+        .slider:hover::before {
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.3);
         }
 
         input:checked + .slider:before {
-            transform: translateX(30px);
+            transform: translateX(2em);
+            background: #C5A028;
+        }
+
+        [data-theme="dark"] .slider {
+            background-color: #2C1F14;
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .slider:before {
+            box-shadow: 0 0.4em rgba(212, 175, 55, 0.2);
+        }
+
+        [data-theme="dark"] .slider:hover::before {
+            box-shadow: 0 0.2em rgba(212, 175, 55, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .switch {
+                font-size: 0.8rem;
+            }
         }
 
         /* Main content styles */
@@ -233,8 +257,56 @@
             max-width: 60%;
             position: relative;
             z-index: 2;
+        }
+
+        .intro-content h1,
+        .intro-content .arabic-title,
+        .intro-content p,
+        .intro-content .hadith-quote {
             opacity: 0;
-            transform: translateX(-100%);
+            transform: translateX(-400px);
+            transition: all 1s ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        .intro:not(.visible) .intro-content h1 {
+            transition-delay: 0s;
+        }
+
+        .intro:not(.visible) .intro-content .arabic-title {
+            transition-delay: 0.2s;
+        }
+
+        .intro:not(.visible) .intro-content p {
+            transition-delay: 0.4s;
+        }
+
+        .intro:not(.visible) .intro-content .hadith-quote {
+            transition-delay: 0.6s;
+        }
+
+        .intro.visible .intro-content h1 {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0s;
+        }
+
+        .intro.visible .intro-content .arabic-title {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.2s;
+        }
+
+        .intro.visible .intro-content p {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.4s;
+        }
+
+        .intro.visible .intro-content .hadith-quote {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.6s;
         }
 
         .hadith-quote {
@@ -272,13 +344,13 @@
             position: absolute;
             right: 5%;
             top: 50%;
-            transform: translateY(-50%);
             width: 30%;
             height: 70%;
             z-index: 1;
             overflow: visible;
-            opacity: 0;
             padding: 20px;
+            opacity: 0;
+            transform: translate(400px, -50%);
         }
 
         .intro-image img {
@@ -288,6 +360,36 @@
             object-position: center;
             opacity: 0.8;
             animation: float 6s ease-in-out infinite;
+        }
+
+        .intro.visible .intro-image {
+            animation: slideIn 1s ease-in-out 0.8s forwards;
+        }
+
+        .intro:not(.visible) .intro-image {
+            animation: slideOut 1s ease-in-out forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translate(400px, -50%);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(0, -50%);
+            }
+        }
+
+        @keyframes slideOut {
+            0% {
+                opacity: 1;
+                transform: translate(0, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(400px, -50%);
+            }
         }
 
         .intro h1 {
@@ -312,13 +414,14 @@
 
         .rule-section {
             padding: 4rem 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 0; /* Remove margin between sections */
             text-align: left;
             min-height: 45vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Add subtle separator */
         }
 
         .rule-content {
@@ -331,6 +434,11 @@
             flex-direction: column;
             justify-content: center;
             height: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Add subtle background */
+            padding: 2rem 4rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .rule-content h2,
@@ -339,7 +447,7 @@
         .rule-content .arabic-example {
             opacity: 0;
             transform: translateX(-400px);
-            transition: all 1s ease-in-out;
+            transition: all 0.8s ease-in-out;
             will-change: transform, opacity;
         }
 
@@ -411,13 +519,43 @@
             color: var(--heading-color);
         }
 
-        /* Rule-specific backgrounds */
-        .ghunnah { background-color: var(--ghunnah-color); }
-        .idghaam { background-color: var(--idghaam-color); }
-        .ikhfa { background-color: var(--ikhfa-color); }
-        .qalqalah { background-color: var(--qalqalah-color); }
-        .iqlab { background-color: var(--iqlab-color); }
-        .idghaam-shafawi { background-color: var(--idghaam-shafawi-color); }
+        /* Rule-specific backgrounds with rich gradients */
+        .ghunnah { 
+            background-color: var(--ghunnah-color);
+            background-image: linear-gradient(45deg, var(--ghunnah-color), #B22222);
+        }
+        .idghaam { 
+            background-color: var(--idghaam-color);
+            background-image: linear-gradient(45deg, var(--idghaam-color), #228B22);
+        }
+        .ikhfa { 
+            background-color: var(--ikhfa-color);
+            background-image: linear-gradient(45deg, var(--ikhfa-color), #800080);
+        }
+        .qalqalah { 
+            background-color: var(--qalqalah-color);
+            background-image: linear-gradient(45deg, var(--qalqalah-color), #00688B);
+        }
+        .iqlab { 
+            background-color: var(--iqlab-color);
+            background-image: linear-gradient(45deg, var(--iqlab-color), #CD5C5C);
+        }
+        .idghaam-shafawi { 
+            background-color: var(--idghaam-shafawi-color);
+            background-image: linear-gradient(45deg, var(--idghaam-shafawi-color), #B8860B);
+        }
+
+        /* Adjust text colors for better contrast on the bolder backgrounds */
+        .rule-section h2,
+        .rule-section .arabic-title,
+        .rule-section .arabic-example {
+            color: #FFFFFF;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .rule-section p {
+            color: rgba(255, 255, 255, 0.9);
+        }
 
         /* Smooth scroll behavior */
         html {
@@ -452,15 +590,46 @@
                 width: 70%;
                 height: 250px;
                 margin: 2rem auto;
-                transform: none;
                 top: auto;
                 right: auto;
+                transform: translateX(400px);
+                padding: 0;
+            }
+
+            .intro.visible .intro-image {
+                animation: slideInMobile 1s ease-in-out 0.8s forwards;
+            }
+
+            .intro:not(.visible) .intro-image {
+                animation: slideOutMobile 1s ease-in-out forwards;
             }
 
             .rule-content {
                 padding-left: 0;
                 margin: 0 auto;
                 text-align: center;
+            }
+        }
+
+        @keyframes slideInMobile {
+            0% {
+                opacity: 0;
+                transform: translateX(400px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutMobile {
+            0% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(400px);
             }
         }
 
@@ -478,7 +647,7 @@
 
         @keyframes slideInRight {
             from {
-                transform: translateX(100%) translateY(-50%);
+                transform: translateX(400px) translateY(-50%);
                 opacity: 0;
             }
             to {
@@ -488,14 +657,11 @@
         }
 
         @keyframes float {
-            0% {
-                transform: translateY(0px);
+            0%, 100% {
+                transform: translateY(0);
             }
             50% {
                 transform: translateY(-15px);
-            }
-            100% {
-                transform: translateY(0px);
             }
         }
 
@@ -507,10 +673,42 @@
             animation: slideInRight 1s ease-out forwards;
         }
 
-        /* Make sure the floating animation continues after the slide-in */
-        .intro.visible .intro-image img {
-            animation: float 6s ease-in-out infinite;
-        }
+        /* Update the intersection observer script */
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const intro = document.querySelector('.intro');
+                const ruleSections = document.querySelectorAll('.rule-section');
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        // Remove any existing animations
+                        entry.target.querySelector('.intro-image').style.animation = 'none';
+                        
+                        // Force reflow
+                        void entry.target.querySelector('.intro-image').offsetHeight;
+                        
+                        // Add appropriate class
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        } else {
+                            entry.target.classList.remove('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.3,
+                    rootMargin: '-20% 0px -20% 0px'
+                });
+
+                observer.observe(intro);
+                
+                ruleSections.forEach(section => {
+                    observer.observe(section);
+                });
+
+                // Remove any initial visible class
+                intro.classList.remove('visible');
+            });
+        </script>
     </style>
 </head>
 <body>
@@ -672,12 +870,6 @@
             const intro = document.querySelector('.intro');
             const ruleSections = document.querySelectorAll('.rule-section');
             
-            // Add visible class to intro immediately
-            setTimeout(() => {
-                intro.classList.add('visible');
-            }, 100);
-
-            // Create observer for rule sections
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -691,14 +883,18 @@
                     }
                 });
             }, {
-                threshold: 0.5,
-                rootMargin: '-40% 0px -10% 0px'
+                threshold: 0.3,
+                rootMargin: '-20% 0px -20% 0px'
             });
 
-            // Observe each rule section
+            observer.observe(intro);
+            
             ruleSections.forEach(section => {
                 observer.observe(section);
             });
+
+            // Remove any initial visible class
+            intro.classList.remove('visible');
         });
     </script>
 </body>
