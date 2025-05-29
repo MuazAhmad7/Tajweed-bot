@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tajweed Rules - AI Tajweed Teacher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #D4AF37;
+            --background-color: #F5ECD9;
+            --card-background: #FFFFFF;
+            --text-color: #2D2D2D;
+            --heading-color: #1F1F1F;
+            --secondary-text: #777777;
+            --border-color: #E5E7EB;
+            
+            /* Tajweed Rule Colors */
+            --ghunnah-color: rgba(255, 127, 127, 0.9);
+            --idghaam-color: rgba(152, 251, 152, 0.9);
+            --ikhfa-color: rgba(221, 160, 221, 0.9);
+            --qalqalah-color: rgba(135, 206, 235, 0.9);
+            --iqlab-color: rgba(255, 182, 193, 0.9);
+            --idghaam-shafawi-color: rgba(240, 230, 140, 0.9);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #D4AF37;
+            --background-color: #121212;
+            --card-background: #2C1F14;
+            --text-color: #F3F4F6;
+            --heading-color: #FFFFFF;
+            --secondary-text: #A0A0A0;
+            --border-color: #2A2118;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        /* Navigation styles */
+        .nav-trigger {
+            display: none;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-background);
+            z-index: 999;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(25px);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 2px solid transparent;
+            background: 
+                linear-gradient(var(--card-background), var(--card-background)) padding-box,
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+        }
+
+        .top-nav.scrolled {
+            transform: translateY(0);
+        }
+
+        .top-nav.hidden {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            height: 3.25rem;
+        }
+
+        .nav-logo {
+            height: 52px;
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .nav-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Desktop-only hover navigation */
+        @media (min-width: 1024px) {
+            .nav-trigger {
+                display: block;
+            }
+
+            .top-nav {
+                background: transparent;
+                border-bottom: none;
+            }
+
+            .nav-trigger:hover + .top-nav,
+            .top-nav:hover {
+                transform: translateY(25px);
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        /* Mobile navigation styles */
+        @media (max-width: 1023px) {
+            .nav-content {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .content-wrapper {
+                padding-top: 5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .nav-content {
+                padding: 0.3rem 1rem;
+                height: 3rem;
+            }
+            .nav-logo {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .nav-content {
+                padding: 1rem;
+            }
+            .nav-logo {
+                height: 32px;
+            }
+        }
+
+        /* Theme toggle switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--background-color);
+            transition: .4s;
+            border-radius: 30px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 2px;
+            background-color: var(--primary-color);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        /* Main content styles */
+        .content-wrapper {
+            padding-top: 80px; /* Space for fixed navbar */
+        }
+
+        .intro {
+            text-align: left;
+            padding: 6rem 2rem;
+            background: var(--card-background);
+            margin-bottom: 3rem;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-content {
+            max-width: 60%;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            transform: translateX(-100%);
+        }
+
+        .hadith-quote {
+            margin: 2rem 0;
+            padding: 2rem;
+            border-left: 4px solid var(--primary-color);
+            background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
+            border-radius: 8px;
+        }
+
+        .hadith-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+            color: var(--heading-color);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .hadith-translation {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .hadith-source {
+            font-size: 0.9rem;
+            color: var(--secondary-text);
+            text-align: right;
+        }
+
+        .intro-image {
+            position: absolute;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30%;
+            height: 70%;
+            z-index: 1;
+            overflow: visible;
+            opacity: 0;
+            padding: 20px;
+        }
+
+        .intro-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            opacity: 0.8;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .intro h1 {
+            color: var(--heading-color);
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .intro .arabic-title {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .intro p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--secondary-text);
+            margin: 0;
+        }
+
+        .rule-section {
+            padding: 4rem 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+            min-height: 45vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .rule-content {
+            max-width: 800px;
+            margin: 0;
+            padding-left: 4rem;
+            position: relative;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .rule-content h2,
+        .rule-content .arabic-title,
+        .rule-content p,
+        .rule-content .arabic-example {
+            opacity: 0;
+            transform: translateX(-400px);
+            transition: all 1s ease-in-out;
+            will-change: transform, opacity;
+        }
+
+        .rule-section.visible .rule-content h2 {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0s;
+        }
+
+        .rule-section.visible .rule-content .arabic-title {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.2s;
+        }
+
+        .rule-section.visible .rule-content p {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.4s;
+        }
+
+        .rule-section.visible .rule-content .arabic-example {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.6s;
+        }
+
+        .rule-section:not(.visible) .rule-content h2 {
+            transition-delay: 0.6s;
+        }
+
+        .rule-section:not(.visible) .rule-content .arabic-title {
+            transition-delay: 0.4s;
+        }
+
+        .rule-section:not(.visible) .rule-content p {
+            transition-delay: 0.2s;
+        }
+
+        .rule-section:not(.visible) .rule-content .arabic-example {
+            transition-delay: 0s;
+        }
+
+        .rule-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--heading-color);
+        }
+
+        .rule-section .arabic-title {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--heading-color);
+        }
+
+        .rule-section p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .rule-section .arabic-example {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            margin: 1.5rem 0;
+            direction: rtl;
+            color: var(--heading-color);
+        }
+
+        /* Rule-specific backgrounds */
+        .ghunnah { background-color: var(--ghunnah-color); }
+        .idghaam { background-color: var(--idghaam-color); }
+        .ikhfa { background-color: var(--ikhfa-color); }
+        .qalqalah { background-color: var(--qalqalah-color); }
+        .iqlab { background-color: var(--iqlab-color); }
+        .idghaam-shafawi { background-color: var(--idghaam-shafawi-color); }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .intro-content {
+                max-width: 65%;
+            }
+
+            .intro-image {
+                width: 30%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .intro {
+                flex-direction: column;
+                text-align: center;
+                padding: 4rem 1.5rem;
+            }
+
+            .intro-content {
+                max-width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .intro-image {
+                position: relative;
+                width: 70%;
+                height: 250px;
+                margin: 2rem auto;
+                transform: none;
+                top: auto;
+                right: auto;
+            }
+
+            .rule-content {
+                padding-left: 0;
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+
+        /* Animation classes */
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%) translateY(-50%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0) translateY(-50%);
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .intro.visible .intro-content {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        .intro.visible .intro-image {
+            animation: slideInRight 1s ease-out forwards;
+        }
+
+        /* Make sure the floating animation continues after the slide-in */
+        .intro.visible .intro-image img {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-hover-area"></div>
+    <nav class="top-nav">
+        <div class="nav-content">
+            <a href="/" class="nav-logo-link">
+                <img src="/static/images/logo1.png" alt="Tajweed Bot Logo" class="nav-logo">
+            </a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/demo" class="nav-link">Quran</a>
+                <a href="/tajweed-rules" class="nav-link">Tajweed</a>
+                <a href="/#pricing" class="nav-link">Pricing</a>
+            </div>
+            <label class="switch" title="Toggle dark mode">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+        <div class="intro">
+            <div class="intro-content">
+                <h1>Tajweed Rules</h1>
+                <div class="arabic-title">أَحْكَام التَّجْوِيد</div>
+                <p>Tajweed is the set of rules governing the proper pronunciation of the Quran. These rules help ensure that the Quran is recited as closely as possible to how it was revealed to Prophet Muhammad ﷺ. The Qur'an flows like water — smooth and full of life. Tajweed is the subtle bed beneath, guiding each sound with grace and purpose.</p>
+                
+                <div class="hadith-quote">
+                    <div class="hadith-text">خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ</div>
+                    <div class="hadith-translation">"The best among you are those who learn the Quran and teach it to others."</div>
+                    <div class="hadith-source">Sahih al-Bukhari 5027</div>
+                </div>
+            </div>
+            <div class="intro-image">
+                <img src="/static/images/Waterfall.png" alt="Waterfall Background">
+            </div>
+        </div>
+
+        <section class="rule-section ghunnah">
+            <div class="rule-content">
+                <h2>Ghunnah</h2>
+                <div class="arabic-title">الغُنَّة</div>
+                <p>Ghunnah is the nasalization that occurs with the letters ن and م. It must be held for 2 counts when these letters have a shaddah (ّ).</p>
+                <div class="arabic-example">إِنَّ ، ثُمَّ</div>
+            </div>
+        </section>
+
+        <section class="rule-section idghaam">
+            <div class="rule-content">
+                <h2>Idghaam</h2>
+                <div class="arabic-title">الإدغام</div>
+                <p>When a noon sakinah (نْ) or tanween meets certain letters, it merges into the following letter. The letters of Idghaam are ي ر م ل و ن.</p>
+                <div class="arabic-example">مِنْ رَّبِّهِمْ</div>
+            </div>
+        </section>
+
+        <section class="rule-section ikhfa">
+            <div class="rule-content">
+                <h2>Ikhfa</h2>
+                <div class="arabic-title">الإخفاء</div>
+                <p>When a noon sakinah (نْ) or tanween is followed by any of the 15 Ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
+                <div class="arabic-example">مِنْ قَبْلِ</div>
+            </div>
+        </section>
+
+        <section class="rule-section qalqalah">
+            <div class="rule-content">
+                <h2>Qalqalah</h2>
+                <div class="arabic-title">القَلْقَلَة</div>
+                <p>The letters ق ط ب ج د when having a sukoon produce an echo-like sound. This is more pronounced when stopping on these letters.</p>
+                <div class="arabic-example">قُلْ أَعُوذُ</div>
+            </div>
+        </section>
+
+        <section class="rule-section iqlab">
+            <div class="rule-content">
+                <h2>Iqlab</h2>
+                <div class="arabic-title">الإقْلاب</div>
+                <p>When noon sakinah (نْ) or tanween is followed by the letter ب, the noon sound is converted to a meem sound with ghunnah.</p>
+                <div class="arabic-example">مِنْ بَعْدِ</div>
+            </div>
+        </section>
+
+        <section class="rule-section idghaam-shafawi">
+            <div class="rule-content">
+                <h2>Idghaam Shafawi</h2>
+                <div class="arabic-title">الإدغام الشَّفَوي</div>
+                <p>When a meem sakinah (مْ) meets another meem, it merges into it with a ghunnah sound held for 2 counts.</p>
+                <div class="arabic-example">لَكُمْ مَا</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            
+            // Set initial state based on saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            }
+            
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+
+        // Add scroll behavior for navbar
+        document.addEventListener('DOMContentLoaded', () => {
+            const navbar = document.querySelector('.top-nav');
+            let lastScrollTop = 0;
+            
+            // Handle pricing link clicks
+            document.querySelectorAll('a[href="#pricing"], a[href="/#pricing"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = '/#pricing';
+                });
+            });
+            
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // At the top of the page
+                if (scrollTop < 50) {
+                    navbar.classList.remove('scrolled', 'hidden');
+                    return;
+                }
+                
+                // Scrolling down
+                if (scrollTop > lastScrollTop) {
+                    navbar.classList.add('hidden');
+                    navbar.classList.remove('scrolled');
+                }
+                // Scrolling up
+                else {
+                    navbar.classList.remove('hidden');
+                    navbar.classList.add('scrolled');
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const intro = document.querySelector('.intro');
+            const ruleSections = document.querySelectorAll('.rule-section');
+            
+            // Add visible class to intro immediately
+            setTimeout(() => {
+                intro.classList.add('visible');
+            }, 100);
+
+            // Create observer for rule sections
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        requestAnimationFrame(() => {
+                            entry.target.classList.add('visible');
+                        });
+                    } else {
+                        requestAnimationFrame(() => {
+                            entry.target.classList.remove('visible');
+                        });
+                    }
+                });
+            }, {
+                threshold: 0.5,
+                rootMargin: '-40% 0px -10% 0px'
+            });
+
+            // Observe each rule section
+            ruleSections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html> 

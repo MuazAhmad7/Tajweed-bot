@@ -80,6 +80,10 @@ def index():
 def demo():
     return render_template('index.html')
 
+@app.route('/tajweed-rules')
+def tajweed_rules():
+    return render_template('tajweed_rules.html')
+
 @sock.route('/ws')
 def handle_websocket(ws):
     print("WebSocket connection established")
