@@ -10,6 +10,7 @@
     <style>
         :root {
             --primary-color: #D4AF37;
+            --secondary-color: #C5A028;    /* Added secondary color */
             --background-color: #F5ECD9;
             --card-background: #FFFFFF;
             --text-color: #2D2D2D;
@@ -28,12 +29,54 @@
 
         [data-theme="dark"] {
             --primary-color: #D4AF37;
+            --secondary-color: #C5A028;    /* Added secondary color */
             --background-color: #121212;
             --card-background: #2C1F14;
             --text-color: #F3F4F6;
             --heading-color: #FFFFFF;
             --secondary-text: #A0A0A0;
             --border-color: #2A2118;
+        }
+
+        /* Custom Scrollbar Styles - Moved to top for higher specificity */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--background-color);
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--background-color);
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 8px;
+            border: 3px solid var(--background-color);
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        /* Dark mode scrollbar adjustments */
+        [data-theme="dark"] ::-webkit-scrollbar-track {
+            background: var(--background-color);
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: 3px solid var(--background-color);
+        }
+
+        [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
         }
 
         body {
