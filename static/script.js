@@ -507,9 +507,23 @@ async function startRecording(ayah) {
             if (ws) {
                 ws.close();
             }
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-            console.log('Sending complete audio, size:', audioBlob.size);
-            await sendAudioToServer(audioBlob);
+            // Convert the recorded audioChunks (WebM/Opus) to WAV
+            const webmBlob = new Blob(audioChunks, { type: 'audio/webm' });
+            const arrayBuffer = await webmBlob.arrayBuffer();
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            let audioBuffer;
+            try {
+                audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+            } catch (err) {
+                console.error('Unable to decode audio data:', err);
+                showToast('Error decoding audio. Please try again.');
+                return;
+            }
+            // Now convert AudioBuffer to WAV
+            const wavData = audioBufferToWav(audioBuffer);
+            const wavBlob = new Blob([wavData], { type: 'audio/wav' });
+            // Send the real WAV blob to the backend
+            await sendAudioToServer(wavBlob);
         };
 
         // Handle recording errors
@@ -626,20 +640,22 @@ async function sendAudioToServer(audioBlob) {
     const formData = new FormData();
     formData.append('audio', audioBlob, 'recording.wav');
 
+    // Show loading state for Madd feedback
+    showMaddLoadingCard();
+
     try {
+        // 1. Send to /analyze (existing Tajweed feedback)
         const response = await fetch('/analyze', {
             method: 'POST',
             body: formData
         });
-
         const result = await response.json();
         console.log('Server response:', result);
-        
+        let tajweedFeedbackHtml = '';
         if (result.success) {
-            const feedbackHtml = result.feedback.map(message => {
+            tajweedFeedbackHtml = result.feedback.map(message => {
                 let messageClass = 'feedback-message ';
                 let icon = '';
-                
                 if (message.startsWith('✅')) {
                     messageClass += 'feedback-success';
                     icon = '✅';
@@ -653,7 +669,6 @@ async function sendAudioToServer(audioBlob) {
                     messageClass += 'feedback-error';
                     icon = '❌';
                 }
-                
                 return `
                     <div class="${messageClass}">
                         <span class="feedback-icon">${icon}</span>
@@ -661,33 +676,56 @@ async function sendAudioToServer(audioBlob) {
                     </div>
                 `;
             }).join('');
-            
-            document.getElementById('feedback').innerHTML = `
-                <div class="feedback-section">
-                    <div class="feedback-card">
-                        <h3>Recorded Recitation</h3>
-                        <p dir="rtl" class="arabic">${result.transcription}</p>
-                    </div>
-                    <div class="feedback-card">
-                        <h3>Tajweed Feedback</h3>
-                        <div class="feedback-messages">
-                            ${feedbackHtml}
-                        </div>
-                    </div>
-                </div>
-            `;
         } else {
-            document.getElementById('feedback').innerHTML = `
-                <div class="feedback-section">
-                    <div class="feedback-card">
-                        <div class="feedback-message feedback-error">
-                            <span class="feedback-icon">❌</span>
-                            <span>Error: ${result.error}</span>
-                        </div>
-                    </div>
+            tajweedFeedbackHtml = `
+                <div class="feedback-message feedback-error">
+                    <span class="feedback-icon">❌</span>
+                    <span>Error: ${result.error}</span>
                 </div>
             `;
         }
+
+        // 2. Send to /madd-audio-analysis (Madd feedback)
+        const maddFormData = new FormData();
+        maddFormData.append('audio', audioBlob, 'recording.wav');
+        showMaddLoadingCard();
+        let maddResults = null;
+        let maddDebug = null;
+        let maddStatus = 'analyzing';
+        try {
+            const maddResponse = await fetch('/madd-audio-analysis', {
+                method: 'POST',
+                body: maddFormData
+            });
+            const maddJson = await maddResponse.json();
+            maddResults = maddJson.results || [];
+            maddDebug = maddJson.debug || [];
+            maddStatus = maddJson.status;
+        } catch (err) {
+            maddResults = [];
+            maddDebug = [String(err)];
+            maddStatus = 'error';
+        }
+        renderMaddFeedbackCard(maddResults, maddDebug, maddStatus);
+
+        // 3. Render all feedback cards
+        document.getElementById('feedback').innerHTML = `
+            <div class="feedback-section">
+                <div class="feedback-card">
+                    <h3>Recorded Recitation</h3>
+                    <p dir="rtl" class="arabic">${result.transcription || ''}</p>
+                </div>
+                <div class="feedback-card">
+                    <h3>Tajweed Feedback</h3>
+                    <div class="feedback-messages">
+                        ${tajweedFeedbackHtml}
+                    </div>
+                </div>
+                <div id="madd-feedback-card"></div>
+                <div id="madd-debug-box"></div>
+            </div>
+        `;
+        renderMaddFeedbackCard(maddResults, maddDebug, maddStatus);
     } catch (error) {
         console.error('Error sending audio:', error);
         document.getElementById('feedback').innerHTML = `
@@ -701,6 +739,81 @@ async function sendAudioToServer(audioBlob) {
             </div>
         `;
     }
+}
+
+function showMaddLoadingCard() {
+    const maddCard = document.getElementById('madd-feedback-card');
+    if (maddCard) {
+        maddCard.innerHTML = `
+            <div class="feedback-card madd-card">
+                <h3>Madd (Prolongation) Feedback</h3>
+                <p class="processing-message">Analyzing Madd... <span class="dots"></span></p>
+            </div>
+        `;
+    }
+    const debugBox = document.getElementById('madd-debug-box');
+    if (debugBox) {
+        debugBox.innerHTML = '';
+    }
+}
+
+function renderMaddFeedbackCard(maddResults, maddDebug, maddStatus) {
+    const maddCard = document.getElementById('madd-feedback-card');
+    const debugBox = document.getElementById('madd-debug-box');
+    if (!maddCard) return;
+    if (maddStatus === 'analyzing') {
+        showMaddLoadingCard();
+        return;
+    }
+    if (maddStatus === 'error') {
+        maddCard.innerHTML = `
+            <div class="feedback-card madd-card">
+                <h3>Madd (Prolongation) Feedback</h3>
+                <div class="feedback-message feedback-error">
+                    <span class="feedback-icon">❌</span>
+                    <span>Error analyzing Madd</span>
+                </div>
+            </div>
+        `;
+        debugBox.innerHTML = '';
+        return;
+    }
+    if (!maddResults || maddResults.length === 0) {
+        maddCard.innerHTML = `
+            <div class="feedback-card madd-card">
+                <h3>Madd (Prolongation) Feedback</h3>
+                <div class="feedback-message feedback-info">
+                    <span class="feedback-icon">ℹ️</span>
+                    <span>No Madd detected in this ayah.</span>
+                </div>
+            </div>
+        `;
+    } else {
+        maddCard.innerHTML = `
+            <div class="feedback-card madd-card">
+                <h3>Madd (Prolongation) Feedback</h3>
+                <div class="madd-results">
+                    ${maddResults.map(madd => `
+                        <div class="madd-row">
+                            <span class="madd-icon">${madd.madd_detected ? '✅' : '❌'}</span>
+                            <span class="madd-word">${madd.word}</span>
+                            <span class="madd-letter">(${madd.letter})</span>
+                            <span class="madd-type">${madd.type}</span>
+                            <span class="madd-expected">${madd.text_expected ? '<span class="madd-expected-yes">Expected</span>' : '<span class="madd-expected-no">Not Expected</span>'}</span>
+                            <span class="madd-feedback-msg">${madd.feedback}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    // Debug box (collapsible)
+    debugBox.innerHTML = `
+        <div class="madd-debug-container">
+            <button class="madd-debug-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Show Madd Debug JSON</button>
+            <pre class="madd-debug-json">${JSON.stringify(maddDebug, null, 2)}</pre>
+        </div>
+    `;
 }
 
 // Show toast message function

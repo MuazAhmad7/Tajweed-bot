@@ -17,6 +17,7 @@ import gc
 import psutil
 import logging
 from datetime import datetime
+from utils.tajweed_checker import normalize_arabic_text, ARABIC_MADD_LETTERS, SURAH_FATIHA
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -384,6 +385,161 @@ def switch_model(model_name):
         return jsonify({"status": "success", "message": f"Switched to {model_name} model"})
     print(f'DEBUG: Invalid model name: {model_name}')
     return jsonify({"status": "error", "message": "Invalid model name"})
+
+def get_audio_duration_librosa(audio_path):
+    """Get duration of audio file in seconds using librosa, with robust fallbacks."""
+    try:
+        import librosa
+        duration = librosa.get_duration(path=audio_path)
+        if duration > 0:
+            return duration
+    except Exception as e:
+        print(f"Librosa failed: {e}")
+    # Fallback to soundfile
+    try:
+        import soundfile as sf
+        f = sf.SoundFile(audio_path)
+        duration = len(f) / f.samplerate
+        return duration
+    except Exception as e:
+        print(f"SoundFile failed: {e}")
+    # Fallback to wave
+    try:
+        import wave
+        with wave.open(audio_path, 'rb') as wf:
+            frames = wf.getnframes()
+            rate = wf.getframerate()
+            duration = frames / float(rate)
+            return duration
+    except Exception as e:
+        print(f"Wave failed: {e}")
+    return 0.0
+
+@app.route('/madd-audio-analysis', methods=['POST'])
+def madd_audio_analysis():
+    debug_log = []
+    try:
+        # 1. Get latest audio file from upload (like /analyze)
+        if 'audio' not in request.files:
+            error = 'No audio file provided'
+            debug_log.append(error)
+            return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 400
+        audio_file = request.files['audio']
+        if audio_file.filename == '':
+            error = 'No selected file'
+            debug_log.append(error)
+            return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 400
+        filename = Path(audio_file.filename)
+        save_path = UPLOAD_FOLDER / filename
+        audio_file.save(save_path)
+        debug_log.append(f'Saved audio file to {save_path}')
+
+        # 2. Transcribe
+        transcription = transcribe_audio(str(save_path))
+        debug_log.append(f'Transcription: {transcription}')
+        if not transcription:
+            error = 'Transcription failed.'
+            debug_log.append(error)
+            if save_path.exists():
+                save_path.unlink()
+            return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 400
+
+        # 3. Match ayah
+        ayah_number, _ = match_ayah_and_word(transcription)
+        debug_log.append(f'Matched ayah_number: {ayah_number}')
+        if ayah_number is None:
+            error = 'Could not match recitation to any ayah of Surah Al-Fatiha.'
+            debug_log.append(error)
+            if save_path.exists():
+                save_path.unlink()
+            return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 400
+
+        # 4. Get ayah text and words
+        ayah_data = SURAH_FATIHA.get(ayah_number)
+        if not ayah_data:
+            error = f'Ayah {ayah_number} not found in SURAH_FATIHA.'
+            debug_log.append(error)
+            if save_path.exists():
+                save_path.unlink()
+            return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 400
+        ayah_text = ayah_data['text']
+        words = ayah_text.split()
+        debug_log.append(f'Ayah text: {ayah_text}')
+        debug_log.append(f'Words: {words}')
+
+        # 5. Detect Madd letters in each word
+        madd_results = []
+        for word in words:
+            norm_word = normalize_arabic_text(word)
+            for letter in ARABIC_MADD_LETTERS:
+                if letter in norm_word:
+                    madd_results.append({
+                        'ayah': ayah_number + 1,  # 1-based
+                        'word': word,
+                        'letter': letter,
+                        'type': 'Madd Asli',
+                        'text_expected': True
+                    })
+        debug_log.append(f'Madd instances: {madd_results}')
+
+        # 6. Estimate durations (improved: proportional to word length)
+        audio_duration = get_audio_duration_librosa(str(save_path))
+        debug_log.append(f'Audio duration: {audio_duration:.2f}s')
+        # Split ayah text into words and get their lengths
+        word_lengths = [len(normalize_arabic_text(w)) for w in words]
+        total_length = sum(word_lengths)
+        # Assign each word a proportional duration
+        word_durations = [(l / total_length) * audio_duration if total_length > 0 else 0 for l in word_lengths]
+        debug_log.append(f'Word durations: {word_durations}')
+
+        # 7. Madd detection and feedback (use per-word duration)
+        for madd in madd_results:
+            # Find the index of the word in the ayah
+            try:
+                word_idx = words.index(madd['word'])
+            except ValueError:
+                word_idx = 0
+            this_word_duration = word_durations[word_idx] if word_idx < len(word_durations) else 0
+            if this_word_duration < 0.4:
+                madd['madd_detected'] = False
+                madd['feedback'] = f"Madd too short on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s, should be at least 0.4s)"
+            elif this_word_duration > 0.7:
+                madd['madd_detected'] = False
+                madd['feedback'] = f"Madd too long on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s, should not exceed 0.7s)"
+            else:
+                madd['madd_detected'] = True
+                madd['feedback'] = f"Madd correct on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s)"
+        debug_log.append(f"DEBUG: Madd analysis results: {madd_results}")
+        debug_log.append('Final Madd analysis complete.')
+
+        # 8. Prepare user-friendly results for frontend
+        user_friendly_results = []
+        for madd in madd_results:
+            user_friendly_results.append({
+                'ayah': madd['ayah'],
+                'word': madd['word'],
+                'letter': madd['letter'],
+                'type': madd['type'],
+                'madd_detected': madd['madd_detected'],
+                'text_expected': madd['text_expected'],
+                'feedback': madd['feedback'],
+            })
+
+        # 9. Clean up audio file only after all processing
+        if save_path.exists():
+            save_path.unlink()
+            debug_log.append(f'Deleted audio file {save_path}')
+
+        return jsonify({
+            'status': 'done',
+            'results': user_friendly_results,
+            'debug': debug_log
+        })
+
+    except Exception as e:
+        error = f'Internal error: {str(e)}'
+        debug_log.append(error)
+        return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 500
 
 if __name__ == '__main__':
     app.run(debug=True) 
