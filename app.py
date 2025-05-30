@@ -15,6 +15,8 @@ from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
 import librosa
 import gc
 import psutil
+import logging
+from datetime import datetime
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -40,6 +42,21 @@ FATIHA_VERSES = {
     5: ["ٱهْدِنَا", "ٱلصِّرَٰطَ", "ٱلْمُسْتَقِيمَ"],
     6: ["صِرَٰطَ", "ٱلَّذِينَ", "أَنْعَمْتَ", "عَلَيْهِمْ", "غَيْرِ", "ٱلْمَغْضُوبِ", "عَلَيْهِمْ", "وَلَا", "ٱلضَّآلِّينَ"]
 }
+
+# Set up request logging to a file
+REQUEST_LOG_FILE = 'request_log.txt'
+request_logger = logging.getLogger('request_logger')
+request_logger.setLevel(logging.INFO)
+file_handler = logging.FileHandler(REQUEST_LOG_FILE)
+file_handler.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
+if not request_logger.hasHandlers():
+    request_logger.addHandler(file_handler)
+
+def log_request(req):
+    try:
+        request_logger.info(f"REQUEST: {req.method} {req.path}\n  args: {dict(req.args)}\n  form: {dict(req.form)}\n  json: {req.get_json(silent=True)}\n  headers: {dict(req.headers)}")
+    except Exception as e:
+        request_logger.error(f"Failed to log request: {e}")
 
 def transcribe_audio(audio_file):
     """Transcribe audio using Whisper model, loading model only when needed to save memory."""
@@ -74,19 +91,26 @@ def transcribe_audio(audio_file):
 
 @app.route('/')
 def index():
+    log_request(request)
+    print('DEBUG: Handling / route')
     return render_template('landing.html')
 
 @app.route('/demo')
 def demo():
+    log_request(request)
+    print('DEBUG: Handling /demo route')
     return render_template('index.html')
 
 @app.route('/tajweed-rules')
 def tajweed_rules():
+    log_request(request)
+    print('DEBUG: Handling /tajweed-rules route')
     return render_template('tajweed_rules.html')
 
 @sock.route('/ws')
 def handle_websocket(ws):
     print("WebSocket connection established")
+    request_logger.info("WEBSOCKET: /ws connection established")
     chunk_counter = 0
     temp_wav = None
     target_ayah = None  # Store the target ayah number
@@ -97,6 +121,7 @@ def handle_websocket(ws):
             message = ws.receive()
             if message is None:
                 print("WebSocket closed by client.")
+                request_logger.info("WEBSOCKET: closed by client")
                 break
             # Check if this is a configuration or done message
             if isinstance(message, str):
@@ -105,13 +130,16 @@ def handle_websocket(ws):
                     if 'target_ayah' in config:
                         target_ayah = config['target_ayah']
                         print(f"Received target ayah: {target_ayah}")
+                        request_logger.info(f"WEBSOCKET: Received target ayah: {target_ayah}")
                         continue
                     if config.get('type') == 'done':
                         print("Received done message from client.")
+                        request_logger.info("WEBSOCKET: Received done message from client.")
                         done = True
                         continue
                 except json.JSONDecodeError:
                     print("Invalid JSON message received")
+                    request_logger.info("WEBSOCKET: Invalid JSON message received")
                     continue
             # Save audio chunk in memory
             audio_chunks.append(message)
@@ -125,6 +153,7 @@ def handle_websocket(ws):
                     for chunk in audio_chunks:
                         f.write(chunk)
                 print(f"Saved full audio to {abs_temp_wav}")
+                request_logger.info(f"WEBSOCKET: Saved full audio to {abs_temp_wav}")
                 # Transcription logic (same as before)
                 if target_ayah == "6":
                     try:
@@ -135,6 +164,7 @@ def handle_websocket(ws):
                             audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
                     except Exception as sf_error:
                         print(f"Direct audio processing failed: {sf_error}")
+                        request_logger.info(f"WEBSOCKET: Direct audio processing failed: {sf_error}")
                         import wave
                         with wave.open(str(abs_temp_wav), 'rb') as wf:
                             audio = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16)
@@ -150,12 +180,14 @@ def handle_websocket(ws):
                 else:
                     transcribed_text = transcribe_audio(str(abs_temp_wav))
                 print(f"Transcription result: {transcribed_text}")
+                request_logger.info(f"WEBSOCKET: Transcription result: {transcribed_text}")
                 if target_ayah is not None:
                     ayah_number = int(target_ayah)
                     word_index = 0
                 else:
                     ayah_number, word_index = match_ayah_and_word(transcribed_text)
                 print(f"Using ayah {ayah_number}, word {word_index}")
+                request_logger.info(f"WEBSOCKET: Using ayah {ayah_number}, word {word_index}")
                 if ayah_number is not None:
                     feedback = analyze_ayah(ayah_number, transcribed_text)
                 else:
@@ -172,10 +204,12 @@ def handle_websocket(ws):
                 }
                 ws.send(json.dumps(response))
                 print("Sent response to client")
+                request_logger.info("WEBSOCKET: Sent response to client")
             except Exception as e:
                 print(f"Error processing audio: {e}")
                 import traceback
                 print(f"Error trace: {traceback.format_exc()}")
+                request_logger.error(f"WEBSOCKET: Error processing audio: {e}\n{traceback.format_exc()}")
                 ws.send(json.dumps({
                     'type': 'error',
                     'message': f'Processing failed: {str(e)}'
@@ -187,30 +221,38 @@ def handle_websocket(ws):
         print(f"WebSocket error: {e}")
         import traceback
         print(f"WebSocket error trace: {traceback.format_exc()}")
+        request_logger.error(f"WEBSOCKET: error: {e}\n{traceback.format_exc()}")
     finally:
         if temp_wav and temp_wav.exists():
             temp_wav.unlink()
 
 @app.route('/analyze', methods=['POST'])
 def analyze_audio():
+    log_request(request)
+    print('DEBUG: Handling /analyze route')
     if 'audio' not in request.files:
+        print('DEBUG: No audio file provided')
         return jsonify({'error': 'No audio file provided'}), 400
     
     audio_file = request.files['audio']
     if audio_file.filename == '':
+        print('DEBUG: No selected file')
         return jsonify({'error': 'No selected file'}), 400
 
     # Save the audio file
     filename = Path(audio_file.filename)
     save_path = UPLOAD_FOLDER / filename
     audio_file.save(save_path)
+    print(f'DEBUG: Saved audio file to {save_path}')
 
     try:
         # Transcribe using our new function
         transcription = transcribe_audio(str(save_path))
+        print(f'DEBUG: Transcription: {transcription}')
         
         # Match transcribed text with Fatiha verses
         ayah_number, word_index = match_ayah_and_word(transcription)
+        print(f'DEBUG: Matched ayah_number: {ayah_number}, word_index: {word_index}')
         
         # Analyze using our Tajweed checker
         if ayah_number is not None:
@@ -220,6 +262,7 @@ def analyze_audio():
                 'type': 'error',
                 'message': "Could not match recitation to any ayah of Surah Al-Fatiha"
             }]
+        print(f'DEBUG: Feedback: {feedback}')
         
         return jsonify({
             'success': True,
@@ -229,22 +272,30 @@ def analyze_audio():
         })
 
     except Exception as e:
+        print(f'DEBUG: Exception: {e}')
         return jsonify({'error': str(e)}), 500
 
     finally:
         # Clean up the audio file
         if save_path.exists():
             save_path.unlink()
+            print(f'DEBUG: Deleted audio file {save_path}')
 
 @app.route('/latest-recording')
 def get_latest_recording():
+    log_request(request)
+    print('DEBUG: Handling /latest-recording route')
     global latest_recording
     if latest_recording and latest_recording.exists():
+        print(f'DEBUG: Returning latest recording {latest_recording}')
         return send_file(str(latest_recording), mimetype='audio/wav')
+    print('DEBUG: No recording available')
     return "No recording available", 404
 
 @app.route('/analyze-dataset', methods=['GET'])
 def analyze_dataset():
+    log_request(request)
+    print('DEBUG: Handling /analyze-dataset route')
     # Fix the path to use the exact folder name with space
     current_dir = Path(__file__).parent
     dataset_path = current_dir / 'tajweed dataset' / 'audio'
@@ -255,6 +306,7 @@ def analyze_dataset():
         metadata_file = dataset_path / 'fatiha_metadata_final.csv'
         print(f"Trying to open metadata file: {metadata_file}")
         if not metadata_file.exists():
+            print(f"DEBUG: Metadata file not found at {metadata_file}")
             return jsonify({'error': f'Metadata file not found at {metadata_file}'}), 404
             
         # Read the metadata file
@@ -262,6 +314,7 @@ def analyze_dataset():
             import csv
             reader = csv.DictReader(f)
             metadata = list(reader)
+        print(f"DEBUG: Loaded metadata with {len(metadata)} entries")
         
         for entry in metadata:
             audio_file = dataset_path / entry['file'].replace('.wav', '.mp3')
@@ -274,12 +327,15 @@ def analyze_dataset():
                 # Transcribe the audio
                 result = model.transcribe(str(audio_file), language="ar")
                 transcription = result['text'].strip()
+                print(f"DEBUG: Transcription for {audio_file}: {transcription}")
                 
                 # Get the ayah number from metadata
                 ayah_number = int(entry['ayah']) - 1  # Convert to 0-based index
+                print(f"DEBUG: Ayah number for {audio_file}: {ayah_number}")
                 
                 # Analyze using our Tajweed checker
                 feedback = analyze_ayah(ayah_number, transcription)
+                print(f"DEBUG: Feedback for {audio_file}: {feedback}")
                 
                 results.append({
                     'reciter': entry['reciter'],
@@ -296,7 +352,7 @@ def analyze_dataset():
                     'ayah': entry['ayah'],
                     'error': str(e)
                 })
-        
+        print(f"DEBUG: Finished processing dataset")
         return jsonify(results)
     except Exception as e:
         print(f"Error in analyze_dataset: {str(e)}")
@@ -304,21 +360,29 @@ def analyze_dataset():
 
 @app.route('/reference-audio/<reciter>/<ayah>')
 def get_reference_audio(reciter, ayah):
+    log_request(request)
+    print(f'DEBUG: Handling /reference-audio/{reciter}/{ayah} route')
     # Construct the audio file path
     audio_file = Path(__file__).parent / 'tajweed dataset' / 'audio' / f'{reciter}_00100{ayah}.mp3'
     
     if not audio_file.exists():
+        print(f'DEBUG: Audio file not found: {audio_file}')
         return "Audio file not found", 404
         
+    print(f'DEBUG: Returning audio file: {audio_file}')
     return send_file(str(audio_file), mimetype='audio/mpeg')
 
 @app.route('/switch_model/<model_name>')
 def switch_model(model_name):
+    log_request(request)
+    print(f'DEBUG: Handling /switch_model/{model_name} route')
     """Switch between ASR models"""
     global CURRENT_MODEL
     if model_name in ["whisper", "wav2vec2"]:
         CURRENT_MODEL = model_name
+        print(f'DEBUG: Switched to model {model_name}')
         return jsonify({"status": "success", "message": f"Switched to {model_name} model"})
+    print(f'DEBUG: Invalid model name: {model_name}')
     return jsonify({"status": "error", "message": "Invalid model name"})
 
 if __name__ == '__main__':
