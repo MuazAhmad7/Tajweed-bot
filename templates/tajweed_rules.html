@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tajweed Rules - AI Tajweed Teacher</title>
+    <title>Tajweed Rules - Iqra AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -154,13 +154,37 @@
             font-size: 1.1rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 0.5rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
+            position: relative;
         }
 
         .nav-link:hover {
             color: var(--primary-color);
-            transform: translateY(-1px);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Desktop-only hover navigation */
@@ -759,7 +783,7 @@
     <nav class="top-nav">
         <div class="nav-content">
             <a href="/" class="nav-logo-link">
-                <img src="/static/images/logo1.png" alt="Tajweed Bot Logo" class="nav-logo">
+                <img src="/static/images/logo1.png" alt="Iqra AI Logo" class="nav-logo">
             </a>
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>

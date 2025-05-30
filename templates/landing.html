@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="format-detection" content="telephone=no">
-    <title>AI Tajweed Teacher - Learn Quran with AI</title>
+    <title>Iqra AI - Learn Quran with AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -509,13 +509,37 @@
             font-size: 1.1rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 0.5rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
+            position: relative;
         }
 
         .nav-link:hover {
             color: var(--primary-color);
-            transform: translateY(-1px);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         /* Desktop-only hover navigation */
@@ -1374,7 +1398,7 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero">
-                        <h1>AI Tajweed Teacher</h1>
+                        <h1>Iqra AI</h1>
                         <div class="arabic-title">تَعَلَّم التَّجْوِيد</div>
                         <p>Master Quranic recitation with real-time AI feedback. Practice Tajweed rules while reciting Surah Al-Fatiha and receive instant guidance on your pronunciation.</p>
                         <a href="/demo" class="cta-button">Try Surah Al-Fatiha Demo</a>
@@ -1404,8 +1428,8 @@
                     </div>
                 </div>
                 <div class="hero-image">
-                    <img src="/static/images/landing2.png" alt="Tajweed Bot Interface Light Mode" class="light-mode-img">
-                    <img src="/static/images/landing1.png" alt="Tajweed Bot Interface Dark Mode" class="dark-mode-img">
+                    <img src="/static/images/landing2.png" alt="Iqra AI Interface Light Mode" class="light-mode-img">
+                    <img src="/static/images/landing1.png" alt="Iqra AI Interface Dark Mode" class="dark-mode-img">
                 </div>
             </div>
         </div>
@@ -1414,7 +1438,7 @@
         <section id="pricing" class="pricing-section">
             <div class="pricing-wrapper">
                 <div class="pricing-left">
-                    <img src="/static/images/logo1.png" alt="Tajweed Bot Logo" class="pricing-logo">
+                    <img src="/static/images/logo1.png" alt="Iqra AI Logo" class="pricing-logo">
                     <div class="pricing-header">
                         <h2>Choose Your Plan</h2>
                         <p>Select the perfect plan for your Quranic learning journey with our carefully crafted options.</p>
@@ -1468,7 +1492,7 @@
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
-                <img src="/static/images/logo1.png" alt="Tajweed Bot Logo" class="footer-logo">
+                <img src="/static/images/logo1.png" alt="Iqra AI Logo" class="footer-logo">
                 <p>Master Quranic recitation with AI-powered feedback and personalized learning.</p>
                 <div class="social-links">
                     <a href="#" title="Twitter">𝕏</a>

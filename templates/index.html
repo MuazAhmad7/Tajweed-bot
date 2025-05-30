@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Tajweed Teacher - Quran Practice</title>
+    <title>Iqra AI - Quran Practice</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -16,12 +16,12 @@
         }
 
         [data-theme="dark"] {
-            --background-color: #1C1410; /* Deep, rich brown background */
-            --card-background: #2C1F14; /* Slightly lighter brown for cards */
-            --text-color: #E8D5C4; /* Warm, light brown text */
-            --border-color: #3D2B1F; /* Medium brown for borders */
+            --background-color: #121212; /* Dark brown background */
+            --card-background: #121212; /* Same dark brown for cards */
+            --text-color: #F3F4F6; /* Light text for better contrast */
+            --border-color: #2A2118; /* Darker brown for borders */
             --header-bg: transparent;
-            --header-text: #E8D5C4;
+            --header-text: #FFFFFF;
         }
 
         /* Enhance card contrast in dark mode */
@@ -29,20 +29,26 @@
         [data-theme="dark"] .feedback-card,
         [data-theme="dark"] .tajweed-legend {
             background: var(--card-background);
-            border: 2px solid var(--border-color);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            border: 2px solid transparent;
+            background: 
+                linear-gradient(var(--card-background), var(--card-background)) padding-box,
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
+            box-shadow: 0 4px 6px var(--gold-shadow);
         }
 
         [data-theme="dark"] .options-content {
             background: var(--card-background);
-            border: 1px solid var(--border-color);
-        }
-
-        [data-theme="dark"] .nav-link:hover {
-            background-color: rgba(232, 213, 196, 0.1); /* Subtle hover effect */
+            border: 2px solid transparent;
+            background: 
+                linear-gradient(var(--card-background), var(--card-background)) padding-box,
+                linear-gradient(135deg, var(--primary-color), var(--secondary-color)) border-box;
         }
 
         /* Navigation styles */
+        .nav-trigger {
+            display: none;
+        }
+
         .top-nav {
             position: fixed;
             top: 0;
@@ -53,7 +59,7 @@
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 1;
             visibility: visible;
-            transform: translateY(0) !important;
+            transform: translateY(25px);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-bottom: 2px solid transparent;
@@ -63,11 +69,11 @@
         }
 
         .top-nav.scrolled {
-            transform: translateY(0) !important;
+            transform: translateY(0);
         }
 
         .top-nav.hidden {
-            transform: translateY(-100%) !important;
+            transform: translateY(-100%);
             opacity: 0;
         }
 
@@ -105,13 +111,86 @@
             font-size: 1.1rem;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 0.5rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 6px;
+            position: relative;
         }
 
         .nav-link:hover {
             color: var(--primary-color);
-            transform: translateY(-1px);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        [data-theme="dark"] .nav-link:hover {
+            color: var(--primary-color);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        /* Desktop-only hover navigation */
+        @media (min-width: 1024px) {
+            .nav-trigger {
+                display: block;
+            }
+
+            .top-nav {
+                background: transparent;
+                border-bottom: none;
+            }
+
+            .nav-trigger:hover + .top-nav,
+            .top-nav:hover {
+                transform: translateY(25px);
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        /* Mobile navigation styles */
+        @media (max-width: 1023px) {
+            .nav-content {
+                padding: 1.2rem 1.5rem;
+            }
+
+            .content-wrapper {
+                padding-top: 5rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .nav-content {
+                padding: 0.3rem 1rem;
+                height: 3rem;
+            }
+            .nav-logo {
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 599px) {
+            .nav-content {
+                padding: 1rem;
+            }
+            .nav-logo {
+                height: 32px;
+            }
         }
 
         /* Theme toggle switch */
@@ -179,46 +258,50 @@
             .switch {
                 font-size: 0.8rem;
             }
-            .nav-content {
-                padding: 0.3rem 1rem;
-            }
-            .nav-logo {
-                height: 40px;
-            }
-            .nav-links {
-                gap: 1rem;
-            }
-            .nav-link {
-                font-size: 1rem;
-                padding: 0.4rem 0.8rem;
-            }
         }
 
         /* Adjust content for fixed navbar */
-        .content-wrapper {
-            padding-top: 4rem;
-        }
-
         .container {
-            padding-top: 4.5rem; /* Add padding to account for fixed navbar */
+            padding-top: 5rem;
             max-width: 1200px;
             margin: 0 auto;
             padding-left: 2rem;
             padding-right: 2rem;
         }
 
-        /* Responsive adjustments for container padding */
+        /* Ensure tajweed legend doesn't overlap with navbar */
+        .tajweed-legend {
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Adjust feedback container positioning */
+        .feedback-container {
+            position: sticky;
+            top: 5rem;
+            z-index: 2;
+        }
+
         @media (max-width: 768px) {
             .container {
-                padding-top: 4rem;
+                padding-top: 4.5rem;
                 padding-left: 1rem;
                 padding-right: 1rem;
             }
+            
+            .feedback-container {
+                top: 4.5rem;
+            }
         }
 
-        @media (max-width: 599px) {
+        @media (max-width: 480px) {
             .container {
-                padding-top: 3.5rem;
+                padding-top: 4rem;
+            }
+            
+            .feedback-container {
+                top: 4rem;
             }
         }
 
@@ -238,10 +321,11 @@
 </head>
 <body>
     <div id="root-tooltip" class="root-tooltip"></div>
+    <div class="nav-hover-area"></div>
     <nav class="top-nav">
         <div class="nav-content">
             <a href="/" class="nav-logo-link">
-                <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Tajweed Bot Logo" class="nav-logo">
+                <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Iqra AI Logo" class="nav-logo">
             </a>
             <div class="nav-links">
                 <a href="/" class="nav-link">Home</a>
@@ -582,6 +666,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('themeToggle');
             const body = document.body;
+            const navbar = document.querySelector('.top-nav');
+            let lastScrollTop = 0;
             
             // Set initial state based on saved theme
             const savedTheme = localStorage.getItem('theme');
@@ -600,10 +686,15 @@
                 }
             });
 
-            // Add scroll behavior for navbar
-            const navbar = document.querySelector('.top-nav');
-            let lastScrollTop = 0;
+            // Handle pricing link clicks
+            document.querySelectorAll('a[href="#pricing"], a[href="/#pricing"]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.href = '/#pricing';
+                });
+            });
             
+            // Add scroll behavior for navbar
             window.addEventListener('scroll', () => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
                 

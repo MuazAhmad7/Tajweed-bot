@@ -1,573 +1,333 @@
-2025-05-29 23:54:34,879 REQUEST: GET /
+
+              ^^^^^^^^^^^^
+    message = ws.receive()
+    raise ConnectionClosed(self.close_reason, self.close_message)
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/simple_websocket/ws.py", line 104, in receive
+  File "/Users/muaz/portfolio/src/Tajweed Bot/app.py", line 121, in handle_websocket
+  File "/Users/muaz/portfolio/src/Tajweed Bot/app.py", line 122, in handle_websocket
+  File "/Users/muaz/portfolio/src/Tajweed Bot/venv/lib/python3.12/site-packages/simple_websocket/ws.py", line 104, in receive
+  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 121, in handle_websocket
+  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
+  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
   args: {}
   form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Purpose': 'prefetch;prerender', 'Purpose': 'prefetch', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-29 23:54:37,371 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-29 23:54:45,759 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:22:05,722 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:28:23,028 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
+  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary4rtQp5C1hSyBrZfL', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '31893', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryA0bkfnBXsy0Klk1e', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '44284', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryn4eNiAT2Nb4lA2GO', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '52158', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryqD1q9hETts3KDeCr', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '47468', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  headers: {'Host': '127.0.0.1:5000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'same-origin', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Mode': 'navigate', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/', 'Sec-Fetch-Dest': 'document', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
   headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:28:26,545 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:28:27,769 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:22,942 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:24,199 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:26,016 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:52,147 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:54,275 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:35:55,156 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:42:16,709 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:42:20,044 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:42:57,283 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:45:01,665 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:45:06,348 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:45:08,908 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:45:11,503 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:45:15,509 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:52:09,985 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
-2025-05-30 00:52:12,652 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
   headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '18398', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarycicvqhddjSEjwNZn', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '18599', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryKTTN5Vh9Og73J1HY', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20270', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary5XFcAPYnekEVeOiL', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20315', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarySrQ87EDFnVbjzPYg', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20635', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryuJbCZk313zbkEa7M', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '219111', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryq0VgINFOzb6A0Bhg', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '26926', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryyhlo3S66FeSvOjqC', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '43452', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary92HkocHkVrbTrNpf', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '443751', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryYLfVj8hF2FT1iNk4', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '5256', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarybhdeaE0cwWvM3TEj', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '5568', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary9kGC2T0gITqCwk3F', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '5725', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxk5chnh2U95AiYP6', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '698', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryAcyxCBKwvkOO7ib5', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '8659', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryrFBzCTyMCfu2inmh', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Purpose': 'prefetch;prerender', 'Purpose': 'prefetch', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?1', 'Sec-Ch-Ua-Platform': '"Android"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?1', 'Sec-Ch-Ua-Platform': '"Android"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+  headers: {'Host': '127.0.0.1:5000', 'Sec-Fetch-Dest': 'document', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Upgrade-Insecure-Requests': '1', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+  json: None
+2025-05-29 23:54:34,879 REQUEST: GET /
+2025-05-29 23:54:37,371 REQUEST: GET /demo
+2025-05-29 23:54:45,759 REQUEST: GET /tajweed-rules
+2025-05-30 00:22:05,722 REQUEST: GET /
+2025-05-30 00:28:23,028 REQUEST: GET /
+2025-05-30 00:28:26,545 REQUEST: GET /
+2025-05-30 00:28:27,769 REQUEST: GET /demo
+2025-05-30 00:35:22,942 REQUEST: GET /demo
+2025-05-30 00:35:24,199 REQUEST: GET /
+2025-05-30 00:35:26,016 REQUEST: GET /tajweed-rules
+2025-05-30 00:35:52,147 REQUEST: GET /
+2025-05-30 00:35:54,275 REQUEST: GET /demo
+2025-05-30 00:35:55,156 REQUEST: GET /tajweed-rules
+2025-05-30 00:42:16,709 REQUEST: GET /
+2025-05-30 00:42:20,044 REQUEST: GET /demo
+2025-05-30 00:42:57,283 REQUEST: GET /tajweed-rules
+2025-05-30 00:45:01,665 REQUEST: GET /tajweed-rules
+2025-05-30 00:45:06,348 REQUEST: GET /tajweed-rules
+2025-05-30 00:45:08,908 REQUEST: GET /
+2025-05-30 00:45:11,503 REQUEST: GET /demo
+2025-05-30 00:45:15,509 REQUEST: GET /
+2025-05-30 00:52:09,985 REQUEST: GET /demo
+2025-05-30 00:52:12,652 REQUEST: GET /demo
 2025-05-30 00:52:18,429 WEBSOCKET: /ws connection established
 2025-05-30 00:52:18,512 WEBSOCKET: Received target ayah: 0
 2025-05-30 00:52:21,237 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '5725', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryxk5chnh2U95AiYP6', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:52:21,238 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/muaz/portfolio/src/Tajweed Bot/app.py", line 121, in handle_websocket
-    message = ws.receive()
-              ^^^^^^^^^^^^
-  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 00:52:42,066 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:08,622 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:09,723 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:17,958 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:37,197 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:40,377 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:54:43,300 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:01,414 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:04,151 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:07,433 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:11,210 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:27,972 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:57:30,417 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 00:58:51,123 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:00:22,334 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:01:13,978 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:01:52,569 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:01:56,816 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:02:03,528 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:13:13,814 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:13:39,561 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/tajweed-rules', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:13:42,593 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:13:45,326 REQUEST: GET /tajweed-rules
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9'}
 2025-05-30 01:15:14,201 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?1', 'Sec-Ch-Ua-Platform': '"Android"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:15:20,151 WEBSOCKET: /ws connection established
 2025-05-30 01:15:20,249 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:15:24,300 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 121, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:15:24,314 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '8659', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryrFBzCTyMCfu2inmh', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:19:21,583 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:19:55,260 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?1', 'Sec-Ch-Ua-Platform': '"Android"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Referer': 'http://127.0.0.1:5000/', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:20:20,191 REQUEST: GET /
+2025-05-30 01:20:28,171 REQUEST: GET /demo
+2025-05-30 01:20:42,363 REQUEST: GET /tajweed-rules
+2025-05-30 01:20:51,621 REQUEST: GET /tajweed-rules
+2025-05-30 01:20:54,507 REQUEST: GET /demo
+2025-05-30 01:20:58,889 REQUEST: GET /
+2025-05-30 01:22:08,320 REQUEST: GET /
+2025-05-30 01:22:12,985 REQUEST: GET /demo
+2025-05-30 01:22:16,143 REQUEST: GET /tajweed-rules
+2025-05-30 01:22:37,056 REQUEST: GET /
+2025-05-30 01:22:41,335 REQUEST: GET /demo
+2025-05-30 01:22:43,644 REQUEST: GET /tajweed-rules
+2025-05-30 01:22:48,373 REQUEST: GET /demo
 2025-05-30 01:24:00,710 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Sec-Fetch-Dest': 'document', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Upgrade-Insecure-Requests': '1', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 01:24:04,721 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'same-origin', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Mode': 'navigate', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/', 'Sec-Fetch-Dest': 'document', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 01:24:08,804 WEBSOCKET: /ws connection established
 2025-05-30 01:24:08,901 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:24:16,887 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:24:16,894 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary4rtQp5C1hSyBrZfL', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '31893', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+2025-05-30 01:24:17,101 REQUEST: GET /demo
+2025-05-30 01:24:32,711 REQUEST: GET /demo
+2025-05-30 01:25:13,160 REQUEST: GET /demo
+2025-05-30 01:25:14,601 REQUEST: GET /demo
 2025-05-30 01:25:15,770 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:25:25,281 WEBSOCKET: /ws connection established
 2025-05-30 01:25:25,381 WEBSOCKET: Received target ayah: 2
-2025-05-30 01:25:25,751 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:25:25,751 WEBSOCKET: /ws connection established
+2025-05-30 01:25:25,751 WEBSOCKET: error: Connection closed: 1005 
 2025-05-30 01:25:25,770 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '698', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryAcyxCBKwvkOO7ib5', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:25:25,772 WEBSOCKET: error: Connection closed: 1001 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1001 
-
 2025-05-30 01:25:26,542 WEBSOCKET: /ws connection established
 2025-05-30 01:25:26,568 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:25:26,630 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:25:36,978 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:25:36,991 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '43452', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary92HkocHkVrbTrNpf', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:25:46,516 WEBSOCKET: /ws connection established
 2025-05-30 01:25:46,615 WEBSOCKET: Received target ayah: 3
+2025-05-30 01:26:12,977 REQUEST: GET /demo
+2025-05-30 01:27:00,907 REQUEST: GET /
+2025-05-30 01:27:26,248 REQUEST: GET /demo
+2025-05-30 01:27:40,856 REQUEST: GET /
+2025-05-30 01:27:42,308 REQUEST: GET /demo
+2025-05-30 01:27:43,345 REQUEST: GET /tajweed-rules
+2025-05-30 01:27:49,137 REQUEST: GET /tajweed-rules
+2025-05-30 01:27:50,051 REQUEST: GET /demo
+2025-05-30 01:28:19,376 WEBSOCKET: /ws connection established
+2025-05-30 01:28:19,455 WEBSOCKET: Received target ayah: 0
+2025-05-30 01:28:22,278 WEBSOCKET: error: Connection closed: 1005 
+2025-05-30 01:28:22,282 REQUEST: POST /analyze
 2025-05-30 01:30:49,053 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Sec-Fetch-Dest': 'document', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Upgrade-Insecure-Requests': '1', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 01:30:51,075 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'same-origin', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Mode': 'navigate', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/', 'Sec-Fetch-Dest': 'document', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+2025-05-30 01:30:54,154 REQUEST: GET /demo
+2025-05-30 01:31:44,826 REQUEST: GET /
+2025-05-30 01:31:50,532 REQUEST: GET /tajweed-rules
+2025-05-30 01:31:52,935 REQUEST: GET /
+2025-05-30 01:31:58,122 REQUEST: GET /demo
+2025-05-30 01:32:04,911 REQUEST: GET /demo
+2025-05-30 01:32:10,584 REQUEST: GET /demo
 2025-05-30 01:32:12,290 WEBSOCKET: /ws connection established
+2025-05-30 01:32:12,323 REQUEST: GET /
 2025-05-30 01:32:12,388 WEBSOCKET: Received target ayah: 3
+2025-05-30 01:32:13,156 REQUEST: GET /demo
+2025-05-30 01:32:23,251 REQUEST: GET /
 2025-05-30 01:32:24,557 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:32:24,562 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryn4eNiAT2Nb4lA2GO', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '52158', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+2025-05-30 01:32:25,623 REQUEST: GET /demo
+2025-05-30 01:32:34,123 REQUEST: GET /tajweed-rules
+2025-05-30 01:32:37,204 REQUEST: GET /
+2025-05-30 01:32:38,848 REQUEST: GET /tajweed-rules
+2025-05-30 01:32:39,711 REQUEST: GET /demo
+2025-05-30 01:33:15,365 REQUEST: GET /
+2025-05-30 01:33:36,859 REQUEST: GET /demo
+2025-05-30 01:33:46,027 REQUEST: GET /
+2025-05-30 01:33:48,492 REQUEST: GET /tajweed-rules
+2025-05-30 01:34:16,469 REQUEST: GET /demo
+2025-05-30 01:34:19,956 REQUEST: GET /demo
+2025-05-30 01:35:14,515 REQUEST: GET /
 2025-05-30 01:35:15,939 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'same-origin', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Mode': 'navigate', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/', 'Sec-Fetch-Dest': 'document', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 01:35:21,137 WEBSOCKET: /ws connection established
 2025-05-30 01:35:21,237 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:35:31,320 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:35:31,328 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryA0bkfnBXsy0Klk1e', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '44284', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
+2025-05-30 01:35:52,974 REQUEST: GET /
+2025-05-30 01:35:56,909 REQUEST: GET /tajweed-rules
+2025-05-30 01:35:59,191 REQUEST: GET /demo
+2025-05-30 01:36:05,615 REQUEST: GET /demo
+2025-05-30 01:36:07,673 REQUEST: GET /
+2025-05-30 01:36:09,346 REQUEST: GET /tajweed-rules
+2025-05-30 01:36:10,693 REQUEST: GET /demo
+2025-05-30 01:36:36,102 REQUEST: GET /
+2025-05-30 01:36:41,634 REQUEST: GET /demo
+2025-05-30 01:36:49,974 REQUEST: GET /tajweed-rules
+2025-05-30 01:36:56,718 REQUEST: GET /
+2025-05-30 01:37:17,929 REQUEST: GET /
+2025-05-30 01:37:20,645 REQUEST: GET /demo
 2025-05-30 01:37:52,279 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:38:01,587 WEBSOCKET: /ws connection established
 2025-05-30 01:38:01,688 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:38:14,370 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:38:14,380 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '26926', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryyhlo3S66FeSvOjqC', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:39:21,486 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:39:23,973 WEBSOCKET: /ws connection established
 2025-05-30 01:39:24,070 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:39:33,666 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:39:33,681 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20270', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary5XFcAPYnekEVeOiL', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:39:53,603 REQUEST: GET /demo
+2025-05-30 01:40:34,608 REQUEST: GET /demo
+2025-05-30 01:40:48,628 REQUEST: GET /
+2025-05-30 01:40:54,393 REQUEST: GET /demo
+2025-05-30 01:40:57,926 REQUEST: GET /demo
+2025-05-30 01:41:04,549 REQUEST: GET /
+2025-05-30 01:41:06,016 REQUEST: GET /demo
+2025-05-30 01:41:11,231 REQUEST: GET /demo
+2025-05-30 01:41:12,645 REQUEST: GET /
+2025-05-30 01:41:15,312 REQUEST: GET /demo
+2025-05-30 01:41:20,696 REQUEST: GET /demo
+2025-05-30 01:41:52,034 REQUEST: GET /tajweed-rules
 2025-05-30 01:42:10,602 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:42:13,167 WEBSOCKET: /ws connection established
 2025-05-30 01:42:13,270 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:42:23,302 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:42:23,315 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20635', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryuJbCZk313zbkEa7M', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:42:39,660 REQUEST: GET /demo
+2025-05-30 01:42:40,753 REQUEST: GET /tajweed-rules
 2025-05-30 01:42:47,929 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:42:49,057 REQUEST: GET /
+2025-05-30 01:42:49,803 REQUEST: GET /demo
 2025-05-30 01:42:49,833 WEBSOCKET: /ws connection established
 2025-05-30 01:42:49,935 WEBSOCKET: Received target ayah: 3
 2025-05-30 01:42:58,482 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:42:58,498 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '18398', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarycicvqhddjSEjwNZn', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:43:05,690 REQUEST: GET /tajweed-rules
+2025-05-30 01:43:13,018 REQUEST: GET /demo
+2025-05-30 01:43:38,323 REQUEST: GET /tajweed-rules
 2025-05-30 01:45:00,783 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 01:45:02,983 WEBSOCKET: /ws connection established
 2025-05-30 01:45:03,083 WEBSOCKET: Received target ayah: 3
+2025-05-30 01:45:05,984 REQUEST: GET /tajweed-rules
+2025-05-30 01:45:07,647 REQUEST: GET /
+2025-05-30 01:45:10,436 REQUEST: GET /tajweed-rules
+2025-05-30 01:45:11,355 REQUEST: GET /demo
 2025-05-30 01:45:12,470 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 01:45:12,483 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '20315', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarySrQ87EDFnVbjzPYg', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 01:45:14,380 REQUEST: GET /tajweed-rules
+2025-05-30 01:46:33,897 REQUEST: GET /
+2025-05-30 01:46:35,070 REQUEST: GET /demo
+2025-05-30 01:47:09,394 REQUEST: GET /
+2025-05-30 01:47:18,252 REQUEST: GET /
+2025-05-30 01:48:26,852 REQUEST: GET /
+2025-05-30 01:48:29,600 REQUEST: GET /tajweed-rules
+2025-05-30 01:48:32,201 REQUEST: GET /demo
+2025-05-30 01:51:23,131 REQUEST: GET /demo
+2025-05-30 01:51:30,701 REQUEST: GET /tajweed-rules
+2025-05-30 01:51:34,308 REQUEST: GET /
+2025-05-30 01:51:37,052 REQUEST: GET /demo
+2025-05-30 01:52:01,298 REQUEST: GET /demo
+2025-05-30 01:52:04,010 REQUEST: GET /
+2025-05-30 01:52:06,349 REQUEST: GET /tajweed-rules
+2025-05-30 01:52:13,447 REQUEST: GET /tajweed-rules
+2025-05-30 01:52:15,985 REQUEST: GET /demo
+2025-05-30 01:52:18,990 REQUEST: GET /
+2025-05-30 01:52:32,871 REQUEST: GET /demo
+2025-05-30 01:52:36,449 REQUEST: GET /tajweed-rules
+2025-05-30 01:52:40,668 REQUEST: GET /
+2025-05-30 01:52:54,315 REQUEST: GET /demo
+2025-05-30 02:05:23,641 REQUEST: GET /tajweed-rules
+2025-05-30 02:05:28,088 REQUEST: GET /demo
+2025-05-30 02:06:37,242 REQUEST: GET /
+2025-05-30 02:07:19,504 REQUEST: GET /tajweed-rules
+2025-05-30 02:12:00,435 REQUEST: GET /demo
+2025-05-30 02:12:08,499 REQUEST: GET /
+2025-05-30 02:12:12,471 REQUEST: GET /tajweed-rules
+2025-05-30 02:12:37,384 REQUEST: GET /tajweed-rules
+2025-05-30 02:12:38,342 REQUEST: GET /demo
+2025-05-30 02:16:24,475 REQUEST: GET /
+2025-05-30 02:16:30,632 REQUEST: GET /demo
+2025-05-30 02:20:36,048 REQUEST: GET /
+2025-05-30 02:20:40,430 REQUEST: GET /tajweed-rules
+2025-05-30 02:20:47,667 REQUEST: GET /demo
+2025-05-30 02:20:51,064 REQUEST: GET /
+2025-05-30 02:20:52,783 REQUEST: GET /tajweed-rules
+2025-05-30 02:21:01,882 REQUEST: GET /demo
+2025-05-30 02:58:33,246 REQUEST: GET /
+2025-05-30 03:06:28,939 REQUEST: GET /
+2025-05-30 03:07:02,637 REQUEST: GET /tajweed-rules
+2025-05-30 03:07:05,289 REQUEST: GET /
+2025-05-30 03:08:41,524 REQUEST: GET /demo
+2025-05-30 03:08:42,501 REQUEST: GET /tajweed-rules
+2025-05-30 03:08:52,365 REQUEST: GET /
+2025-05-30 03:08:56,953 REQUEST: GET /demo
+2025-05-30 03:09:03,915 REQUEST: GET /
+2025-05-30 03:09:25,696 REQUEST: GET /tajweed-rules
+2025-05-30 03:09:59,081 REQUEST: GET /demo
+2025-05-30 03:10:00,298 REQUEST: GET /
+2025-05-30 03:11:04,708 REQUEST: GET /demo
 2025-05-30 11:28:43,041 REQUEST: GET /
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Sec-Fetch-Dest': 'document', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Upgrade-Insecure-Requests': '1', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 11:28:44,943 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8', 'Sec-Fetch-Site': 'same-origin', 'Upgrade-Insecure-Requests': '1', 'Sec-Fetch-Mode': 'navigate', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/', 'Sec-Fetch-Dest': 'document', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=0, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 11:28:46,722 WEBSOCKET: /ws connection established
 2025-05-30 11:28:46,820 WEBSOCKET: Received target ayah: 3
 2025-05-30 11:28:57,701 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 11:28:57,716 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Accept': '*/*', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryqD1q9hETts3KDeCr', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3.1 Safari/605.1.15', 'Referer': 'http://127.0.0.1:5000/demo', 'Sec-Fetch-Dest': 'empty', 'Content-Length': '47468', 'Accept-Language': 'en-US,en;q=0.9', 'Priority': 'u=3, i', 'Accept-Encoding': 'gzip, deflate', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDY_XQ.J3r1TKpiv5LsJxTKkeOwiH4g8Q0', 'Connection': 'keep-alive'}
 2025-05-30 11:31:34,427 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?1', 'Sec-Ch-Ua-Platform': '"Android"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 11:31:37,033 WEBSOCKET: /ws connection established
 2025-05-30 11:31:37,134 WEBSOCKET: Received target ayah: 3
 2025-05-30 11:31:39,847 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 11:31:39,870 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '5256', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarybhdeaE0cwWvM3TEj', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 11:31:40,395 WEBSOCKET: /ws connection established
 2025-05-30 11:31:40,497 WEBSOCKET: Received target ayah: 3
 2025-05-30 11:31:49,211 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 11:31:49,242 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '18599', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryKTTN5Vh9Og73J1HY', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 11:47:51,378 REQUEST: GET /demo
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Cache-Control': 'max-age=0', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Sec-Ch-Ua-Mobile': '?0', 'Sec-Ch-Ua-Platform': '"macOS"', 'Upgrade-Insecure-Requests': '1', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'Sec-Fetch-Site': 'none', 'Sec-Fetch-Mode': 'navigate', 'Sec-Fetch-User': '?1', 'Sec-Fetch-Dest': 'document', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
 2025-05-30 11:47:53,296 WEBSOCKET: /ws connection established
 2025-05-30 11:47:53,393 WEBSOCKET: Received target ayah: 3
 2025-05-30 11:47:58,226 WEBSOCKET: error: Connection closed: 1005 
-Traceback (most recent call last):
-  File "/Users/shaheersaud/BuyBot/CourseSniperOG/Tajweed-bot/app.py", line 122, in handle_websocket
-    message = ws.receive()
-  File "/Users/shaheersaud/Library/Python/3.9/lib/python/site-packages/simple_websocket/ws.py", line 104, in receive
-    raise ConnectionClosed(self.close_reason, self.close_message)
-simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
-
 2025-05-30 11:47:58,259 REQUEST: POST /analyze
-  args: {}
-  form: {}
-  json: None
-  headers: {'Host': '127.0.0.1:5000', 'Connection': 'keep-alive', 'Content-Length': '443751', 'Sec-Ch-Ua-Platform': '"macOS"', 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'Sec-Ch-Ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"', 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryYLfVj8hF2FT1iNk4', 'Sec-Ch-Ua-Mobile': '?0', 'Accept': '*/*', 'Origin': 'http://127.0.0.1:5000', 'Sec-Fetch-Site': 'same-origin', 'Sec-Fetch-Mode': 'cors', 'Sec-Fetch-Dest': 'empty', 'Referer': 'http://127.0.0.1:5000/demo', 'Accept-Encoding': 'gzip, deflate, br, zstd', 'Accept-Language': 'en-US,en;q=0.9', 'Cookie': 'session=eyJlbWFpbCI6InNoYWhlZXJzYXVkMjAwNEBnbWFpbC5jb20iLCJpc19hZG1pbiI6ZmFsc2UsIm5ldGlkIjoic2FkczEyMzEiLCJ1c2VyX2lkIjoyM30.aDYqUQ.DZSlusImblWHS8KAmmorA4JEliM'}
+2025-05-30 12:09:14,080 REQUEST: GET /demo
+2025-05-30 12:22:01,098 REQUEST: GET /
+2025-05-30 12:22:04,459 REQUEST: GET /demo
+2025-05-30 12:22:07,922 REQUEST: GET /tajweed-rules
+2025-05-30 12:22:10,528 REQUEST: GET /demo
+2025-05-30 12:22:36,677 WEBSOCKET: /ws connection established
+2025-05-30 12:22:36,765 WEBSOCKET: Received target ayah: 0
+2025-05-30 12:22:39,394 WEBSOCKET: error: Connection closed: 1005 
+2025-05-30 12:22:39,448 REQUEST: POST /analyze
+2025-05-30 12:24:19,487 REQUEST: GET /tajweed-rules
+Traceback (most recent call last):
+simple_websocket.errors.ConnectionClosed: Connection closed: 1001 
+simple_websocket.errors.ConnectionClosed: Connection closed: 1005 
