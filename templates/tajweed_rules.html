@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
         :root {
             --primary-color: #D4AF37;
@@ -42,6 +44,7 @@
         * {
             scrollbar-width: thin;
             scrollbar-color: var(--primary-color) var(--background-color);
+            box-sizing: border-box;
         }
 
         ::-webkit-scrollbar {
@@ -305,19 +308,21 @@
 
         /* Main content styles */
         .content-wrapper {
-            padding-top: 80px; /* Space for fixed navbar */
+            padding-top: 0;
+            width: 100%;
+            min-height: 100vh;
+            box-sizing: border-box;
         }
 
+        /* Introduction section */
         .intro {
             text-align: left;
             padding: 6rem 2rem;
             background: var(--card-background);
-            margin-bottom: 3rem;
-            min-height: 60vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             position: relative;
-            overflow: hidden;
         }
 
         .intro-content {
@@ -326,54 +331,32 @@
             z-index: 2;
         }
 
-        .intro-content h1,
-        .intro-content .arabic-title,
-        .intro-content p,
-        .intro-content .hadith-quote {
-            opacity: 0;
-            transform: translateX(-400px);
-            transition: all 1s ease-in-out;
-            will-change: transform, opacity;
+        .intro-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--heading-color);
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .intro:not(.visible) .intro-content h1 {
-            transition-delay: 0s;
+        .intro-content .arabic-title {
+            font-family: 'Amiri', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .intro:not(.visible) .intro-content .arabic-title {
-            transition-delay: 0.2s;
-        }
-
-        .intro:not(.visible) .intro-content p {
-            transition-delay: 0.4s;
-        }
-
-        .intro:not(.visible) .intro-content .hadith-quote {
-            transition-delay: 0.6s;
-        }
-
-        .intro.visible .intro-content h1 {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0s;
-        }
-
-        .intro.visible .intro-content .arabic-title {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.2s;
-        }
-
-        .intro.visible .intro-content p {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.4s;
-        }
-
-        .intro.visible .intro-content .hadith-quote {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.6s;
+        .intro-content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--secondary-text);
+            margin-bottom: 2rem;
+            max-width: 90%;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .hadith-quote {
@@ -382,16 +365,20 @@
             border-left: 4px solid var(--primary-color);
             background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
             border-radius: 8px;
+            max-width: 90%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .hadith-text {
             font-family: 'Amiri', serif;
             font-size: 1.8rem;
+            font-weight: 700;
             color: var(--heading-color);
             margin-bottom: 1rem;
             line-height: 1.6;
             text-align: right;
             direction: rtl;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hadith-translation {
@@ -399,12 +386,45 @@
             color: var(--text-color);
             font-style: italic;
             margin-bottom: 0.5rem;
+            line-height: 1.6;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
         .hadith-source {
             font-size: 0.9rem;
             color: var(--secondary-text);
             text-align: right;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Responsive adjustments for introduction */
+        @media (max-width: 768px) {
+            .intro-content {
+                max-width: 100%;
+                text-align: center;
+            }
+
+            .intro-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro-content .arabic-title {
+                font-size: 2.2rem;
+            }
+
+            .intro-content p {
+                font-size: 1.1rem;
+                max-width: 100%;
+            }
+
+            .hadith-quote {
+                max-width: 100%;
+            }
+
+            .hadith-text {
+                font-size: 1.5rem;
+            }
         }
 
         .intro-image {
@@ -414,10 +434,7 @@
             width: 30%;
             height: 70%;
             z-index: 1;
-            overflow: visible;
-            padding: 20px;
-            opacity: 0;
-            transform: translate(400px, -50%);
+            transform: translateY(-50%);
         }
 
         .intro-image img {
@@ -426,193 +443,121 @@
             object-fit: contain;
             object-position: center;
             opacity: 0.8;
-            animation: float 6s ease-in-out infinite;
         }
 
-        .intro.visible .intro-image {
-            animation: slideIn 1s ease-in-out 0.8s forwards;
-        }
-
-        .intro:not(.visible) .intro-image {
-            animation: slideOut 1s ease-in-out forwards;
-        }
-
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translate(400px, -50%);
-            }
-            100% {
-                opacity: 1;
-                transform: translate(0, -50%);
-            }
-        }
-
-        @keyframes slideOut {
-            0% {
-                opacity: 1;
-                transform: translate(0, -50%);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(400px, -50%);
-            }
-        }
-
-        .intro h1 {
-            color: var(--heading-color);
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .intro .arabic-title {
-            font-family: 'Amiri', serif;
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .intro p {
-            font-size: 1.3rem;
-            line-height: 1.6;
-            color: var(--secondary-text);
-            margin: 0;
+        /* Remove the initial hidden state */
+        .intro-content h1,
+        .intro-content .arabic-title,
+        .intro-content p,
+        .hadith-quote,
+        .intro-image {
+            opacity: 1;
+            visibility: visible;
         }
 
         .rule-section {
-            padding: 4rem 2rem;
-            margin-bottom: 0; /* Remove margin between sections */
-            text-align: left;
-            min-height: 45vh;
+            padding: 0;
+            height: 400px;
+            width: 90%;
+            max-width: 700px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: relative;
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Add subtle separator */
+            position: sticky;
+            top: 2rem;
+            z-index: 1;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            box-sizing: border-box;
+            margin-bottom: 4rem;
+            transform: rotate(var(--tilt-angle));
+        }
+
+        /* Add different tilt angles for each card */
+        .ghunnah { 
+            --tilt-angle: -1deg;
+            background: linear-gradient(135deg, var(--ghunnah-color), #B22222);
+        }
+        .idghaam { 
+            --tilt-angle: 1.5deg;
+            background: linear-gradient(135deg, var(--idghaam-color), #228B22);
+        }
+        .ikhfa { 
+            --tilt-angle: -2deg;
+            background: linear-gradient(135deg, var(--ikhfa-color), #800080);
+        }
+        .qalqalah { 
+            --tilt-angle: 2deg;
+            background: linear-gradient(135deg, var(--qalqalah-color), #00688B);
+        }
+        .iqlab { 
+            --tilt-angle: -1.5deg;
+            background: linear-gradient(135deg, var(--iqlab-color), #CD5C5C);
+        }
+        .idghaam-shafawi { 
+            --tilt-angle: 1deg;
+            background: linear-gradient(135deg, var(--idghaam-shafawi-color), #B8860B);
+        }
+
+        /* Add hover effect to straighten the card */
+        .rule-section:hover {
+            transform: rotate(0deg) translateY(-5px);
+            transition: transform 0.3s ease;
         }
 
         .rule-content {
-            max-width: 800px;
+            max-width: 100%;
             margin: 0;
-            padding-left: 4rem;
+            padding: 2rem;
             position: relative;
-            left: 0;
+            border-radius: 1rem;
+            box-sizing: border-box;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1); /* Add subtle background */
-            padding: 2rem 4rem;
-            border-radius: 15px;
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
         }
 
-        .rule-content h2,
-        .rule-content .arabic-title,
-        .rule-content p,
-        .rule-content .arabic-example {
-            opacity: 0;
-            transform: translateX(-400px);
-            transition: all 0.8s ease-in-out;
-            will-change: transform, opacity;
-        }
-
-        .rule-section.visible .rule-content h2 {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0s;
-        }
-
-        .rule-section.visible .rule-content .arabic-title {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.2s;
-        }
-
-        .rule-section.visible .rule-content p {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.4s;
-        }
-
-        .rule-section.visible .rule-content .arabic-example {
-            opacity: 1;
-            transform: translateX(0);
-            transition-delay: 0.6s;
-        }
-
-        .rule-section:not(.visible) .rule-content h2 {
-            transition-delay: 0.6s;
-        }
-
-        .rule-section:not(.visible) .rule-content .arabic-title {
-            transition-delay: 0.4s;
-        }
-
-        .rule-section:not(.visible) .rule-content p {
-            transition-delay: 0.2s;
-        }
-
-        .rule-section:not(.visible) .rule-content .arabic-example {
-            transition-delay: 0s;
-        }
-
-        .rule-section h2 {
+        .rule-content h2 {
             font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: var(--heading-color);
+            color: #FFFFFF;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .rule-section .arabic-title {
+        .rule-content .arabic-title {
             font-family: 'Amiri', serif;
             font-size: 2.2rem;
+            font-weight: 700;
             margin-bottom: 1.5rem;
-            color: var(--heading-color);
+            color: #FFFFFF;
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .rule-section p {
+        .rule-content p {
             font-size: 1.2rem;
-            line-height: 1.6;
+            line-height: 1.8;
             margin-bottom: 1.5rem;
-            color: var(--text-color);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
-        .rule-section .arabic-example {
+        .rule-content .arabic-example {
             font-family: 'Amiri', serif;
             font-size: 2rem;
+            font-weight: 700;
             margin: 1.5rem 0;
             direction: rtl;
-            color: var(--heading-color);
+            color: #FFFFFF;
+            line-height: 1.6;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Rule-specific backgrounds with rich gradients */
-        .ghunnah { 
-            background-color: var(--ghunnah-color);
-            background-image: linear-gradient(45deg, var(--ghunnah-color), #B22222);
-        }
-        .idghaam { 
-            background-color: var(--idghaam-color);
-            background-image: linear-gradient(45deg, var(--idghaam-color), #228B22);
-        }
-        .ikhfa { 
-            background-color: var(--ikhfa-color);
-            background-image: linear-gradient(45deg, var(--ikhfa-color), #800080);
-        }
-        .qalqalah { 
-            background-color: var(--qalqalah-color);
-            background-image: linear-gradient(45deg, var(--qalqalah-color), #00688B);
-        }
-        .iqlab { 
-            background-color: var(--iqlab-color);
-            background-image: linear-gradient(45deg, var(--iqlab-color), #CD5C5C);
-        }
-        .idghaam-shafawi { 
-            background-color: var(--idghaam-shafawi-color);
-            background-image: linear-gradient(45deg, var(--idghaam-shafawi-color), #B8860B);
-        }
-
-        /* Adjust text colors for better contrast on the bolder backgrounds */
+        /* Ensure text is visible on colored backgrounds */
         .rule-section h2,
         .rule-section .arabic-title,
         .rule-section .arabic-example {
@@ -675,6 +620,42 @@
                 padding-left: 0;
                 margin: 0 auto;
                 text-align: center;
+            }
+
+            .rule-section {
+                height: 450px; /* Slightly taller on mobile for better readability */
+            }
+            
+            .rule-content {
+                padding: 1.5rem;
+            }
+
+            .intro-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro-content .arabic-title {
+                font-size: 2.2rem;
+            }
+
+            .intro-content p {
+                font-size: 1.1rem;
+            }
+
+            .rule-content h2 {
+                font-size: 2rem;
+            }
+
+            .rule-content .arabic-title {
+                font-size: 1.8rem;
+            }
+
+            .rule-content p {
+                font-size: 1.1rem;
+            }
+
+            .rule-content .arabic-example {
+                font-size: 1.6rem;
             }
         }
 
@@ -740,42 +721,69 @@
             animation: slideInRight 1s ease-out forwards;
         }
 
-        /* Update the intersection observer script */
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                const intro = document.querySelector('.intro');
-                const ruleSections = document.querySelectorAll('.rule-section');
-                
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        // Remove any existing animations
-                        entry.target.querySelector('.intro-image').style.animation = 'none';
-                        
-                        // Force reflow
-                        void entry.target.querySelector('.intro-image').offsetHeight;
-                        
-                        // Add appropriate class
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        } else {
-                            entry.target.classList.remove('visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.3,
-                    rootMargin: '-20% 0px -20% 0px'
-                });
+        /* Rules container and sections */
+        .rules-container {
+            width: 100%;
+            position: relative;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+            align-items: center;
+            box-sizing: border-box;
+            min-height: 500vh;
+        }
 
-                observer.observe(intro);
-                
-                ruleSections.forEach(section => {
-                    observer.observe(section);
-                });
+        /* Remove all problematic positioning and transitions */
+        .rule-section::after {
+            display: none;
+        }
 
-                // Remove any initial visible class
-                intro.classList.remove('visible');
-            });
-        </script>
+        /* Add animation classes */
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .fade-in-left {
+            animation: fadeInLeft 1s ease-out forwards;
+        }
+
+        .fade-in-right {
+            animation: fadeInRight 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -816,62 +824,120 @@
             </div>
         </div>
 
-        <section class="rule-section ghunnah">
-            <div class="rule-content">
-                <h2>Ghunnah</h2>
-                <div class="arabic-title">الغُنَّة</div>
-                <p>Ghunnah is the nasalization that occurs with the letters ن and م. It must be held for 2 counts when these letters have a shaddah (ّ).</p>
-                <div class="arabic-example">إِنَّ ، ثُمَّ</div>
-            </div>
-        </section>
+        <div class="rules-container">
+            <section class="rule-section ghunnah">
+                <div class="rule-content">
+                    <h2>Ghunnah</h2>
+                    <div class="arabic-title">الغُنَّة</div>
+                    <p>Ghunnah is the nasalization that occurs with the letters ن and م. It must be held for 2 counts when these letters have a shaddah (ّ).</p>
+                    <div class="arabic-example">إِنَّ ، ثُمَّ</div>
+                </div>
+            </section>
 
-        <section class="rule-section idghaam">
-            <div class="rule-content">
-                <h2>Idghaam</h2>
-                <div class="arabic-title">الإدغام</div>
-                <p>When a noon sakinah (نْ) or tanween meets certain letters, it merges into the following letter. The letters of Idghaam are ي ر م ل و ن.</p>
-                <div class="arabic-example">مِنْ رَّبِّهِمْ</div>
-            </div>
-        </section>
+            <section class="rule-section idghaam">
+                <div class="rule-content">
+                    <h2>Idghaam</h2>
+                    <div class="arabic-title">الإدغام</div>
+                    <p>When a noon sakinah (نْ) or tanween meets certain letters, it merges into the following letter. The letters of Idghaam are ي ر م ل و ن.</p>
+                    <div class="arabic-example">مِنْ رَّبِّهِمْ</div>
+                </div>
+            </section>
 
-        <section class="rule-section ikhfa">
-            <div class="rule-content">
-                <h2>Ikhfa</h2>
-                <div class="arabic-title">الإخفاء</div>
-                <p>When a noon sakinah (نْ) or tanween is followed by any of the 15 Ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
-                <div class="arabic-example">مِنْ قَبْلِ</div>
-            </div>
-        </section>
+            <section class="rule-section ikhfa">
+                <div class="rule-content">
+                    <h2>Ikhfa</h2>
+                    <div class="arabic-title">الإخفاء</div>
+                    <p>When a noon sakinah (نْ) or tanween is followed by any of the 15 Ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
+                    <div class="arabic-example">مِنْ قَبْلِ</div>
+                </div>
+            </section>
 
-        <section class="rule-section qalqalah">
-            <div class="rule-content">
-                <h2>Qalqalah</h2>
-                <div class="arabic-title">القَلْقَلَة</div>
-                <p>The letters ق ط ب ج د when having a sukoon produce an echo-like sound. This is more pronounced when stopping on these letters.</p>
-                <div class="arabic-example">قُلْ أَعُوذُ</div>
-            </div>
-        </section>
+            <section class="rule-section qalqalah">
+                <div class="rule-content">
+                    <h2>Qalqalah</h2>
+                    <div class="arabic-title">القَلْقَلَة</div>
+                    <p>The letters ق ط ب ج د when having a sukoon produce an echo-like sound. This is more pronounced when stopping on these letters.</p>
+                    <div class="arabic-example">قُلْ أَعُوذُ</div>
+                </div>
+            </section>
 
-        <section class="rule-section iqlab">
-            <div class="rule-content">
-                <h2>Iqlab</h2>
-                <div class="arabic-title">الإقْلاب</div>
-                <p>When noon sakinah (نْ) or tanween is followed by the letter ب, the noon sound is converted to a meem sound with ghunnah.</p>
-                <div class="arabic-example">مِنْ بَعْدِ</div>
-            </div>
-        </section>
+            <section class="rule-section iqlab">
+                <div class="rule-content">
+                    <h2>Iqlab</h2>
+                    <div class="arabic-title">الإقْلاب</div>
+                    <p>When noon sakinah (نْ) or tanween is followed by the letter ب, the noon sound is converted to a meem sound with ghunnah.</p>
+                    <div class="arabic-example">مِنْ بَعْدِ</div>
+                </div>
+            </section>
 
-        <section class="rule-section idghaam-shafawi">
-            <div class="rule-content">
-                <h2>Idghaam Shafawi</h2>
-                <div class="arabic-title">الإدغام الشَّفَوي</div>
-                <p>When a meem sakinah (مْ) meets another meem, it merges into it with a ghunnah sound held for 2 counts.</p>
-                <div class="arabic-example">لَكُمْ مَا</div>
-            </div>
-        </section>
+            <section class="rule-section idghaam-shafawi">
+                <div class="rule-content">
+                    <h2>Idghaam Shafawi</h2>
+                    <div class="arabic-title">الإدغام الشَّفَوي</div>
+                    <p>When a meem sakinah (مْ) meets another meem, it merges into it with a ghunnah sound held for 2 counts.</p>
+                    <div class="arabic-example">لَكُمْ مَا</div>
+                </div>
+            </section>
+        </div>
     </div>
 
     <script>
+        // Wait for both DOM and GSAP to be ready
+        window.addEventListener('load', () => {
+            console.log('Window loaded, checking GSAP...');
+            
+            if (typeof gsap === 'undefined') {
+                console.error('GSAP is not loaded!');
+                return;
+            }
+            
+            console.log('GSAP is loaded, initializing animations...');
+            
+            const intro = document.querySelector('.intro');
+            
+            // Initialize GSAP ScrollTrigger
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Create a timeline for the introduction
+            const introTimeline = gsap.timeline({
+                defaults: {
+                    duration: 1,
+                    ease: "power3.out"
+                }
+            });
+
+            console.log('Starting intro animations...');
+
+            // Add animations to the timeline with explicit fromTo
+            introTimeline
+                .fromTo('.intro-content h1', 
+                    { y: 50, opacity: 0 },
+                    { y: 0, opacity: 1 }
+                )
+                .fromTo('.intro-content .arabic-title',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1 },
+                    "-=0.7"
+                )
+                .fromTo('.intro-content p',
+                    { y: 30, opacity: 0 },
+                    { y: 0, opacity: 1 },
+                    "-=0.7"
+                )
+                .fromTo('.hadith-quote',
+                    { x: -50, opacity: 0 },
+                    { x: 0, opacity: 1 },
+                    "-=0.7"
+                )
+                .fromTo('.intro-image',
+                    { x: 100, opacity: 0 },
+                    { x: 0, opacity: 1 },
+                    "-=0.8"
+                );
+
+            console.log('Intro animations added to timeline');
+        });
+
         // Theme toggle functionality
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggle = document.getElementById('themeToggle');
@@ -930,38 +996,6 @@
                 
                 lastScrollTop = scrollTop;
             });
-        });
-
-        // Intersection Observer for scroll animations
-        document.addEventListener('DOMContentLoaded', () => {
-            const intro = document.querySelector('.intro');
-            const ruleSections = document.querySelectorAll('.rule-section');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        requestAnimationFrame(() => {
-                            entry.target.classList.add('visible');
-                        });
-                    } else {
-                        requestAnimationFrame(() => {
-                            entry.target.classList.remove('visible');
-                        });
-                    }
-                });
-            }, {
-                threshold: 0.3,
-                rootMargin: '-20% 0px -20% 0px'
-            });
-
-            observer.observe(intro);
-            
-            ruleSections.forEach(section => {
-                observer.observe(section);
-            });
-
-            // Remove any initial visible class
-            intro.classList.remove('visible');
         });
     </script>
 </body>
