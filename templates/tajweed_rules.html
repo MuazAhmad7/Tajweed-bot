@@ -16,32 +16,62 @@
     <style>
         :root {
             --primary-color: #D4AF37;
-            --secondary-color: #C5A028;    /* Added secondary color */
-            --background-color: #F5ECD9;
+            --secondary-color: #C5A028;
+            --background-color: #F8F9FA;  /* Light gray instead of beige */
             --card-background: #FFFFFF;
             --text-color: #2D2D2D;
             --heading-color: #1F1F1F;
             --secondary-text: #777777;
             --border-color: #E5E7EB;
             
-            /* Tajweed Rule Colors - Bright and Bold */
-            --ghunnah-color: #D92626;        /* Brighter Deep Red */
-            --idghaam-color: #2EA62E;        /* Brighter Forest Green */
-            --ikhfa-color: #9932CC;          /* Brighter Deep Purple */
-            --qalqalah-color: #0086B3;       /* Brighter Deep Blue */
-            --iqlab-color: #E66767;          /* Brighter Indian Red */
-            --idghaam-shafawi-color: #DAA520; /* Brighter Golden Rod */
+            /* Tajweed Rule Colors - Light Mode */
+            --madd-color: #FF6B6B;
+            --madd-gradient: #ff8585;
+            --ghunnah-color: #D92626;
+            --ghunnah-gradient: #ff4d4d;
+            --idghaam-color: #2EA62E;
+            --idghaam-gradient: #47d147;
+            --ikhfa-color: #9932CC;
+            --ikhfa-gradient: #b347e6;
+            --qalqalah-color: #0086B3;
+            --qalqalah-gradient: #00b3f0;
+            --ikhfa-meem-color: #E066FF;
+            --ikhfa-meem-gradient: #f0a3ff;
+            --silent-color: #8A2BE2;
+            --silent-gradient: #9f3eff;
+            
+            /* Shadow opacity for light mode */
+            --shadow-opacity: 0.3;
         }
 
         [data-theme="dark"] {
             --primary-color: #D4AF37;
-            --secondary-color: #C5A028;    /* Added secondary color */
-            --background-color: #121212;
-            --card-background: #2C1F14;
+            --secondary-color: #C5A028;
+            --background-color: #1A1A1A;  /* Darker background */
+            --card-background: #2D2D2D;   /* Darker card background */
             --text-color: #F3F4F6;
             --heading-color: #FFFFFF;
             --secondary-text: #A0A0A0;
-            --border-color: #2A2118;
+            --border-color: #404040;
+            
+            /* Tajweed Rule Colors - Dark Mode (More saturated) */
+            --madd-color: #FF8080;
+            --madd-gradient: #ff9999;
+            --ghunnah-color: #FF4040;
+            --ghunnah-gradient: #ff6666;
+            --idghaam-color: #40BF40;
+            --idghaam-gradient: #66CC66;
+            --ikhfa-color: #B347E6;
+            --ikhfa-gradient: #CC66FF;
+            --qalqalah-color: #0099CC;
+            --qalqalah-gradient: #00B8F0;
+            --ikhfa-meem-color: #E680FF;
+            --ikhfa-meem-gradient: #F0B3FF;
+            --silent-color: #9933FF;
+            --silent-gradient: #B366FF;
+            
+            /* Shadow opacity for dark mode */
+            --shadow-opacity: 0.5;
         }
 
         /* Custom Scrollbar Styles - Moved to top for higher specificity */
@@ -322,7 +352,7 @@
         .intro {
             text-align: left;
             padding: 6rem 2rem;
-            background: var(--card-background);
+            background: linear-gradient(135deg, var(--card-background), var(--background-color));
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -455,122 +485,125 @@
         .intro-content p,
         .hadith-quote,
         .intro-image {
-            opacity: 1;
+                opacity: 1;
             visibility: visible;
         }
 
         .rule-section {
-            padding: 0;
-            height: 400px;
+            position: sticky;
+            top: 20px;
+            margin-bottom: 4rem;
+            padding: 2rem;
+            border-radius: 15px;
             width: 90%;
             max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            transform: rotate(var(--tilt-angle));
+            transition: all 0.3s ease;
+            height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            position: sticky;
-            top: 2rem;
-            z-index: 1;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            box-sizing: border-box;
-            margin-bottom: 4rem;
-            transform: rotate(var(--tilt-angle));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        /* Add different tilt angles for each card */
-        .ghunnah { 
-            --tilt-angle: -1deg;
-            background: linear-gradient(135deg, var(--ghunnah-color), #B22222);
-        }
-        .idghaam { 
-            --tilt-angle: 1.5deg;
-            background: linear-gradient(135deg, var(--idghaam-color), #228B22);
-        }
-        .ikhfa { 
-            --tilt-angle: -2deg;
-            background: linear-gradient(135deg, var(--ikhfa-color), #800080);
-        }
-        .qalqalah { 
-            --tilt-angle: 2deg;
-            background: linear-gradient(135deg, var(--qalqalah-color), #00688B);
-        }
-        .iqlab { 
-            --tilt-angle: -1.5deg;
-            background: linear-gradient(135deg, var(--iqlab-color), #CD5C5C);
-        }
-        .idghaam-shafawi { 
-            --tilt-angle: 1deg;
-            background: linear-gradient(135deg, var(--idghaam-shafawi-color), #B8860B);
-        }
-
-        /* Add hover effect to straighten the card */
         .rule-section:hover {
             transform: rotate(0deg) translateY(-5px);
-            transition: transform 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, var(--shadow-opacity));
+        }
+
+        #madd-rule {
+            --tilt-angle: -2deg;
+            background: linear-gradient(135deg, var(--madd-color), var(--madd-gradient));
+            box-shadow: 0 4px 15px rgba(255, 107, 107, var(--shadow-opacity));
+        }
+
+        #ghunnah-rule {
+            --tilt-angle: 1deg;
+            background: linear-gradient(135deg, var(--ghunnah-color), var(--ghunnah-gradient));
+            box-shadow: 0 4px 15px rgba(217, 38, 38, var(--shadow-opacity));
+        }
+
+        #qalqalah-rule {
+            --tilt-angle: -1deg;
+            background: linear-gradient(135deg, var(--qalqalah-color), var(--qalqalah-gradient));
+            box-shadow: 0 4px 15px rgba(0, 134, 179, var(--shadow-opacity));
+        }
+
+        #ikhfa-rule {
+            --tilt-angle: 2deg;
+            background: linear-gradient(135deg, var(--ikhfa-color), var(--ikhfa-gradient));
+            box-shadow: 0 4px 15px rgba(153, 50, 204, var(--shadow-opacity));
+        }
+
+        #ikhfa-meem-rule {
+            --tilt-angle: -1.5deg;
+            background: linear-gradient(135deg, var(--ikhfa-meem-color), var(--ikhfa-meem-gradient));
+            box-shadow: 0 4px 15px rgba(224, 102, 255, var(--shadow-opacity));
+        }
+
+        #idghaam-rule {
+            --tilt-angle: 1.5deg;
+            background: linear-gradient(135deg, var(--idghaam-color), var(--idghaam-gradient));
+            box-shadow: 0 4px 15px rgba(46, 166, 46, var(--shadow-opacity));
+        }
+
+        #silent-rule {
+            --tilt-angle: -0.5deg;
+            background: linear-gradient(135deg, var(--silent-color), var(--silent-gradient));
+            box-shadow: 0 4px 15px rgba(138, 43, 226, var(--shadow-opacity));
         }
 
         .rule-content {
-            max-width: 100%;
-            margin: 0;
-            padding: 2rem;
-            position: relative;
-            border-radius: 1rem;
-            box-sizing: border-box;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .rule-content h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2rem;
             margin-bottom: 1rem;
-            color: #FFFFFF;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-
-        .rule-content .arabic-title {
-            font-family: 'Amiri', serif;
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: #FFFFFF;
-            line-height: 1.4;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-align: center;
         }
 
         .rule-content p {
             font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-            color: rgba(255, 255, 255, 0.95);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            text-align: center;
         }
 
         .rule-content .arabic-example {
             font-family: 'Amiri', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin: 1.5rem 0;
+            font-size: 1.8rem;
             direction: rtl;
-            color: #FFFFFF;
-            line-height: 1.6;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 1rem 0;
+            text-align: center;
         }
 
-        /* Ensure text is visible on colored backgrounds */
-        .rule-section h2,
-        .rule-section .arabic-title,
-        .rule-section .arabic-example {
-            color: #FFFFFF;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        @media (max-width: 768px) {
+            .rule-section {
+                height: 450px;
+                padding: 1.5rem;
+        }
+            
+            .rule-content h2 {
+                font-size: 1.8rem;
         }
 
-        .rule-section p {
-            color: rgba(255, 255, 255, 0.9);
+            .rule-content p {
+                font-size: 1.1rem;
+            }
+            
+            .rule-content .arabic-example {
+                font-size: 1.6rem;
+            }
         }
 
         /* Smooth scroll behavior */
@@ -788,6 +821,199 @@
                 transform: translateX(0);
             }
         }
+
+        /* Practice Section Styles */
+        .practice-section {
+            padding: 4rem 2rem;
+            background: var(--background-color);
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            margin-bottom: 2rem;
+        }
+
+        .practice-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .practice-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 2rem;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .practice-content {
+            margin-top: 1rem;
+        }
+
+        .quran-text {
+            font-family: 'Amiri', serif;
+            font-size: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            direction: rtl;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .practice-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: var(--primary-color);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .practice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .progress-tracker {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+        }
+
+        .progress-stats {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Common Mistakes Section */
+        .mistakes-section {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--background-color), var(--card-background));
+        }
+
+        .mistakes-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .mistake-card {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .mistake-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mistake-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Resources Section */
+        .resources-section {
+            padding: 4rem 2rem;
+            background: var(--background-color);
+        }
+
+        .resources-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: var(--card-background);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+                        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .resource-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Dark mode adjustments */
+        [data-theme="dark"] .practice-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        [data-theme="dark"] .mistake-card,
+        [data-theme="dark"] .resource-card {
+            background: var(--card-background);
+        }
+
+        [data-theme="dark"] .stat-item {
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        /* Add subtle patterns to backgrounds */
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: radial-gradient(circle at 1px 1px, var(--border-color) 1px, transparent 0);
+            background-size: 40px 40px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .mistakes-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(45deg, var(--border-color) 25%, transparent 25%, transparent 75%, var(--border-color) 75%, var(--border-color)),
+                            linear-gradient(45deg, var(--border-color) 25%, transparent 25%, transparent 75%, var(--border-color) 75%, var(--border-color));
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -829,59 +1055,138 @@
         </div>
 
         <div class="rules-container">
-            <section class="rule-section ghunnah">
-                <div class="rule-content">
-                    <h2>Ghunnah</h2>
-                    <div class="arabic-title">الغُنَّة</div>
-                    <p>Ghunnah is the nasalization that occurs with the letters ن and م. It must be held for 2 counts when these letters have a shaddah (ّ).</p>
-                    <div class="arabic-example">إِنَّ ، ثُمَّ</div>
-                </div>
-            </section>
+            <div id="madd-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Madd (Prolongation)</h2>
+                    <p>When certain letters are followed by specific signs, their sound should be extended. This rule applies to the letters ا, و, and ي when they have a sukoon or when followed by a hamza.</p>
+                    <div class="arabic-example">فِيهَا ، قَالُوا ، آمَنُوا</div>
+            </div>
+            </div>
 
-            <section class="rule-section idghaam">
-                <div class="rule-content">
-                    <h2>Idghaam</h2>
-                    <div class="arabic-title">الإدغام</div>
-                    <p>When a noon sakinah (نْ) or tanween meets certain letters, it merges into the following letter. The letters of Idghaam are ي ر م ل و ن.</p>
-                    <div class="arabic-example">مِنْ رَّبِّهِمْ</div>
-                </div>
-            </section>
+            <div id="ghunnah-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Ghunnah (Nasal Sound)</h2>
+                    <p>A nasal sound that occurs with the letters ن and م when they have a shaddah. The sound should be held for approximately two counts.</p>
+                    <div class="arabic-example">ثُمَّ ، إِنَّ ، مِمَّا</div>
+            </div>
+            </div>
 
-            <section class="rule-section ikhfa">
-                <div class="rule-content">
-                    <h2>Ikhfa</h2>
-                    <div class="arabic-title">الإخفاء</div>
-                    <p>When a noon sakinah (نْ) or tanween is followed by any of the 15 Ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
-                    <div class="arabic-example">مِنْ قَبْلِ</div>
-                </div>
-            </section>
+            <div id="qalqalah-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Qalqalah (Echoing Sound)</h2>
+                    <p>An echoing sound that occurs with five letters (ق ط ب ج د) when they have a sukoon or at the end of a word. The sound bounces back with a slight echo.</p>
+                    <div class="arabic-example">يَجْعَلْ ، أَحَد ، خَلَقْ</div>
+            </div>
+            </div>
 
-            <section class="rule-section qalqalah">
-                <div class="rule-content">
-                    <h2>Qalqalah</h2>
-                    <div class="arabic-title">القَلْقَلَة</div>
-                    <p>The letters ق ط ب ج د when having a sukoon produce an echo-like sound. This is more pronounced when stopping on these letters.</p>
-                    <div class="arabic-example">قُلْ أَعُوذُ</div>
-                </div>
-            </section>
+            <div id="ikhfa-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Ikhfa (Concealment)</h2>
+                    <p>When a noon sakinah or tanween is followed by any of the 15 ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
+                    <div class="arabic-example">مِنْ قَبْلُ ، عَذَابٌ شَدِيدٌ</div>
+            </div>
+            </div>
 
-            <section class="rule-section iqlab">
-                <div class="rule-content">
-                    <h2>Iqlab</h2>
-                    <div class="arabic-title">الإقْلاب</div>
-                    <p>When noon sakinah (نْ) or tanween is followed by the letter ب, the noon sound is converted to a meem sound with ghunnah.</p>
-                    <div class="arabic-example">مِنْ بَعْدِ</div>
-                </div>
-            </section>
+            <div id="ikhfa-meem-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Ikhfa Meem Saakin</h2>
+                    <p>When a meem with sukoon is followed by the letter ب, it is pronounced with a light nasal sound while hiding the meem.</p>
+                    <div class="arabic-example">هُم بِمُؤْمِنِين</div>
+            </div>
+            </div>
 
-            <section class="rule-section idghaam-shafawi">
+            <div id="idghaam-rule" class="rule-section">
+            <div class="rule-content">
+                    <h2>Idghaam (Merging)</h2>
+                    <p>When noon sakinah or tanween is followed by specific letters (ي ر م ل و ن), the noon sound merges into the following letter.</p>
+                    <div class="arabic-example">مِن نَّذِيرٍ ، خَيْرٌ لَّكُمْ</div>
+            </div>
+            </div>
+
+            <div id="silent-rule" class="rule-section">
                 <div class="rule-content">
-                    <h2>Idghaam Shafawi</h2>
-                    <div class="arabic-title">الإدغام الشَّفَوي</div>
-                    <p>When a meem sakinah (مْ) meets another meem, it merges into it with a ghunnah sound held for 2 counts.</p>
-                    <div class="arabic-example">لَكُمْ مَا</div>
+                    <h2>Silent Letters</h2>
+                    <p>Certain letters in the Quran are written but not pronounced during recitation. These letters are usually marked with a small circle above them.</p>
+                    <div class="arabic-example">اهْدِنَا ، قَالُوا</div>
                 </div>
-            </section>
+            </div>
+        </div>
+
+        <!-- Interactive Practice Section -->
+        <div class="practice-section">
+            <h2 class="section-title">Practice Your Tajweed</h2>
+            <div class="practice-container">
+                <div class="practice-card">
+                    <h3>Interactive Exercises</h3>
+                    <div class="practice-content">
+                        <div class="quran-text" id="practice-text">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                        <div class="controls">
+                            <button class="practice-btn" onclick="showNextExample()">Next Example</button>
+                            <button class="practice-btn" onclick="checkAnswer()">Check Answer</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-tracker">
+                    <h3>Your Progress</h3>
+                    <div class="progress-stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Completed</span>
+                            <span class="stat-value" id="completed-exercises">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Accuracy</span>
+                            <span class="stat-value" id="accuracy">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Mistakes Section -->
+        <div class="mistakes-section">
+            <h2 class="section-title">Common Mistakes to Avoid</h2>
+            <div class="mistakes-grid">
+                <div class="mistake-card">
+                    <div class="mistake-icon">⚠️</div>
+                    <h3>Madd Duration</h3>
+                    <p>Not extending the madd letters for their proper duration. Remember: 2, 4, or 6 counts based on the type.</p>
+                </div>
+                <div class="mistake-card">
+                    <div class="mistake-icon">⚠️</div>
+                    <h3>Ghunnah Sound</h3>
+                    <p>Skipping the nasal sound in noon and meem mushaddad. Always hold these for 2 counts.</p>
+                </div>
+                <div class="mistake-card">
+                    <div class="mistake-icon">⚠️</div>
+                    <h3>Qalqalah Clarity</h3>
+                    <p>Not pronouncing the qalqalah letters with their characteristic bounce, especially at stops.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources-section">
+            <h2 class="section-title">Additional Resources</h2>
+            <div class="resources-grid">
+                <a href="#" class="resource-card">
+                    <div class="resource-icon">📚</div>
+                    <h3>Downloadable Guides</h3>
+                    <p>Comprehensive PDF guides for each Tajweed rule</p>
+                </a>
+                <a href="#" class="resource-card">
+                    <div class="resource-icon">🎥</div>
+                    <h3>Video Tutorials</h3>
+                    <p>Step-by-step video explanations with examples</p>
+                </a>
+                <a href="#" class="resource-card">
+                    <div class="resource-icon">🎯</div>
+                    <h3>Practice Exercises</h3>
+                    <p>Additional exercises for each rule</p>
+                </a>
+            </div>
         </div>
     </div>
 
@@ -1001,6 +1306,55 @@
                 lastScrollTop = scrollTop;
             });
         });
+
+        // Sample practice examples
+        const practiceExamples = [
+            {
+                text: "إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
+                rule: "ghunnah",
+                explanation: "Contains ghunnah in إِنَّ"
+            },
+            {
+                text: "قُلْ هُوَ اللَّهُ أَحَدٌ",
+                rule: "qalqalah",
+                explanation: "Contains qalqalah in قُلْ"
+            },
+            {
+                text: "مِنْ قَبْلُ",
+                rule: "ikhfa",
+                explanation: "Contains ikhfa in مِنْ"
+            },
+            {
+                text: "هُم بِمُؤْمِنِين",
+                rule: "ikhfa-meem",
+                explanation: "Contains ikhfa meem in هُم"
+            }
+        ];
+
+        let currentExampleIndex = 0;
+        let completedExercises = 0;
+        let correctAnswers = 0;
+
+        function showNextExample() {
+            const example = practiceExamples[currentExampleIndex];
+            document.getElementById('practice-text').textContent = example.text;
+            currentExampleIndex = (currentExampleIndex + 1) % practiceExamples.length;
+        }
+
+        function checkAnswer() {
+            completedExercises++;
+            // Implement answer checking logic
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('completed-exercises').textContent = completedExercises;
+            const accuracy = Math.round((correctAnswers / completedExercises) * 100);
+            document.getElementById('accuracy').textContent = `${accuracy}%`;
+        }
+
+        // Initialize first example
+        showNextExample();
     </script>
 </body>
 </html> 
