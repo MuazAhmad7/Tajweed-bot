@@ -467,72 +467,59 @@ def madd_audio_analysis():
         debug_log.append(f'Ayah text: {ayah_text}')
         debug_log.append(f'Words: {words}')
 
-        # 5. Detect Madd letters in each word
+        # Only check Madd Laazim for الضَّالِّينَ in the last ayah (ayah_number == 6)
         madd_results = []
-        for word in words:
-            norm_word = normalize_arabic_text(word)
-            for letter in ARABIC_MADD_LETTERS:
-                if letter in norm_word:
-                    madd_results.append({
-                        'ayah': ayah_number + 1,  # 1-based
-                        'word': word,
-                        'letter': letter,
-                        'type': 'Madd Asli',
-                        'text_expected': True
-                    })
-        debug_log.append(f'Madd instances: {madd_results}')
-
-        # 6. Estimate durations (improved: proportional to word length)
-        audio_duration = get_audio_duration_librosa(str(save_path))
-        debug_log.append(f'Audio duration: {audio_duration:.2f}s')
-        # Split ayah text into words and get their lengths
-        word_lengths = [len(normalize_arabic_text(w)) for w in words]
-        total_length = sum(word_lengths)
-        # Assign each word a proportional duration
-        word_durations = [(l / total_length) * audio_duration if total_length > 0 else 0 for l in word_lengths]
-        debug_log.append(f'Word durations: {word_durations}')
-
-        # 7. Madd detection and feedback (use per-word duration)
-        for madd in madd_results:
-            # Find the index of the word in the ayah
-            try:
-                word_idx = words.index(madd['word'])
-            except ValueError:
-                word_idx = 0
-            this_word_duration = word_durations[word_idx] if word_idx < len(word_durations) else 0
-            if this_word_duration < 0.4:
-                madd['madd_detected'] = False
-                madd['feedback'] = f"Madd too short on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s, should be at least 0.4s)"
-            elif this_word_duration > 0.7:
-                madd['madd_detected'] = False
-                madd['feedback'] = f"Madd too long on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s, should not exceed 0.7s)"
+        if ayah_number == 6:
+            # Find the index of الضَّالِّينَ (normalize for robustness)
+            target_word = None
+            for w in words:
+                if normalize_arabic_text(w) == normalize_arabic_text('الضَّالِّينَ'):
+                    target_word = w
+                    break
+            if target_word:
+                word_idx = words.index(target_word)
+                # Get audio duration and word durations
+                audio_duration = get_audio_duration_librosa(str(save_path))
+                debug_log.append(f'Audio duration: {audio_duration:.2f}s')
+                word_lengths = [len(normalize_arabic_text(w)) for w in words]
+                total_length = sum(word_lengths)
+                word_durations = [(l / total_length) * audio_duration if total_length > 0 else 0 for l in word_lengths]
+                debug_log.append(f'Word durations: {word_durations}')
+                this_word_duration = word_durations[word_idx] if word_idx < len(word_durations) else 0
+                # Madd Laazim feedback logic
+                mandatory_msg = 'Madd Laazim is a mandatory 6 count for the ending ayah.'
+                if this_word_duration < 2.0:
+                    feedback = f"❌ Madd Laazim too short on الضَّالِّينَ. {mandatory_msg}"
+                    madd_detected = False
+                elif this_word_duration > 3.0:
+                    feedback = f"❌ Madd Laazim too long on الضَّالِّينَ. {mandatory_msg}"
+                    madd_detected = False
+                else:
+                    feedback = f"✅ Madd Laazim correct on الضَّالِّينَ. {mandatory_msg}"
+                    madd_detected = True
+                madd_results.append({
+                    'ayah': ayah_number + 1,
+                    'word': target_word,
+                    'letter': '',
+                    'type': 'Madd Laazim',
+                    'madd_detected': madd_detected,
+                    'text_expected': True,
+                    'feedback': feedback,
+                })
+                debug_log.append(f"DEBUG: Madd Laazim analysis result: {madd_results}")
             else:
-                madd['madd_detected'] = True
-                madd['feedback'] = f"Madd correct on {madd['letter']} in {madd['word']} (duration: {this_word_duration:.2f}s)"
-        debug_log.append(f"DEBUG: Madd analysis results: {madd_results}")
-        debug_log.append('Final Madd analysis complete.')
+                debug_log.append('الضَّالِّينَ not found in last ayah words.')
+        else:
+            debug_log.append('Not last ayah, skipping Madd feedback.')
 
-        # 8. Prepare user-friendly results for frontend
-        user_friendly_results = []
-        for madd in madd_results:
-            user_friendly_results.append({
-                'ayah': madd['ayah'],
-                'word': madd['word'],
-                'letter': madd['letter'],
-                'type': madd['type'],
-                'madd_detected': madd['madd_detected'],
-                'text_expected': madd['text_expected'],
-                'feedback': madd['feedback'],
-            })
-
-        # 9. Clean up audio file only after all processing
+        # Clean up audio file only after all processing
         if save_path.exists():
             save_path.unlink()
             debug_log.append(f'Deleted audio file {save_path}')
 
         return jsonify({
             'status': 'done',
-            'results': user_friendly_results,
+            'results': madd_results,
             'debug': debug_log
         })
 
