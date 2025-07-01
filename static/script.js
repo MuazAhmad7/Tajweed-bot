@@ -372,10 +372,32 @@ function handleTranscription(text, ayahNumber, wordIndex, hasError) {
     }
 }
 
+// Check for browser media support
+function checkMediaSupport() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        // Add getUserMedia support for older browsers
+        navigator.mediaDevices = {};
+        navigator.mediaDevices.getUserMedia = function(constraints) {
+            const getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+            
+            if (!getUserMedia) {
+                return Promise.reject(new Error('getUserMedia is not supported in this browser'));
+            }
+            
+            return new Promise(function(resolve, reject) {
+                getUserMedia.call(navigator, constraints, resolve, reject);
+            });
+        }
+    }
+}
+
 // Start recording function
 async function startRecording(ayah) {
     try {
         console.log('Starting recording for ayah:', ayah.dataset.ayah);
+        
+        // Check media support first
+        checkMediaSupport();
         
         // Initialize WebSocket first
         initializeWebSocket();
@@ -392,18 +414,25 @@ async function startRecording(ayah) {
         
         // Request microphone permission with specific constraints
         console.log('Requesting microphone access...');
-        const stream = await navigator.mediaDevices.getUserMedia({
-            audio: {
-                channelCount: 1,
-                sampleRate: 16000,
-                echoCancellation: true,
-                noiseSuppression: true
-            }
-        });
+        let stream;
+        try {
+            stream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    channelCount: 1,
+                    sampleRate: 16000,
+                    echoCancellation: true,
+                    noiseSuppression: true
+                }
+            });
+        } catch (err) {
+            console.log('Failed with specific constraints, trying basic audio...', err);
+            // Fallback to basic audio constraints
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        }
         console.log('Microphone access granted, creating MediaRecorder...');
         
         // Create MediaRecorder instance with specific MIME type
-        const options = {
+        let options = {
             mimeType: 'audio/webm;codecs=opus',
             audioBitsPerSecond: 16000
         };
@@ -413,8 +442,35 @@ async function startRecording(ayah) {
             console.log('MediaRecorder created successfully');
         } catch (e) {
             console.warn('Failed to create MediaRecorder with preferred options, trying fallback...', e);
-            // Fallback to default options
-            mediaRecorder = new MediaRecorder(stream);
+            // Try different MIME types
+            const mimeTypes = [
+                'audio/webm',
+                'audio/ogg;codecs=opus',
+                'audio/ogg',
+                'audio/mp4'
+            ];
+            
+            for (const mimeType of mimeTypes) {
+                if (MediaRecorder.isTypeSupported(mimeType)) {
+                    options.mimeType = mimeType;
+                    try {
+                        mediaRecorder = new MediaRecorder(stream, options);
+                        console.log('MediaRecorder created with fallback MIME type:', mimeType);
+                        break;
+                    } catch (err) {
+                        console.warn('Failed with MIME type:', mimeType, err);
+                    }
+                }
+            }
+            
+            // If still no MediaRecorder, try without options
+            if (!mediaRecorder) {
+                mediaRecorder = new MediaRecorder(stream);
+            }
+        }
+        
+        if (!mediaRecorder) {
+            throw new Error('Failed to create MediaRecorder with any configuration');
         }
         
         audioChunks = [];
@@ -540,14 +596,21 @@ async function startRecording(ayah) {
         
     } catch (err) {
         console.error('Error starting recording:', err);
-        alert('Error accessing microphone. Please ensure microphone permissions are granted and try again.');
+        const errorMessage = err.name === 'NotAllowedError' 
+            ? 'Microphone access denied. Please grant microphone permissions and try again.'
+            : err.name === 'NotFoundError'
+            ? 'No microphone found. Please connect a microphone and try again.'
+            : 'Error accessing microphone. Please check your browser settings and try again.';
+        
+        showToast(errorMessage);
+        
         // Clean up UI if there's an error
         if (currentRecordingAyah) {
             currentRecordingAyah.classList.remove('recording');
         }
         currentRecordingAyah = null;
         isRecording = false;
-        throw err; // Re-throw to be handled by caller
+        throw err;  // Re-throw for the calling function to handle
     }
 }
 

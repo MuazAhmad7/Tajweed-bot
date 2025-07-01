@@ -18,6 +18,9 @@ import psutil
 import logging
 from datetime import datetime
 from utils.tajweed_checker import normalize_arabic_text, ARABIC_MADD_LETTERS, SURAH_FATIHA
+from multiprocessing import shared_memory
+import pickle
+import atexit
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -59,30 +62,91 @@ def log_request(req):
     except Exception as e:
         request_logger.error(f"Failed to log request: {e}")
 
-def transcribe_audio(audio_file):
-    """Transcribe audio using Whisper model, loading model only when needed to save memory."""
+# Global variables for model and processor
+global_processor = None
+global_model = None
+
+def load_models():
+    """Load models once and share between workers"""
+    global global_processor, global_model
+    if global_processor is None or global_model is None:
+        print("[MEM] Loading models...")
+        try:
+            # Try to access existing shared memory
+            shm = shared_memory.SharedMemory(name='whisper_model')
+            print("[MEM] Using existing model from shared memory")
+        except FileNotFoundError:
+            # First worker loads the model
+            print("[MEM] First worker loading model")
+            processor = AutoProcessor.from_pretrained(
+                "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
+                low_memory=True
+            )
+            model = AutoModelForSpeechSeq2Seq.from_pretrained(
+                "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
+                low_cpu_mem_usage=True,
+                torch_dtype=torch.float16  # Use half precision
+            )
+            # Move model to CPU and optimize memory
+            model = model.to('cpu').eval()
+            
+            # Create shared memory and store model
+            model_bytes = pickle.dumps((processor, model))
+            shm = shared_memory.SharedMemory(create=True, size=len(model_bytes), name='whisper_model')
+            shm.buf[:len(model_bytes)] = model_bytes
+            
+        # Load model from shared memory
+        model_bytes = bytes(shm.buf)
+        global_processor, global_model = pickle.loads(model_bytes)
+        print("[MEM] Models loaded successfully")
+
+def cleanup_shared_memory():
+    """Cleanup shared memory on shutdown"""
     try:
-        print("[MEM] Before model load:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
-        processor = AutoProcessor.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
-        model = AutoModelForSpeechSeq2Seq.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")
-        print("[MEM] After model load:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
+        shm = shared_memory.SharedMemory(name='whisper_model')
+        shm.close()
+        shm.unlink()
+    except FileNotFoundError:
+        pass
+
+# Register cleanup function
+atexit.register(cleanup_shared_memory)
+
+def transcribe_audio(audio_file):
+    """Transcribe audio using global model instance"""
+    global global_processor, global_model
+    try:
+        if global_processor is None or global_model is None:
+            load_models()
+            
         # Load and preprocess the audio
         speech, sr = librosa.load(audio_file, sr=16000)
         speech = speech.astype(np.float32)
+        
+        # Clear any unused memory
+        gc.collect()
+        torch.cuda.empty_cache() if torch.cuda.is_available() else None
+        
         # Process with Whisper model
-        inputs = processor(
+        inputs = global_processor(
             speech,
             sampling_rate=16000,
             return_tensors="pt"
         )
+        
         with torch.no_grad():
-            generated_ids = model.generate(inputs["input_features"])
-            transcription = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
-        print("[MEM] After transcription:", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
-        del processor
-        del model
+            generated_ids = global_model.generate(
+                inputs["input_features"],
+                max_length=225,
+                num_beams=1
+            )
+            transcription = global_processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
+        
+        # Clear temporary tensors
+        del inputs, generated_ids
         gc.collect()
-        print("[MEM] After gc.collect():", psutil.Process(os.getpid()).memory_info().rss / 1024 ** 2, "MB")
+        torch.cuda.empty_cache() if torch.cuda.is_available() else None
+        
         return transcription.strip()
     except Exception as e:
         print(f"Detailed transcription error: {str(e)}")
@@ -108,15 +172,32 @@ def tajweed_rules():
     print('DEBUG: Handling /tajweed-rules route')
     return render_template('tajweed_rules.html')
 
+def get_memory_usage():
+    """Get current memory usage in MB"""
+    process = psutil.Process(os.getpid())
+    return process.memory_info().rss / 1024 / 1024
+
+def log_memory(action):
+    """Log memory usage with a specific action"""
+    memory = get_memory_usage()
+    print(f"[MEMORY] {action}: {memory:.2f} MB")
+    return memory
+
 @sock.route('/ws')
 def handle_websocket(ws):
     print("WebSocket connection established")
     request_logger.info("WEBSOCKET: /ws connection established")
+    
+    # Log initial memory
+    initial_memory = log_memory("Initial memory before recording")
+    peak_memory = initial_memory
+    
     chunk_counter = 0
     temp_wav = None
-    target_ayah = None  # Store the target ayah number
+    target_ayah = None
     audio_chunks = []
     done = False
+    
     try:
         while not done:
             message = ws.receive()
@@ -124,108 +205,57 @@ def handle_websocket(ws):
                 print("WebSocket closed by client.")
                 request_logger.info("WEBSOCKET: closed by client")
                 break
+                
             # Check if this is a configuration or done message
             if isinstance(message, str):
                 try:
-                    config = json.loads(message)
-                    if 'target_ayah' in config:
-                        target_ayah = config['target_ayah']
-                        print(f"Received target ayah: {target_ayah}")
-                        request_logger.info(f"WEBSOCKET: Received target ayah: {target_ayah}")
-                        continue
-                    if config.get('type') == 'done':
-                        print("Received done message from client.")
-                        request_logger.info("WEBSOCKET: Received done message from client.")
+                    data = json.loads(message)
+                    if data.get('done'):
                         done = True
-                        continue
+                        # Log memory before processing
+                        pre_process_memory = log_memory("Memory before processing recording")
+                        
+                        # Process the recording
+                        result = process_recording(temp_wav, target_ayah)
+                        
+                        # Log memory after processing
+                        post_process_memory = log_memory("Memory after processing recording")
+                        peak_memory = max(peak_memory, post_process_memory)
+                        
+                        print(f"Memory used for processing: {post_process_memory - pre_process_memory:.2f} MB")
+                        print(f"Peak memory: {peak_memory:.2f} MB")
+                        
+                        # Cleanup
+                        gc.collect()
+                        torch.cuda.empty_cache() if torch.cuda.is_available() else None
+                        after_cleanup = log_memory("After cleanup")
+                        
+                        print(f"Memory freed by cleanup: {post_process_memory - after_cleanup:.2f} MB")
+                        
+                        ws.send(json.dumps(result))
+                    else:
+                        target_ayah = data.get('target_ayah')
+                        temp_wav = data.get('temp_wav')
                 except json.JSONDecodeError:
-                    print("Invalid JSON message received")
-                    request_logger.info("WEBSOCKET: Invalid JSON message received")
-                    continue
-            # Save audio chunk in memory
-            audio_chunks.append(message)
-            chunk_counter += 1
-        # After receiving all chunks, process the audio
-        if audio_chunks:
-            temp_wav = TEMP_DIR / f'ws_recording_{os.getpid()}.wav'
-            abs_temp_wav = temp_wav.absolute()
-            try:
-                with open(temp_wav, 'wb') as f:
-                    for chunk in audio_chunks:
-                        f.write(chunk)
-                print(f"Saved full audio to {abs_temp_wav}")
-                request_logger.info(f"WEBSOCKET: Saved full audio to {abs_temp_wav}")
-                # Transcription logic (same as before)
-                if target_ayah == "6":
-                    try:
-                        import soundfile as sf
-                        audio, sr = sf.read(str(abs_temp_wav))
-                        if sr != 16000:
-                            import librosa
-                            audio = librosa.resample(audio, orig_sr=sr, target_sr=16000)
-                    except Exception as sf_error:
-                        print(f"Direct audio processing failed: {sf_error}")
-                        request_logger.info(f"WEBSOCKET: Direct audio processing failed: {sf_error}")
-                        import wave
-                        with wave.open(str(abs_temp_wav), 'rb') as wf:
-                            audio = np.frombuffer(wf.readframes(wf.getnframes()), dtype=np.int16)
-                            audio = audio.astype(np.float32) / 32768.0
-                    inputs = AutoProcessor.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha")(
-                        audio,
-                        sampling_rate=16000,
-                        return_tensors="pt"
-                    )
-                    with torch.no_grad():
-                        generated_ids = AutoModelForSpeechSeq2Seq.from_pretrained("fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha").generate(inputs["input_features"])
-                        transcribed_text = inputs.batch_decode(generated_ids, skip_special_tokens=True)[0]
-                else:
-                    transcribed_text = transcribe_audio(str(abs_temp_wav))
-                print(f"Transcription result: {transcribed_text}")
-                request_logger.info(f"WEBSOCKET: Transcription result: {transcribed_text}")
-                if target_ayah is not None:
-                    ayah_number = int(target_ayah)
-                    word_index = 0
-                else:
-                    ayah_number, word_index = match_ayah_and_word(transcribed_text)
-                print(f"Using ayah {ayah_number}, word {word_index}")
-                request_logger.info(f"WEBSOCKET: Using ayah {ayah_number}, word {word_index}")
-                if ayah_number is not None:
-                    feedback = analyze_ayah(ayah_number, transcribed_text)
-                else:
-                    feedback = [{
-                        'type': 'error',
-                        'message': "Could not match recitation to any ayah of Surah Al-Fatiha"
-                    }]
-                response = {
-                    'type': 'transcription',
-                    'text': transcribed_text,
-                    'ayah_number': ayah_number,
-                    'word_index': word_index,
-                    'feedback': get_formatted_feedback(feedback)
-                }
-                ws.send(json.dumps(response))
-                print("Sent response to client")
-                request_logger.info("WEBSOCKET: Sent response to client")
-            except Exception as e:
-                print(f"Error processing audio: {e}")
-                import traceback
-                print(f"Error trace: {traceback.format_exc()}")
-                request_logger.error(f"WEBSOCKET: Error processing audio: {e}\n{traceback.format_exc()}")
-                ws.send(json.dumps({
-                    'type': 'error',
-                    'message': f'Processing failed: {str(e)}'
-                }))
-            finally:
-                if temp_wav and temp_wav.exists():
-                    temp_wav.unlink()
+                    print("Error decoding JSON message")
+                    request_logger.error("WEBSOCKET: Error decoding JSON message")
+            else:
+                # Handle binary audio data
+                audio_chunks.append(message)
+                chunk_counter += 1
+                current_memory = log_memory(f"Memory after chunk {chunk_counter}")
+                peak_memory = max(peak_memory, current_memory)
+                
     except Exception as e:
         print(f"WebSocket error: {e}")
-        import traceback
-        print(f"WebSocket error trace: {traceback.format_exc()}")
-        request_logger.error(f"WEBSOCKET: error: {e}\n{traceback.format_exc()}")
+        request_logger.error(f"WEBSOCKET: Error - {e}")
     finally:
-        if temp_wav and temp_wav.exists():
-            temp_wav.unlink()
+        # Final memory cleanup
+        gc.collect()
+        torch.cuda.empty_cache() if torch.cuda.is_available() else None
+        final_memory = log_memory("Final memory")
+        print(f"Total memory change: {final_memory - initial_memory:.2f} MB")
+        print(f"Peak memory reached: {peak_memory:.2f} MB")
 
 @app.route('/analyze', methods=['POST'])
 def analyze_audio():
@@ -527,6 +557,9 @@ def madd_audio_analysis():
         error = f'Internal error: {str(e)}'
         debug_log.append(error)
         return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 500
+
+# Load models when app starts
+load_models()
 
 if __name__ == '__main__':
     # Development server
