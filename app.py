@@ -21,6 +21,9 @@ from utils.tajweed_checker import normalize_arabic_text, ARABIC_MADD_LETTERS, SU
 from multiprocessing import shared_memory
 import pickle
 import atexit
+import sys
+import flask
+import werkzeug
 
 app = Flask(__name__)
 sock = Sock(app)
@@ -75,39 +78,58 @@ def load_models():
             # Try to access existing shared memory
             shm = shared_memory.SharedMemory(name='whisper_model')
             print("[MEM] Using existing model from shared memory")
-        except FileNotFoundError:
-            # First worker loads the model
-            print("[MEM] First worker loading model")
-            processor = AutoProcessor.from_pretrained(
-                "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
-                low_memory=True
-            )
-            model = AutoModelForSpeechSeq2Seq.from_pretrained(
-                "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
-                low_cpu_mem_usage=True,
-                torch_dtype=torch.float16  # Use half precision
-            )
-            # Move model to CPU and optimize memory
-            model = model.to('cpu').eval()
-            
-            # Create shared memory and store model
-            model_bytes = pickle.dumps((processor, model))
-            shm = shared_memory.SharedMemory(create=True, size=len(model_bytes), name='whisper_model')
-            shm.buf[:len(model_bytes)] = model_bytes
-            
-        # Load model from shared memory
-        model_bytes = bytes(shm.buf)
-        global_processor, global_model = pickle.loads(model_bytes)
-        print("[MEM] Models loaded successfully")
+            # Load model from shared memory
+            model_bytes = bytes(shm.buf)
+            global_processor, global_model = pickle.loads(model_bytes)
+            print("[MEM] Models loaded successfully from shared memory")
+        except (FileNotFoundError, pickle.UnpicklingError, EOFError, AttributeError) as e:
+            # First worker loads the model or handle shared memory errors
+            print(f"[MEM] Loading model directly: {str(e)}")
+            try:
+                processor = AutoProcessor.from_pretrained(
+                    "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
+                    low_memory=True
+                )
+                model = AutoModelForSpeechSeq2Seq.from_pretrained(
+                    "fawzanaramam/Whisper-Small-Finetuned-on-Surah-Fatiha",
+                    low_cpu_mem_usage=True,
+                    torch_dtype=torch.float16  # Use half precision
+                )
+                # Move model to CPU and optimize memory
+                model = model.to('cpu').eval()
+                
+                # Try to use shared memory if possible
+                try:
+                    # Create shared memory and store model
+                    model_bytes = pickle.dumps((processor, model))
+                    shm = shared_memory.SharedMemory(create=True, size=len(model_bytes), name='whisper_model')
+                    shm.buf[:len(model_bytes)] = model_bytes
+                    print("[MEM] Model saved to shared memory")
+                except Exception as shm_err:
+                    # If shared memory fails, just use the models directly
+                    print(f"[MEM] Shared memory failed, using models directly: {str(shm_err)}")
+                
+                global_processor = processor
+                global_model = model
+                print("[MEM] Models loaded successfully")
+            except Exception as model_err:
+                print(f"[MEM] Failed to load models: {str(model_err)}")
+                raise
 
 def cleanup_shared_memory():
     """Cleanup shared memory on shutdown"""
     try:
         shm = shared_memory.SharedMemory(name='whisper_model')
         shm.close()
-        shm.unlink()
+        try:
+            shm.unlink()
+            print("[MEM] Shared memory unlinked successfully")
+        except Exception as e:
+            print(f"[MEM] Could not unlink shared memory: {str(e)}")
     except FileNotFoundError:
-        pass
+        print("[MEM] No shared memory to clean up")
+    except Exception as e:
+        print(f"[MEM] Error during shared memory cleanup: {str(e)}")
 
 # Register cleanup function
 atexit.register(cleanup_shared_memory)
@@ -558,10 +580,34 @@ def madd_audio_analysis():
         debug_log.append(error)
         return jsonify({'status': 'error', 'error': error, 'debug': debug_log}), 500
 
+@app.route('/health')
+def health_check():
+    """Health check endpoint for monitoring"""
+    log_request(request)
+    try:
+        memory_usage = get_memory_usage()
+        python_version = sys.version
+        return jsonify({
+            'status': 'healthy',
+            'memory_usage_mb': round(memory_usage, 2),
+            'python_version': python_version,
+            'flask_version': flask.__version__,
+            'werkzeug_version': werkzeug.__version__,
+            'models_loaded': global_processor is not None and global_model is not None,
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({
+            'status': 'unhealthy',
+            'error': str(e),
+            'timestamp': datetime.now().isoformat()
+        }), 500
+
 # Load models when app starts
 load_models()
 
 if __name__ == '__main__':
     # Development server
     port = int(os.environ.get('PORT', 5001))
+    print(f"[INFO] Starting server on port {port}")
     app.run(debug=True, host='0.0.0.0', port=port) 
