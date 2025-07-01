@@ -1,29 +1,51 @@
-from flask import Flask, render_template, request, jsonify, send_file
-import os
-import whisper
-from pathlib import Path
-from utils.tajweed_checker import analyze_ayah, get_formatted_feedback
-from flask_sock import Sock
-import tempfile
-import numpy as np
-import torch
-from utils.text_matcher import match_ayah_and_word
-import wave
-import json
-import shutil
-from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
-import librosa
-import gc
-import psutil
-import logging
-from datetime import datetime
-from utils.tajweed_checker import normalize_arabic_text, ARABIC_MADD_LETTERS, SURAH_FATIHA
-from multiprocessing import shared_memory
-import pickle
-import atexit
 import sys
-import flask
-import werkzeug
+import traceback
+
+# Set up error logging
+try:
+    import logging
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='[%(asctime)s] [%(levelname)s] %(message)s',
+        handlers=[logging.StreamHandler(sys.stdout)]
+    )
+    logger = logging.getLogger(__name__)
+    logger.info("Starting application...")
+except Exception as e:
+    print(f"Failed to set up logging: {str(e)}")
+    traceback.print_exc()
+
+# Wrap imports in try-except to log specific import errors
+try:
+    from flask import Flask, render_template, request, jsonify, send_file
+    import os
+    import whisper
+    from pathlib import Path
+    from utils.tajweed_checker import analyze_ayah, get_formatted_feedback
+    from flask_sock import Sock
+    import tempfile
+    import numpy as np
+    import torch
+    from utils.text_matcher import match_ayah_and_word
+    import wave
+    import json
+    import shutil
+    from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
+    import librosa
+    import gc
+    import psutil
+    from datetime import datetime
+    from utils.tajweed_checker import normalize_arabic_text, ARABIC_MADD_LETTERS, SURAH_FATIHA
+    from multiprocessing import shared_memory
+    import pickle
+    import atexit
+    import flask
+    import werkzeug
+    logger.info("All imports successful")
+except ImportError as e:
+    print(f"Import error: {str(e)}")
+    traceback.print_exc()
+    sys.exit(1)
 
 app = Flask(__name__)
 sock = Sock(app)
