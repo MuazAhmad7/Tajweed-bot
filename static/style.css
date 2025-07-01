@@ -1492,4 +1492,82 @@ h1, h2, h3, h4, h5, h6 {
 .ikhfa-meem:hover { color: var(--ikhfa-meem-color); filter: brightness(1.1); }
 .idghaam:hover { color: var(--idghaam-color); filter: brightness(1.1); }
 .silent:hover { color: var(--silent-color); filter: brightness(1.1); }
-.tafkheem:hover { color: var(--tafkheem-color); filter: brightness(1.1); } 
+.tafkheem:hover { color: var(--tafkheem-color); filter: brightness(1.1); }
+
+/* Madd Debug JSON Styles */
+.madd-debug-container {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.madd-debug-toggle {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.madd-debug-toggle::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.madd-debug-toggle[aria-expanded="true"]::after {
+    transform: rotate(180deg);
+}
+
+.madd-debug-json {
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.madd-debug-json.show {
+    max-height: 500px;
+    overflow-y: auto;
+    transition: max-height 0.5s ease-in;
+}
+
+/* Add custom scrollbar for the debug JSON */
+.madd-debug-json::-webkit-scrollbar {
+    width: 8px;
+}
+
+.madd-debug-json::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border-radius: 4px;
+}
+
+.madd-debug-json::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.madd-debug-json::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-text);
+}
+
+[data-theme="dark"] .madd-debug-json {
+    background: var(--card-background);
+    color: var(--text-color);
+    border-color: var(--border-color);
+} 

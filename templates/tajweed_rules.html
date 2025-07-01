@@ -346,6 +346,7 @@
             width: 100%;
             min-height: 100vh;
             box-sizing: border-box;
+            position: relative;
         }
 
         /* Introduction section */
@@ -491,15 +492,14 @@
 
         .rule-section {
             position: sticky;
-            top: 20px;
-            margin-bottom: 4rem;
+            top: 15vh; /* Moved up from 25vh to 15vh */
+            margin-bottom: 2rem;
             padding: 2rem;
             border-radius: 15px;
             width: 90%;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            transform: rotate(var(--tilt-angle));
             transition: all 0.3s ease;
             height: 400px;
             display: flex;
@@ -507,10 +507,12 @@
             justify-content: center;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            z-index: 1;
+            transform: rotate(var(--tilt-angle));
         }
 
         .rule-section:hover {
-            transform: rotate(0deg) translateY(-5px);
+            transform: rotate(0deg);
             box-shadow: 0 8px 25px rgba(0, 0, 0, var(--shadow-opacity));
         }
 
@@ -609,6 +611,7 @@
         /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 50vh; /* Adjust scroll padding to account for sticky positioning */
         }
 
         /* Responsive design */
@@ -765,15 +768,24 @@
             padding: 2rem;
             display: flex;
             flex-direction: column;
-            gap: 4rem;
+            gap: 60vh; /* Reduced space between cards */
             align-items: center;
             box-sizing: border-box;
-            min-height: 500vh;
         }
 
-        /* Remove all problematic positioning and transitions */
-        .rule-section::after {
-            display: none;
+        /* Add spacing before rules container */
+        .rules-container::before {
+            content: '';
+            display: block;
+            height: 0.5vh; /* Reduced from 50vh to 30vh */
+            width: 100%;
+        }
+
+        /* Ensure proper spacing after rules */
+        .practice-section {
+            position: relative;
+            z-index: 2;
+            margin-top: 30vh; /* Reduced from 50vh to 30vh */
         }
 
         /* Add animation classes */
@@ -1054,60 +1066,62 @@
             </div>
         </div>
 
-        <div class="rules-container">
-            <div id="madd-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Madd (Prolongation)</h2>
-                    <p>When certain letters are followed by specific signs, their sound should be extended. This rule applies to the letters ا, و, and ي when they have a sukoon or when followed by a hamza.</p>
-                    <div class="arabic-example">فِيهَا ، قَالُوا ، آمَنُوا</div>
-            </div>
-            </div>
-
-            <div id="ghunnah-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Ghunnah (Nasal Sound)</h2>
-                    <p>A nasal sound that occurs with the letters ن and م when they have a shaddah. The sound should be held for approximately two counts.</p>
-                    <div class="arabic-example">ثُمَّ ، إِنَّ ، مِمَّا</div>
-            </div>
-            </div>
-
-            <div id="qalqalah-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Qalqalah (Echoing Sound)</h2>
-                    <p>An echoing sound that occurs with five letters (ق ط ب ج د) when they have a sukoon or at the end of a word. The sound bounces back with a slight echo.</p>
-                    <div class="arabic-example">يَجْعَلْ ، أَحَد ، خَلَقْ</div>
-            </div>
-            </div>
-
-            <div id="ikhfa-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Ikhfa (Concealment)</h2>
-                    <p>When a noon sakinah or tanween is followed by any of the 15 ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
-                    <div class="arabic-example">مِنْ قَبْلُ ، عَذَابٌ شَدِيدٌ</div>
-            </div>
-            </div>
-
-            <div id="ikhfa-meem-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Ikhfa Meem Saakin</h2>
-                    <p>When a meem with sukoon is followed by the letter ب, it is pronounced with a light nasal sound while hiding the meem.</p>
-                    <div class="arabic-example">هُم بِمُؤْمِنِين</div>
-            </div>
-            </div>
-
-            <div id="idghaam-rule" class="rule-section">
-            <div class="rule-content">
-                    <h2>Idghaam (Merging)</h2>
-                    <p>When noon sakinah or tanween is followed by specific letters (ي ر م ل و ن), the noon sound merges into the following letter.</p>
-                    <div class="arabic-example">مِن نَّذِيرٍ ، خَيْرٌ لَّكُمْ</div>
-            </div>
-            </div>
-
-            <div id="silent-rule" class="rule-section">
+        <div class="scroll-wrapper">
+            <div class="rules-container">
+                <div id="madd-rule" class="rule-section">
                 <div class="rule-content">
-                    <h2>Silent Letters</h2>
-                    <p>Certain letters in the Quran are written but not pronounced during recitation. These letters are usually marked with a small circle above them.</p>
-                    <div class="arabic-example">اهْدِنَا ، قَالُوا</div>
+                        <h2>Madd (Prolongation)</h2>
+                        <p>When certain letters are followed by specific signs, their sound should be extended. This rule applies to the letters ا, و, and ي when they have a sukoon or when followed by a hamza.</p>
+                        <div class="arabic-example">فِيهَا ، قَالُوا ، آمَنُوا</div>
+                </div>
+                </div>
+
+                <div id="ghunnah-rule" class="rule-section">
+                <div class="rule-content">
+                        <h2>Ghunnah (Nasal Sound)</h2>
+                        <p>A nasal sound that occurs with the letters ن and م when they have a shaddah. The sound should be held for approximately two counts.</p>
+                        <div class="arabic-example">ثُمَّ ، إِنَّ ، مِمَّا</div>
+                </div>
+                </div>
+
+                <div id="qalqalah-rule" class="rule-section">
+                <div class="rule-content">
+                        <h2>Qalqalah (Echoing Sound)</h2>
+                        <p>An echoing sound that occurs with five letters (ق ط ب ج د) when they have a sukoon or at the end of a word. The sound bounces back with a slight echo.</p>
+                        <div class="arabic-example">يَجْعَلْ ، أَحَد ، خَلَقْ</div>
+                </div>
+                </div>
+
+                <div id="ikhfa-rule" class="rule-section">
+                <div class="rule-content">
+                        <h2>Ikhfa (Concealment)</h2>
+                        <p>When a noon sakinah or tanween is followed by any of the 15 ikhfa letters, the noon sound is hidden and pronounced with a nasal sound.</p>
+                        <div class="arabic-example">مِنْ قَبْلُ ، عَذَابٌ شَدِيدٌ</div>
+                </div>
+                </div>
+
+                <div id="ikhfa-meem-rule" class="rule-section">
+                <div class="rule-content">
+                        <h2>Ikhfa Meem Saakin</h2>
+                        <p>When a meem with sukoon is followed by the letter ب, it is pronounced with a light nasal sound while hiding the meem.</p>
+                        <div class="arabic-example">هُم بِمُؤْمِنِين</div>
+                </div>
+                </div>
+
+                <div id="idghaam-rule" class="rule-section">
+                <div class="rule-content">
+                        <h2>Idghaam (Merging)</h2>
+                        <p>When noon sakinah or tanween is followed by specific letters (ي ر م ل و ن), the noon sound merges into the following letter.</p>
+                        <div class="arabic-example">مِن نَّذِيرٍ ، خَيْرٌ لَّكُمْ</div>
+                </div>
+                </div>
+
+                <div id="silent-rule" class="rule-section">
+                    <div class="rule-content">
+                        <h2>Silent Letters</h2>
+                        <p>Certain letters in the Quran are written but not pronounced during recitation. These letters are usually marked with a small circle above them.</p>
+                        <div class="arabic-example">اهْدِنَا ، قَالُوا</div>
+                    </div>
                 </div>
             </div>
         </div>

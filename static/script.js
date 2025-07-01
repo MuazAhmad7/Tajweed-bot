@@ -810,10 +810,18 @@ function renderMaddFeedbackCard(maddResults, maddDebug, maddStatus) {
     // Debug box (collapsible)
     debugBox.innerHTML = `
         <div class="madd-debug-container">
-            <button class="madd-debug-toggle" onclick="this.nextElementSibling.classList.toggle('show')">Show Madd Debug JSON</button>
+            <button class="madd-debug-toggle" aria-expanded="false" onclick="toggleDebugJson(this)">Show Madd Debug JSON</button>
             <pre class="madd-debug-json">${JSON.stringify(maddDebug, null, 2)}</pre>
         </div>
     `;
+}
+
+function toggleDebugJson(button) {
+    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', !isExpanded);
+    button.textContent = isExpanded ? 'Show Madd Debug JSON' : 'Hide Madd Debug JSON';
+    const jsonElement = button.nextElementSibling;
+    jsonElement.classList.toggle('show');
 }
 
 // Show toast message function
