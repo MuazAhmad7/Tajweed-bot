@@ -10,6 +10,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/static/images/logo1.png">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         /* Quran page specific theme colors */
         :root {
@@ -321,6 +322,107 @@
                 height: 35px;
             }
         }
+
+        /* Main content wrapper - contains legend, selector, and surah content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        /* Surah Selector Styles - Minimal Design */
+        .surah-selector-container {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            padding: 0 1rem;
+        }
+
+        .surah-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .surah-selector label {
+            font-weight: 500;
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        .surah-dropdown {
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--card-background);
+            color: var(--text-color);
+            font-size: 0.95rem;
+            font-family: 'Amiri', serif;
+            min-width: 200px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .surah-dropdown:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 6px rgba(212, 175, 55, 0.15);
+        }
+
+        .surah-dropdown:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Dark mode adjustments for surah selector */
+        [data-theme="dark"] .surah-dropdown {
+            background: var(--card-background);
+            border-color: var(--border-color);
+            color: var(--text-color);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .surah-dropdown:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 6px rgba(212, 175, 55, 0.25);
+        }
+
+        [data-theme="dark"] .surah-dropdown:focus {
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Responsive adjustments for surah selector */
+        @media (max-width: 768px) {
+            .surah-selector-container {
+                margin: 1rem 0;
+            }
+            
+            .surah-selector {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            
+            .surah-dropdown {
+                min-width: 180px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .surah-selector-container {
+                margin: 0.75rem 0;
+                padding: 0 0.5rem;
+            }
+            
+            .surah-dropdown {
+                min-width: 160px;
+                font-size: 0.85rem;
+                padding: 0.5rem 0.7rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -345,37 +447,162 @@
     </nav>
 
     <div class="container">
-        <div class="tajweed-legend">
-            <h3>Tajweed Rules Guide</h3>
-            <div class="legend-items">
-                <div class="legend-item" data-tooltip="Indicates where a vowel sound should be extended">
-                    <div class="color-box" style="background-color: var(--madd-color)"></div>
-                    <span>Madd (Prolongation)</span>
+        <div class="main-content">
+            <div class="tajweed-legend">
+                <h3>Tajweed Rules Guide</h3>
+                <div class="legend-items">
+                    <div class="legend-item" data-tooltip="Indicates where a vowel sound should be extended">
+                        <div class="color-box" style="background-color: var(--madd-color)"></div>
+                        <span>Madd (Prolongation)</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Signifies nasalization, typically occurring with letters like ن (Noon) and م (Meem) when they have a Shaddah">
+                        <div class="color-box" style="background-color: var(--ghunnah-color)"></div>
+                        <span>Ghunnah (Nasal Sound)</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Marks letters that should be pronounced with an echoing sound, such as ق (Qaf), ط (Ta), ب (Ba), ج (Jeem), and د (Dal)">
+                        <div class="color-box" style="background-color: var(--qalqalah-color)"></div>
+                        <span>Qalqalah (Echoing Sound)</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Indicates a nasalized sound that is between Idgham and Izhar, occurring when ن (Noon) or Tanween is followed by specific letters">
+                        <div class="color-box" style="background-color: var(--ikhfa-color)"></div>
+                        <span>Ikhfa (Concealment)</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Denotes the rule applied when م (Meem) with a Sukoon is followed by ب (Ba), resulting in a nasal sound">
+                        <div class="color-box" style="background-color: var(--ikhfa-meem-color)"></div>
+                        <span>Ikhfa Meem Saakin</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Highlights where a letter should be merged into the next, often resulting in a doubled letter with a Shaddah">
+                        <div class="color-box" style="background-color: var(--idghaam-color)"></div>
+                        <span>Idghaam (Merging)</span>
+                    </div>
+                    <div class="legend-item" data-tooltip="Used for letters that are written but not pronounced during recitation">
+                        <div class="color-box" style="background-color: var(--silent-color)"></div>
+                        <span>Silent Letters</span>
+                    </div>
                 </div>
-                <div class="legend-item" data-tooltip="Signifies nasalization, typically occurring with letters like ن (Noon) and م (Meem) when they have a Shaddah">
-                    <div class="color-box" style="background-color: var(--ghunnah-color)"></div>
-                    <span>Ghunnah (Nasal Sound)</span>
-                </div>
-                <div class="legend-item" data-tooltip="Marks letters that should be pronounced with an echoing sound, such as ق (Qaf), ط (Ta), ب (Ba), ج (Jeem), and د (Dal)">
-                    <div class="color-box" style="background-color: var(--qalqalah-color)"></div>
-                    <span>Qalqalah (Echoing Sound)</span>
-                </div>
-                <div class="legend-item" data-tooltip="Indicates a nasalized sound that is between Idgham and Izhar, occurring when ن (Noon) or Tanween is followed by specific letters">
-                    <div class="color-box" style="background-color: var(--ikhfa-color)"></div>
-                    <span>Ikhfa (Concealment)</span>
-                </div>
-                <div class="legend-item" data-tooltip="Denotes the rule applied when م (Meem) with a Sukoon is followed by ب (Ba), resulting in a nasal sound">
-                    <div class="color-box" style="background-color: var(--ikhfa-meem-color)"></div>
-                    <span>Ikhfa Meem Saakin</span>
-                </div>
-                <div class="legend-item" data-tooltip="Highlights where a letter should be merged into the next, often resulting in a doubled letter with a Shaddah">
-                    <div class="color-box" style="background-color: var(--idghaam-color)"></div>
-                    <span>Idghaam (Merging)</span>
-                </div>
-                <div class="legend-item" data-tooltip="Used for letters that are written but not pronounced during recitation">
-                    <div class="color-box" style="background-color: var(--silent-color)"></div>
-                    <span>Silent Letters</span>
-                </div>
+            </div>
+
+            <!-- Surah Selector -->
+            <div class="surah-selector-container">
+                <div class="surah-selector">
+                    <label for="surah-select">Select Surah:</label>
+                    <select id="surah-select" class="surah-dropdown">
+                    <option value="1" selected>1. Al-Fatiha (الفاتحة)</option>
+                    <option value="113">113. Al-Falaq (الفلق)</option>
+                    <option value="2">2. Al-Baqarah (البقرة)</option>
+                    <option value="3">3. Ali 'Imran (آل عمران)</option>
+                    <option value="4">4. An-Nisa (النساء)</option>
+                    <option value="5">5. Al-Ma'idah (المائدة)</option>
+                    <option value="6">6. Al-An'am (الأنعام)</option>
+                    <option value="7">7. Al-A'raf (الأعراف)</option>
+                    <option value="8">8. Al-Anfal (الأنفال)</option>
+                    <option value="9">9. At-Tawbah (التوبة)</option>
+                    <option value="10">10. Yunus (يونس)</option>
+                    <option value="11">11. Hud (هود)</option>
+                    <option value="12">12. Yusuf (يوسف)</option>
+                    <option value="13">13. Ar-Ra'd (الرعد)</option>
+                    <option value="14">14. Ibrahim (إبراهيم)</option>
+                    <option value="15">15. Al-Hijr (الحجر)</option>
+                    <option value="16">16. An-Nahl (النحل)</option>
+                    <option value="17">17. Al-Isra (الإسراء)</option>
+                    <option value="18">18. Al-Kahf (الكهف)</option>
+                    <option value="19">19. Maryam (مريم)</option>
+                    <option value="20">20. Ta-Ha (طه)</option>
+                    <option value="21">21. Al-Anbya (الأنبياء)</option>
+                    <option value="22">22. Al-Hajj (الحج)</option>
+                    <option value="23">23. Al-Mu'minun (المؤمنون)</option>
+                    <option value="24">24. An-Nur (النور)</option>
+                    <option value="25">25. Al-Furqan (الفرقان)</option>
+                    <option value="26">26. Ash-Shu'ara (الشعراء)</option>
+                    <option value="27">27. An-Naml (النمل)</option>
+                    <option value="28">28. Al-Qasas (القصص)</option>
+                    <option value="29">29. Al-'Ankabut (العنكبوت)</option>
+                    <option value="30">30. Ar-Rum (الروم)</option>
+                    <option value="31">31. Luqman (لقمان)</option>
+                    <option value="32">32. As-Sajdah (السجدة)</option>
+                    <option value="33">33. Al-Ahzab (الأحزاب)</option>
+                    <option value="34">34. Saba (سبأ)</option>
+                    <option value="35">35. Fatir (فاطر)</option>
+                    <option value="36">36. Ya-Sin (يس)</option>
+                    <option value="37">37. As-Saffat (الصافات)</option>
+                    <option value="38">38. Sad (ص)</option>
+                    <option value="39">39. Az-Zumar (الزمر)</option>
+                    <option value="40">40. Ghafir (غافر)</option>
+                    <option value="41">41. Fussilat (فصلت)</option>
+                    <option value="42">42. Ash-Shuraa (الشورى)</option>
+                    <option value="43">43. Az-Zukhruf (الزخرف)</option>
+                    <option value="44">44. Ad-Dukhan (الدخان)</option>
+                    <option value="45">45. Al-Jathiyah (الجاثية)</option>
+                    <option value="46">46. Al-Ahqaf (الأحقاف)</option>
+                    <option value="47">47. Muhammad (محمد)</option>
+                    <option value="48">48. Al-Fath (الفتح)</option>
+                    <option value="49">49. Al-Hujurat (الحجرات)</option>
+                    <option value="50">50. Qaf (ق)</option>
+                    <option value="51">51. Adh-Dhariyat (الذاريات)</option>
+                    <option value="52">52. At-Tur (الطور)</option>
+                    <option value="53">53. An-Najm (النجم)</option>
+                    <option value="54">54. Al-Qamar (القمر)</option>
+                    <option value="55">55. Ar-Rahman (الرحمن)</option>
+                    <option value="56">56. Al-Waqi'ah (الواقعة)</option>
+                    <option value="57">57. Al-Hadid (الحديد)</option>
+                    <option value="58">58. Al-Mujadila (المجادلة)</option>
+                    <option value="59">59. Al-Hashr (الحشر)</option>
+                    <option value="60">60. Al-Mumtahanah (الممتحنة)</option>
+                    <option value="61">61. As-Saff (الصف)</option>
+                    <option value="62">62. Al-Jumu'ah (الجمعة)</option>
+                    <option value="63">63. Al-Munafiqun (المنافقون)</option>
+                    <option value="64">64. At-Taghabun (التغابن)</option>
+                    <option value="65">65. At-Talaq (الطلاق)</option>
+                    <option value="66">66. At-Tahrim (التحريم)</option>
+                    <option value="67">67. Al-Mulk (الملك)</option>
+                    <option value="68">68. Al-Qalam (القلم)</option>
+                    <option value="69">69. Al-Haqqah (الحاقة)</option>
+                    <option value="70">70. Al-Ma'arij (المعارج)</option>
+                    <option value="71">71. Nuh (نوح)</option>
+                    <option value="72">72. Al-Jinn (الجن)</option>
+                    <option value="73">73. Al-Muzzammil (المزمل)</option>
+                    <option value="74">74. Al-Muddaththir (المدثر)</option>
+                    <option value="75">75. Al-Qiyamah (القيامة)</option>
+                    <option value="76">76. Al-Insan (الإنسان)</option>
+                    <option value="77">77. Al-Mursalat (المرسلات)</option>
+                    <option value="78">78. An-Naba (النبأ)</option>
+                    <option value="79">79. An-Nazi'at (النازعات)</option>
+                    <option value="80">80. 'Abasa (عبس)</option>
+                    <option value="81">81. At-Takwir (التكوير)</option>
+                    <option value="82">82. Al-Infitar (الانفطار)</option>
+                    <option value="83">83. Al-Mutaffifin (المطففين)</option>
+                    <option value="84">84. Al-Inshiqaq (الانشقاق)</option>
+                    <option value="85">85. Al-Buruj (البروج)</option>
+                    <option value="86">86. At-Tariq (الطارق)</option>
+                    <option value="87">87. Al-A'la (الأعلى)</option>
+                    <option value="88">88. Al-Ghashiyah (الغاشية)</option>
+                    <option value="89">89. Al-Fajr (الفجر)</option>
+                    <option value="90">90. Al-Balad (البلد)</option>
+                    <option value="91">91. Ash-Shams (الشمس)</option>
+                    <option value="92">92. Al-Layl (الليل)</option>
+                    <option value="93">93. Ad-Duhaa (الضحى)</option>
+                    <option value="94">94. Ash-Sharh (الشرح)</option>
+                    <option value="95">95. At-Tin (التين)</option>
+                    <option value="96">96. Al-'Alaq (العلق)</option>
+                    <option value="97">97. Al-Qadr (القدر)</option>
+                    <option value="98">98. Al-Bayyinah (البينة)</option>
+                    <option value="99">99. Az-Zalzalah (الزلزلة)</option>
+                    <option value="100">100. Al-'Adiyat (العاديات)</option>
+                    <option value="101">101. Al-Qari'ah (القارعة)</option>
+                    <option value="102">102. At-Takathur (التكاثر)</option>
+                    <option value="103">103. Al-'Asr (العصر)</option>
+                    <option value="104">104. Al-Humazah (الهمزة)</option>
+                    <option value="105">105. Al-Fil (الفيل)</option>
+                    <option value="106">106. Quraysh (قريش)</option>
+                    <option value="107">107. Al-Ma'un (الماعون)</option>
+                    <option value="108">108. Al-Kawthar (الكوثر)</option>
+                    <option value="109">109. Al-Kafirun (الكافرون)</option>
+                    <option value="110">110. An-Nasr (النصر)</option>
+                    <option value="111">111. Al-Masad (المسد)</option>
+                    <option value="112">112. Al-Ikhlas (الإخلاص)</option>
+                    <option value="113">113. Al-Falaq (الفلق)</option>
+                    <option value="114">114. An-Nas (الناس)</option>
+                </select>
             </div>
         </div>
 
@@ -639,6 +866,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
 
         <div class="feedback-container">

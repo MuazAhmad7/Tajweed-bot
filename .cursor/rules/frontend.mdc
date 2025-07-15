@@ -1,0 +1,4 @@
+---
+alwaysApply: true
+---
+Always double check if formatting is proper. For example if a new button is added dont move containers to random place or to the right of the screen when it was in the middle. 

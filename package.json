@@ -1,0 +1,28 @@
+{
+  "name": "tajweed-bot",
+  "version": "1.0.0",
+  "description": "An interactive web application that helps users learn and practice Tajweed rules while reciting Surah Al-Fatiha. The application uses speech recognition to provide real-time feedback on recitation and highlights Tajweed rules.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MuazAhmad7/Tajweed-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MuazAhmad7/Tajweed-bot/issues"
+  },
+  "homepage": "https://github.com/MuazAhmad7/Tajweed-bot#readme",
+  "dependencies": {
+    "animejs": "^4.0.2",
+    "framer-motion": "^12.23.5",
+    "gsap": "^3.13.0"
+  }
+}
