@@ -27,7 +27,11 @@
     --ikhfa-meem-color: #ED64A6;   /* Pink for Ikhfa Meem */
     --idghaam-color: #F6AD55;      /* Light Orange for Idgham */
     --silent-color: #9F7AEA;       /* Purple for Silent Letters */
-    --tafkheem-color: #ED8936;     /* Light Brown for Heavy Letters */
+    --tafkheem-color: #ED8936;     /* Orange for Heavy Letters (Tafkheem) */
+    --ithhar-color: #10B981;       /* Emerald Green for Ithhar */
+    --hamzat-wasl-color: #8B5CF6;  /* Purple for Hamzat Al-Wasl */
+    --laam-shamsiyya-color: #F59E0B; /* Amber for Laam Shamsiyya */
+    --shaddah-color: #EF4444;      /* Red for Shaddah */
     
     --highlight-color: rgba(212, 175, 55, 0.3);
     --error-highlight: rgba(239, 68, 68, 0.3);
@@ -68,6 +72,10 @@
     --idghaam-color: #f0e68c;      /* Khaki for Idgham */
     --silent-color: #a9a9a9;       /* Dark Gray for Silent Letters */
     --tafkheem-color: #deb887;     /* Burlywood for Heavy Letters */
+    --ithhar-color: #20c997;       /* Lighter Emerald for Ithhar */
+    --hamzat-wasl-color: #a78bfa;  /* Lighter Purple for Hamzat Al-Wasl */
+    --laam-shamsiyya-color: #fbbf24; /* Lighter Amber for Laam Shamsiyya */
+    --shaddah-color: #f87171;      /* Lighter Red for Shaddah */
     
     --highlight-color: rgba(255, 215, 0, 0.3);
     --error-highlight: rgba(248, 113, 113, 0.3);
@@ -665,7 +673,8 @@ input:checked + .slider:before {
 }
 
 /* Tajweed Color Classes - No glow effect */
-.madd, .ghunnah, .qalqalah, .ikhfa, .ikhfa-meem, .idghaam, .silent, .tafkheem {
+.madd, .ghunnah, .qalqalah, .ikhfa, .ikhfa-meem, .idghaam, .silent, .tafkheem, 
+.ithhar, .hamzat-wasl, .laam-shamsiyya, .shaddah {
     transition: opacity 0.2s ease;
 }
 
@@ -677,6 +686,10 @@ input:checked + .slider:before {
 .idghaam { color: var(--idghaam-color); }
 .silent { color: var(--silent-color); }
 .tafkheem { color: var(--tafkheem-color); }
+.ithhar { color: var(--ithhar-color); }
+.hamzat-wasl { color: var(--hamzat-wasl-color); }
+.laam-shamsiyya { color: var(--laam-shamsiyya-color); }
+.shaddah { color: var(--shaddah-color); }
 
 .word:hover .madd,
 .word:hover .ghunnah,
@@ -1493,6 +1506,10 @@ h1, h2, h3, h4, h5, h6 {
 .idghaam:hover { color: var(--idghaam-color); filter: brightness(1.1); }
 .silent:hover { color: var(--silent-color); filter: brightness(1.1); }
 .tafkheem:hover { color: var(--tafkheem-color); filter: brightness(1.1); }
+.ithhar:hover { color: var(--ithhar-color); filter: brightness(1.1); }
+.hamzat-wasl:hover { color: var(--hamzat-wasl-color); filter: brightness(1.1); }
+.laam-shamsiyya:hover { color: var(--laam-shamsiyya-color); filter: brightness(1.1); }
+.shaddah:hover { color: var(--shaddah-color); filter: brightness(1.1); }
 
 /* Madd Debug JSON Styles */
 .madd-debug-container {
@@ -1570,4 +1587,55 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--card-background);
     color: var(--text-color);
     border-color: var(--border-color);
+}
+
+/* Toast notification styles - Minimal Design */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--card-background);
+    color: var(--text-color);
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    font-weight: 400;
+    font-size: 0.9rem;
+    text-align: center;
+    max-width: 400px;
+    word-wrap: break-word;
+    animation: toastSlideIn 0.25s ease-out;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes toastSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+[data-theme="dark"] .toast {
+    background: rgba(18, 18, 18, 0.9);
+    border-color: var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile adjustments for toast */
+@media (max-width: 768px) {
+    .toast {
+        top: 15px;
+        max-width: calc(100vw - 2rem);
+        margin: 0 1rem;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
 } 

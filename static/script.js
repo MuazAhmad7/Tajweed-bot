@@ -6,6 +6,159 @@ let ws = null;
 let currentRecordingAyah = null;
 let tooltipTimeout = null;
 let currentReciter = 'mishary'; // Default reciter
+let currentSurah = 1; // Default to Al-Fatiha
+
+// Surah data
+const surahData = {
+    1: {
+        name: "Al-Fatiha",
+        arabicName: "الفاتحة",
+        ayahs: [
+            {
+                arabic: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+                translation: "In the Name of Allah—the Most Compassionate, Most Merciful.",
+                transliteration: "Bismil laahir Rahmaanir Raheem",
+                words: [
+                    { text: "بِسْمِ", root: "بسم", trans: "In (the) name", translit: "bis'mi" },
+                    { text: "ٱللَّهِ", root: "الله", trans: "(of) Allah", translit: "al-lahi", tajweed: "ghunnah" },
+                    { text: "ٱلرَّحْمَٰنِ", root: "رحم", trans: "the Most Gracious", translit: "al-rahmani", tajweed: "ghunnah madd" },
+                    { text: "ٱلرَّحِيمِ", root: "رحم", trans: "the Most Merciful", translit: "al-rahimi", tajweed: "ghunnah madd" }
+                ]
+            },
+            {
+                arabic: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+                translation: "All praise is for Allah—Lord of all worlds",
+                transliteration: "Alhamdu lillaahi Rabbil 'aalameen",
+                words: [
+                    { text: "ٱلْحَمْدُ", root: "حمد", trans: "All praises and thanks", translit: "al-hamdu", tajweed: "hamzat-wasl" },
+                    { text: "لِلَّهِ", root: "الله", trans: "(be) to Allah", translit: "lillahi", tajweed: "ghunnah" },
+                    { text: "رَبِّ", root: "ربب", trans: "the Lord", translit: "rabbi", tajweed: "ghunnah shaddah" },
+                    { text: "ٱلْعَٰلَمِينَ", root: "علم", trans: "of the universe", translit: "al-'alamina", tajweed: "hamzat-wasl madd" }
+                ]
+            },
+            {
+                arabic: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+                translation: "the Most Compassionate, Most Merciful",
+                transliteration: "Ar-Rahmaanir Raheem",
+                words: [
+                    { text: "ٱلرَّحْمَٰنِ", root: "رحم", trans: "The Most Gracious", translit: "al-rahmani", tajweed: "hamzat-wasl ghunnah shaddah madd" },
+                    { text: "ٱلرَّحِيمِ", root: "رحم", trans: "the Most Merciful", translit: "al-rahimi", tajweed: "hamzat-wasl ghunnah shaddah madd" }
+                ]
+            },
+            {
+                arabic: "مَٰلِكِ يَوْمِ ٱلدِّينِ",
+                translation: "Master of the Day of Judgment",
+                transliteration: "Maaliki Yawmid Deen",
+                words: [
+                    { text: "مَٰلِكِ", root: "ملك", trans: "(The) Master", translit: "maliki", tajweed: "madd" },
+                    { text: "يَوْمِ", root: "يوم", trans: "(of the) Day", translit: "yawmi" },
+                    { text: "ٱلدِّينِ", root: "دين", trans: "(of the) Judgment", translit: "al-dini", tajweed: "hamzat-wasl ghunnah shaddah madd" }
+                ]
+            },
+            {
+                arabic: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+                translation: "You ˹alone˺ we worship and You ˹alone˺ we ask for help",
+                transliteration: "iyyaaka na'budu wa-iyyaaka nasta'een",
+                words: [
+                    { text: "إِيَّاكَ", root: "ايا", trans: "You Alone", translit: "iyyaka", tajweed: "shaddah madd" },
+                    { text: "نَعْبُدُ", root: "عبد", trans: "we worship", translit: "na'budu" },
+                    { text: "وَإِيَّاكَ", root: "ايا", trans: "and You Alone", translit: "wa-iyyaka", tajweed: "shaddah madd" },
+                    { text: "نَسْتَعِينُ", root: "عون", trans: "we ask for help", translit: "nasta'inu", tajweed: "madd" }
+                ]
+            },
+            {
+                arabic: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ",
+                translation: "Guide us along the Straight Path",
+                transliteration: "ihdinas Siraatal Mustaqeem",
+                words: [
+                    { text: "ٱهْدِنَا", root: "هدي", trans: "Guide us", translit: "ih'dina", tajweed: "hamzat-wasl" },
+                    { text: "ٱلصِّرَٰطَ", root: "صرط", trans: "(to) the path", translit: "al-sirata", tajweed: "hamzat-wasl laam-shamsiyya tafkheem shaddah" },
+                    { text: "ٱلْمُسْتَقِيمَ", root: "قوم", trans: "the straight", translit: "al-mus'taqima", tajweed: "hamzat-wasl madd" }
+                ]
+            },
+            {
+                arabic: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+                translation: "the Path of those You have blessed—not those You are displeased with, or those who are astray",
+                transliteration: "Siraatal lazeena an'amta alaihim ghayril maghdoobi alaihim wa-lad daaalleen",
+                words: [
+                    { text: "صِرَٰطَ", root: "صرط", trans: "(The) path", translit: "sirata", tajweed: "tafkheem" },
+                    { text: "ٱلَّذِينَ", root: "الذين", trans: "(of) those", translit: "alladhina", tajweed: "hamzat-wasl ghunnah shaddah madd" },
+                    { text: "أَنْعَمْتَ", root: "نعم", trans: "You have bestowed (Your) Favors", translit: "an'amta", tajweed: "ithhar" },
+                    { text: "عَلَيْهِمْ", root: "علي", trans: "on them", translit: "alayhim" },
+                    { text: "غَيْرِ", root: "غير", trans: "not (of)", translit: "ghayri" },
+                    { text: "ٱلْمَغْضُوبِ", root: "غضب", trans: "those who earned (Your) wrath", translit: "al-maghdubi", tajweed: "hamzat-wasl tafkheem" },
+                    { text: "عَلَيْهِمْ", root: "علي", trans: "on themselves", translit: "alayhim" },
+                    { text: "وَلَا", root: "لا", trans: "and not", translit: "wala" },
+                    { text: "ٱلضَّآلِّينَ", root: "ضلل", trans: "(of) those who go astray", translit: "al-dalina", tajweed: "hamzat-wasl ghunnah shaddah madd" }
+                ]
+            }
+        ]
+    },
+    113: {
+        name: "Al-Falaq",
+        arabicName: "الفلق",
+        ayahs: [
+            {
+                arabic: "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ",
+                translation: "Say, ˹O Prophet,˺ \"I seek refuge in the Lord of the daybreak",
+                transliteration: "Qul a'oodhu bi rabbil falaq",
+                words: [
+                    { text: "قُلْ", root: "قول", trans: "Say", translit: "qul", tajweed: "tafkheem" },
+                    { text: "أَعُوذُ", root: "عوذ", trans: "I seek refuge", translit: "a'oodhu" },
+                    { text: "بِرَبِّ", root: "ربب", trans: "in (the) Lord", translit: "bi-rabbi", tajweed: "shaddah" },
+                    { text: "ٱلْفَلَقِ", root: "فلق", trans: "(of) the daybreak", translit: "al-falaq", tajweed: "hamzat-wasl qalqalah" }
+                ]
+            },
+            {
+                arabic: "مِن شَرِّ مَا خَلَقَ",
+                translation: "from the evil of whatever He has created,",
+                transliteration: "Min sharri maa khalaq",
+                words: [
+                    { text: "مِن", root: "من", trans: "From", translit: "min", tajweed: "ikhfa" },
+                    { text: "شَرِّ", root: "شرر", trans: "(the) evil", translit: "sharri", tajweed: "shaddah" },
+                    { text: "مَا", root: "ما", trans: "(of) what", translit: "maa", tajweed: "madd" },
+                    { text: "خَلَقَ", root: "خلق", trans: "He created", translit: "khalaq", tajweed: "qalqalah" }
+                ]
+            },
+            {
+                arabic: "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+                translation: "and from the evil of the night when it grows dark,",
+                transliteration: "Wa min sharri ghaasiqin idhaa waqab",
+                words: [
+                    { text: "وَمِن", root: "من", trans: "And from", translit: "wa-min", tajweed: "ikhfa" },
+                    { text: "شَرِّ", root: "شرر", trans: "(the) evil", translit: "sharri", tajweed: "shaddah" },
+                    { text: "غَاسِقٍ", root: "غسق", trans: "(of the) darkness", translit: "ghaasiqin", tajweed: "madd ithhar" },
+                    { text: "إِذَا", root: "اذا", trans: "when", translit: "idhaa", tajweed: "madd" },
+                    { text: "وَقَبَ", root: "وقب", trans: "it settles", translit: "waqab", tajweed: "qalqalah" }
+                ]
+            },
+            {
+                arabic: "وَمِن شَرِّ ٱلنَّفَّـٰثَـٰتِ فِى ٱلْعُقَدِ",
+                translation: "and from the evil of those ˹witches˺ who blow on knots,",
+                transliteration: "Wa min sharrin naffaathaati fil 'uqad",
+                words: [
+                    { text: "وَمِن", root: "من", trans: "And from", translit: "wa-min", tajweed: "ikhfa" },
+                    { text: "شَرِّ", root: "شرر", trans: "(the) evil", translit: "sharri", tajweed: "shaddah" },
+                    { text: "ٱلنَّفَّـٰثَـٰتِ", root: "نفث", trans: "(of) the blowers", translit: "an-naffaathaati", tajweed: "hamzat-wasl ghunnah shaddah madd" },
+                    { text: "فِى", root: "في", trans: "in", translit: "fee", tajweed: "hamzat-wasl" },
+                    { text: "ٱلْعُقَدِ", root: "عقد", trans: "the knots", translit: "al-'uqad", tajweed: "hamzat-wasl" }
+                ]
+            },
+            {
+                arabic: "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+                translation: "and from the evil of an envier when they envy.\"",
+                transliteration: "Wa min sharri haasidin idhaa hasad",
+                words: [
+                    { text: "وَمِن", root: "من", trans: "And from", translit: "wa-min", tajweed: "ikhfa" },
+                    { text: "شَرِّ", root: "شرر", trans: "(the) evil", translit: "sharri", tajweed: "shaddah" },
+                    { text: "حَاسِدٍ", root: "حسد", trans: "(of) an envier", translit: "haasidin", tajweed: "madd ithhar" },
+                    { text: "إِذَا", root: "اذا", trans: "when", translit: "idhaa", tajweed: "madd" },
+                    { text: "حَسَدَ", root: "حسد", trans: "he envies", translit: "hasad", tajweed: "qalqalah" }
+                ]
+            }
+        ]
+    }
+};
 
 const processingMessages = [
     "Whispering your ayah to the neural net",
@@ -47,6 +200,204 @@ function handleThemeChange(isDark) {
             pointLight2.color.setHex(isDark ? 0x42a5f5 : 0x90caf9);
         }
     }
+}
+
+// Function to render a word with Tajweed highlighting
+function renderWord(word, wordIndex) {
+    const tajweedClasses = word.tajweed ? word.tajweed.split(' ').map(t => t.trim()).join(' ') : '';
+    return `<span class="word ${tajweedClasses}" data-word="${wordIndex}" data-root="${word.root}" data-trans="${word.trans}" data-translit="${word.translit}">${word.text}</span>`;
+}
+
+// Function to render an ayah
+function renderAyah(ayah, ayahIndex) {
+    const wordsHtml = ayah.words.map((word, wordIndex) => renderWord(word, wordIndex)).join(' ');
+    const ayahNumber = ayahIndex + 1;
+    const arabicNumber = ['١', '٢', '٣', '٤', '٥', '٦', '٧'][ayahIndex] || `${ayahNumber}`;
+    
+    return `
+        <div class="ayah" data-ayah="${ayahIndex}">
+            <div class="ayah-content">
+                <p class="arabic" dir="rtl">
+                    ${wordsHtml}
+                    <span class="ayah-marker" data-number="${arabicNumber}"></span>
+                </p>
+                <p class="translation">${ayah.translation}</p>
+                <p class="transliteration">${ayah.transliteration}</p>
+                <div class="ayah-controls">
+                    <button class="play-btn" aria-label="Play ayah">
+                        <svg class="play-icon" viewBox="0 0 24 24" width="24" height="24">
+                            <path class="play-path" d="M8 5v14l11-7z"/>
+                        </svg>
+                    </button>
+                    <div class="options-menu">
+                        <button class="options-btn" aria-label="More options">⋮</button>
+                        <div class="options-content">
+                            <div class="reciter-select">
+                                <label>Select Reciter:</label>
+                                <select>
+                                    <option value="ayyoub">Sheikh Mohammad Ayyoub</option>
+                                    <option value="hudhaify">Sheikh Ali Al-Hudhaify</option>
+                                    <option value="maher">Sheikh Maher Al-Muaiqly</option>
+                                    <option value="minshawy">Sheikh Mohamed Siddiq El-Minshawi</option>
+                                    <option value="mishary">Sheikh Mishary Rashid Alafasy</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <audio class="ayah-audio"></audio>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Function to render a complete surah
+function renderSurah(surahNumber) {
+    const surah = surahData[surahNumber];
+    if (!surah) return '';
+    
+    return surah.ayahs.map((ayah, index) => renderAyah(ayah, index)).join('');
+}
+
+// Function to transition between surahs with animation
+function transitionToSurah(newSurahNumber) {
+    if (currentSurah === newSurahNumber) return;
+    
+    const surahContainer = document.querySelector('.surah-container');
+    const feedbackCards = document.querySelectorAll('.feedback-card');
+    
+    // Clear feedback cards
+    feedbackCards.forEach(card => {
+        const emptyState = card.querySelector('.empty-state');
+        const feedbackMessages = card.querySelector('.feedback-messages');
+        if (emptyState) emptyState.style.display = 'block';
+        if (feedbackMessages) feedbackMessages.innerHTML = '<p class="empty-state">Feedback will appear here after recording</p>';
+    });
+    
+    // Animate out current ayahs
+    anime({
+        targets: '.ayah',
+        opacity: 0,
+        translateX: -50,
+        duration: 400,
+        delay: anime.stagger(50),
+        easing: 'easeInQuart',
+        complete: function() {
+            // Update current surah
+            currentSurah = newSurahNumber;
+            
+            // Render new surah
+            surahContainer.innerHTML = renderSurah(newSurahNumber);
+            
+            // Re-attach event listeners to new ayahs
+            attachAyahEventListeners();
+            
+            // Animate in new ayahs
+            anime({
+                targets: '.ayah',
+                opacity: [0, 1],
+                translateX: [50, 0],
+                duration: 600,
+                delay: anime.stagger(100, {start: 200}),
+                easing: 'easeOutQuart'
+            });
+            
+            // Show success message
+            const surah = surahData[newSurahNumber];
+            showToast(`${surah.name} (${surah.arabicName})`);
+        }
+    });
+}
+
+// Function to attach event listeners to ayahs
+function attachAyahEventListeners() {
+    const ayahs = document.querySelectorAll('.ayah');
+    ayahs.forEach(ayah => {
+        // Remove any existing listeners to prevent duplicates
+        ayah.removeEventListener('click', handleAyahClick);
+        ayah.addEventListener('click', handleAyahClick);
+    });
+    
+    // Re-attach word tooltip listeners
+    attachWordTooltipListeners();
+    
+    // Re-attach audio control listeners
+    attachAudioControlListeners();
+}
+
+// Function to attach word tooltip listeners
+function attachWordTooltipListeners() {
+    const words = document.querySelectorAll('.word');
+    words.forEach(word => {
+        word.removeEventListener('mouseenter', handleWordHover);
+        word.removeEventListener('mouseleave', handleWordLeave);
+        word.addEventListener('mouseenter', handleWordHover);
+        word.addEventListener('mouseleave', handleWordLeave);
+    });
+}
+
+// Function to attach audio control listeners
+function attachAudioControlListeners() {
+    const playBtns = document.querySelectorAll('.play-btn');
+    const optionsBtns = document.querySelectorAll('.options-btn');
+    
+    playBtns.forEach(btn => {
+        btn.removeEventListener('click', handlePlayClick);
+        btn.addEventListener('click', handlePlayClick);
+    });
+    
+    optionsBtns.forEach(btn => {
+        btn.removeEventListener('click', handleOptionsClick);
+        btn.addEventListener('click', handleOptionsClick);
+    });
+}
+
+// Event handlers for word tooltips
+function handleWordHover(e) {
+    e.stopPropagation();
+    const word = e.target;
+    if (!word.classList.contains('word')) return;
+    
+    const tooltip = document.getElementById('root-tooltip');
+    const root = word.getAttribute('data-root');
+    const trans = word.getAttribute('data-trans');
+    const translit = word.getAttribute('data-translit');
+    
+    if (root && trans && translit) {
+        tooltip.innerHTML = `
+            <div class="tooltip-content">
+                <div class="root">Root: ${root}</div>
+                <div class="trans">Meaning: ${trans}</div>
+                <div class="translit">Pronunciation: ${translit}</div>
+            </div>
+        `;
+        
+        const rect = word.getBoundingClientRect();
+        tooltip.style.left = `${rect.left + rect.width / 2}px`;
+        tooltip.style.top = `${rect.bottom + 10}px`;
+        tooltip.classList.add('show');
+        word.classList.add('word-highlight');
+    }
+}
+
+function handleWordLeave(e) {
+    const tooltip = document.getElementById('root-tooltip');
+    const word = e.target;
+    tooltip.classList.remove('show');
+    word.classList.remove('word-highlight');
+}
+
+// Event handlers for audio controls
+function handlePlayClick(e) {
+    e.stopPropagation();
+    // Placeholder for audio functionality
+    console.log('Play button clicked');
+}
+
+function handleOptionsClick(e) {
+    e.stopPropagation();
+    const optionsMenu = e.target.closest('.options-menu');
+    optionsMenu.classList.toggle('active');
 }
 
 // Wait for the DOM to be fully loaded
@@ -277,6 +628,31 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+
+    // Initialize surah selector
+    const surahSelect = document.getElementById('surah-select');
+    if (surahSelect) {
+        surahSelect.addEventListener('change', function(e) {
+            const selectedSurah = parseInt(e.target.value);
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            
+            // Handle surah selection
+            if (selectedSurah === currentSurah) {
+                const surah = surahData[selectedSurah];
+                showToast(`Already on ${surah.name}`);
+            } else if (selectedSurah === 1 || selectedSurah === 113) {
+                // Transition to available surahs
+                transitionToSurah(selectedSurah);
+            } else {
+                // Show coming soon message for other surahs
+                showToast(`Coming soon! Only Al-Fatiha & Al-Falaq available.`);
+                // Reset to current surah
+                setTimeout(() => {
+                    e.target.value = currentSurah.toString();
+                }, 2000);
+            }
+        });
+    }
 });
 
 // Handle ayah click
