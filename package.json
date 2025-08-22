@@ -11,6 +11,7 @@
     "build": "echo \"✅ Static website build check complete - no build process needed for Flask app\"",
     "dev": "python3 app_static.py",
     "start": "python3 app_static.py",
+    "railway:deploy": "echo 'Deploying static website to Railway...'",
     "lint": "echo \"No JavaScript linter configured - using IDE/editor linting\"",
     "check": "echo \"🔍 Checking static assets...\" && echo \"✅ All static files are ready for deployment\""
   },
