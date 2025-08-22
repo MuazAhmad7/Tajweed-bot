@@ -674,22 +674,33 @@ input:checked + .slider:before {
 
 /* Tajweed Color Classes - No glow effect */
 .madd, .ghunnah, .qalqalah, .ikhfa, .ikhfa-meem, .idghaam, .silent, .tafkheem, 
-.ithhar, .hamzat-wasl, .laam-shamsiyya, .shaddah {
+.ithhar, .hamzat-wasl, .laam-shamsiyya, .shaddah,
+.letter.madd, .letter.ghunnah, .letter.qalqalah, .letter.ikhfa, .letter.ikhfa-meem, 
+.letter.idghaam, .letter.silent, .letter.tafkheem, .letter.ithhar, .letter.hamzat-wasl, 
+.letter.laam-shamsiyya, .letter.shaddah {
     transition: opacity 0.2s ease;
 }
 
-.madd { color: var(--madd-color); }
-.ghunnah { color: var(--ghunnah-color); }
-.qalqalah { color: var(--qalqalah-color); }
-.ikhfa { color: var(--ikhfa-color); }
-.ikhfa-meem { color: var(--ikhfa-meem-color); }
-.idghaam { color: var(--idghaam-color); }
-.silent { color: var(--silent-color); }
-.tafkheem { color: var(--tafkheem-color); }
-.ithhar { color: var(--ithhar-color); }
-.hamzat-wasl { color: var(--hamzat-wasl-color); }
-.laam-shamsiyya { color: var(--laam-shamsiyya-color); }
-.shaddah { color: var(--shaddah-color); }
+.madd, .letter.madd { color: var(--madd-color); }
+.ghunnah, .letter.ghunnah { color: var(--ghunnah-color); }
+.qalqalah, .letter.qalqalah { color: var(--qalqalah-color); }
+
+/* Higher specificity for qalqalah when combined with other classes */
+.qalqalah.hamzat-wasl,
+.hamzat-wasl.qalqalah,
+.letter.qalqalah.hamzat-wasl,
+.letter.hamzat-wasl.qalqalah {
+    color: var(--qalqalah-color) !important;
+}
+.ikhfa, .letter.ikhfa { color: var(--ikhfa-color); }
+.ikhfa-meem, .letter.ikhfa-meem { color: var(--ikhfa-meem-color); }
+.idghaam, .letter.idghaam { color: var(--idghaam-color); }
+.silent, .letter.silent { color: var(--silent-color); }
+.tafkheem, .letter.tafkheem { color: var(--tafkheem-color); }
+.ithhar, .letter.ithhar { color: var(--ithhar-color); }
+.hamzat-wasl, .letter.hamzat-wasl { color: var(--hamzat-wasl-color); }
+.laam-shamsiyya, .letter.laam-shamsiyya { color: var(--laam-shamsiyya-color); }
+.shaddah, .letter.shaddah { color: var(--shaddah-color); }
 
 .word:hover .madd,
 .word:hover .ghunnah,
@@ -1638,4 +1649,112 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 0.85rem;
         padding: 0.5rem 0.8rem;
     }
+}
+
+/* Analysis Results Styling */
+.analysis-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--card-background);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.analysis-section h4 {
+    margin: 0 0 12px 0;
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.transcribed-text {
+    font-size: 18px;
+    padding: 12px;
+    background: var(--background-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-family: 'Amiri', serif;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.ayah-info {
+    padding: 12px;
+    background: var(--background-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.ayah-arabic {
+    font-size: 18px;
+    font-family: 'Amiri', serif;
+    color: var(--primary-color);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.ayah-translation {
+    font-size: 14px;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.madd-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.madd-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: var(--background-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.madd-word {
+    font-family: 'Amiri', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--primary-color);
+    min-width: 80px;
+}
+
+.madd-type {
+    font-size: 12px;
+    padding: 4px 8px;
+    background: var(--secondary-color);
+    color: white;
+    border-radius: 4px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+}
+
+.madd-feedback {
+    font-size: 14px;
+    color: var(--text-color);
+    flex: 1;
+}
+
+.demo-note {
+    background: linear-gradient(135deg, #FEF3C7, #FBBF24);
+    border-color: #F59E0B;
+}
+
+[data-theme="dark"] .demo-note {
+    background: linear-gradient(135deg, #451A03, #92400E);
+    border-color: #F59E0B;
+}
+
+.demo-note .feedback-text {
+    color: #92400E;
+}
+
+[data-theme="dark"] .demo-note .feedback-text {
+    color: #FEF3C7;
 } 

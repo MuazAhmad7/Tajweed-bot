@@ -72,7 +72,19 @@ const surahData = {
                 transliteration: "ihdinas Siraatal Mustaqeem",
                 words: [
                     { text: "ٱهْدِنَا", root: "هدي", trans: "Guide us", translit: "ih'dina", tajweed: "hamzat-wasl" },
-                    { text: "ٱلصِّرَٰطَ", root: "صرط", trans: "(to) the path", translit: "al-sirata", tajweed: "hamzat-wasl laam-shamsiyya tafkheem shaddah" },
+                    { 
+                        text: "ٱلصِّرَٰطَ", 
+                        root: "صرط", 
+                        trans: "(to) the path", 
+                        translit: "al-sirata",
+                        letters: [
+                            { letter: "ٱ", tajweed: "hamzat-wasl" },
+                            { letter: "لْ", tajweed: "laam-shamsiyya" },
+                            { letter: "صِّ", tajweed: "tafkheem shaddah" },
+                            { letter: "رَٰ", tajweed: "tafkheem madd" },
+                            { letter: "طَ", tajweed: "tafkheem qalqalah" }
+                        ]
+                    },
                     { text: "ٱلْمُسْتَقِيمَ", root: "قوم", trans: "the straight", translit: "al-mus'taqima", tajweed: "hamzat-wasl madd" }
                 ]
             },
@@ -81,7 +93,7 @@ const surahData = {
                 translation: "the Path of those You have blessed—not those You are displeased with, or those who are astray",
                 transliteration: "Siraatal lazeena an'amta alaihim ghayril maghdoobi alaihim wa-lad daaalleen",
                 words: [
-                    { text: "صِرَٰطَ", root: "صرط", trans: "(The) path", translit: "sirata", tajweed: "tafkheem" },
+                    { text: "صِرَٰطَ", root: "صرط", trans: "(The) path", translit: "sirata", tajweed: "tafkheem qalqalah" },
                     { text: "ٱلَّذِينَ", root: "الذين", trans: "(of) those", translit: "alladhina", tajweed: "hamzat-wasl ghunnah shaddah madd" },
                     { text: "أَنْعَمْتَ", root: "نعم", trans: "You have bestowed (Your) Favors", translit: "an'amta", tajweed: "ithhar" },
                     { text: "عَلَيْهِمْ", root: "علي", trans: "on them", translit: "alayhim" },
@@ -106,7 +118,19 @@ const surahData = {
                     { text: "قُلْ", root: "قول", trans: "Say", translit: "qul", tajweed: "tafkheem" },
                     { text: "أَعُوذُ", root: "عوذ", trans: "I seek refuge", translit: "a'oodhu" },
                     { text: "بِرَبِّ", root: "ربب", trans: "in (the) Lord", translit: "bi-rabbi", tajweed: "shaddah" },
-                    { text: "ٱلْفَلَقِ", root: "فلق", trans: "(of) the daybreak", translit: "al-falaq", tajweed: "hamzat-wasl qalqalah" }
+                    { 
+                        text: "ٱلْفَلَقِ", 
+                        root: "فلق", 
+                        trans: "(of) the daybreak", 
+                        translit: "al-falaq",
+                        letters: [
+                            { letter: "ٱ", tajweed: "hamzat-wasl" },
+                            { letter: "لْ", tajweed: "laam-shamsiyya" },
+                            { letter: "فَ", tajweed: "" },
+                            { letter: "لَ", tajweed: "" },
+                            { letter: "قِ", tajweed: "qalqalah" }
+                        ]
+                    }
                 ]
             },
             {
@@ -141,7 +165,19 @@ const surahData = {
                     { text: "شَرِّ", root: "شرر", trans: "(the) evil", translit: "sharri", tajweed: "shaddah" },
                     { text: "ٱلنَّفَّـٰثَـٰتِ", root: "نفث", trans: "(of) the blowers", translit: "an-naffaathaati", tajweed: "hamzat-wasl ghunnah shaddah madd" },
                     { text: "فِى", root: "في", trans: "in", translit: "fee", tajweed: "hamzat-wasl" },
-                    { text: "ٱلْعُقَدِ", root: "عقد", trans: "the knots", translit: "al-'uqad", tajweed: "hamzat-wasl" }
+                    { 
+                        text: "ٱلْعُقَدِ", 
+                        root: "عقد", 
+                        trans: "the knots", 
+                        translit: "al-'uqad",
+                        letters: [
+                            { letter: "ٱ", tajweed: "hamzat-wasl" },
+                            { letter: "لْ", tajweed: "" },
+                            { letter: "عُ", tajweed: "" },
+                            { letter: "قَ", tajweed: "" },
+                            { letter: "دِ", tajweed: "qalqalah" }
+                        ]
+                    }
                 ]
             },
             {
@@ -204,8 +240,18 @@ function handleThemeChange(isDark) {
 
 // Function to render a word with Tajweed highlighting
 function renderWord(word, wordIndex) {
-    const tajweedClasses = word.tajweed ? word.tajweed.split(' ').map(t => t.trim()).join(' ') : '';
-    return `<span class="word ${tajweedClasses}" data-word="${wordIndex}" data-root="${word.root}" data-trans="${word.trans}" data-translit="${word.translit}">${word.text}</span>`;
+    // Check if word has letter-by-letter breakdown
+    if (word.letters && word.letters.length > 0) {
+        const lettersHtml = word.letters.map(letterObj => {
+            const tajweedClasses = letterObj.tajweed ? letterObj.tajweed.split(' ').map(t => t.trim()).join(' ') : '';
+            return `<span class="letter ${tajweedClasses}">${letterObj.letter}</span>`;
+        }).join('');
+        return `<span class="word" data-word="${wordIndex}" data-root="${word.root}" data-trans="${word.trans}" data-translit="${word.translit}">${lettersHtml}</span>`;
+    } else {
+        // Fallback to old word-level coloring for words without letter breakdown
+        const tajweedClasses = word.tajweed ? word.tajweed.split(' ').map(t => t.trim()).join(' ') : '';
+        return `<span class="word ${tajweedClasses}" data-word="${wordIndex}" data-root="${word.root}" data-trans="${word.trans}" data-translit="${word.translit}">${word.text}</span>`;
+    }
 }
 
 // Function to render an ayah
@@ -676,21 +722,53 @@ async function handleAyahClick(e) {
     console.log('Ayah clicked:', ayah.dataset.ayah, 'Current recording state:', isRecording);
     
     try {
-        if (isRecording && currentRecordingAyah === ayah) {
-            console.log('Stopping recording for current ayah');
-            await stopRecording();
-        } else {
-            console.log('Starting recording');
-            if (isRecording) {
-                console.log('Stopping previous recording first');
-                await stopRecording();
+        // Check if we're in static mode
+        const response = await fetch('/health');
+        const health = await response.json();
+        
+        if (health.mode === 'static') {
+            // Handle static mode clicks
+            if (isRecording && currentRecordingAyah === ayah) {
+                console.log('Stopping simulated recording for current ayah');
+                stopSimulatedRecording(ayah);
+            } else {
+                console.log('Starting simulated recording');
+                if (isRecording && currentRecordingAyah) {
+                    console.log('Stopping previous simulated recording first');
+                    stopSimulatedRecording(currentRecordingAyah);
+                }
+                simulateRecording(ayah);
             }
-            await startRecording(ayah);
+        } else {
+            // Handle full mode clicks (original logic)
+            if (isRecording && currentRecordingAyah === ayah) {
+                console.log('Stopping recording for current ayah');
+                await stopRecording();
+            } else {
+                console.log('Starting recording');
+                if (isRecording) {
+                    console.log('Stopping previous recording first');
+                    await stopRecording();
+                }
+                await startRecording(ayah);
+            }
         }
     } catch (err) {
         console.error('Error handling ayah click:', err);
-        alert('Error with recording. Please ensure microphone permissions are granted.');
-        await stopRecording();
+        // In static mode, just show a message instead of an alert
+        try {
+            const response = await fetch('/health');
+            const health = await response.json();
+            if (health.mode === 'static') {
+                console.log('Static mode error handled gracefully');
+            } else {
+                alert('Error with recording. Please ensure microphone permissions are granted.');
+                await stopRecording();
+            }
+        } catch {
+            alert('Error with recording. Please ensure microphone permissions are granted.');
+            await stopRecording();
+        }
     }
 }
 
@@ -767,10 +845,210 @@ function checkMediaSupport() {
     }
 }
 
+// Simulate recording for static mode with all visual feedback
+function simulateRecording(ayah) {
+    console.log('🎙️ STATIC MODE: Simulating recording for ayah:', ayah.dataset.ayah);
+    
+    // Add recording class immediately for visual feedback
+    ayah.classList.add('recording');
+    currentRecordingAyah = ayah;
+    isRecording = true;
+    
+    // Store the timeout ID so we can cancel it if user clicks again
+    const recordingTimeout = setTimeout(() => {
+        stopSimulatedRecording(ayah);
+    }, 3000);
+    
+    // Store timeout ID on the ayah element for potential cancellation
+    ayah.recordingTimeout = recordingTimeout;
+}
+
+function stopSimulatedRecording(ayah) {
+    // Clear any existing timeout
+    if (ayah.recordingTimeout) {
+        clearTimeout(ayah.recordingTimeout);
+        ayah.recordingTimeout = null;
+    }
+    
+    // Stop recording visually
+    ayah.classList.remove('recording');
+    currentRecordingAyah = null;
+    isRecording = false;
+    
+    // Show a realistic feedback message based on the ayah
+    setTimeout(() => {
+        console.log('🎯 Generating static mode feedback...');
+        const feedbackCards = document.querySelectorAll('.feedback-card');
+        console.log('📊 Found feedback cards:', feedbackCards.length);
+        const tajweedFeedbackCard = feedbackCards[1]; // Second card is for Tajweed Feedback
+        const ayahNumber = parseInt(ayah.dataset.ayah);
+        console.log('🔢 Processing ayah number:', ayahNumber);
+        const exampleFeedback = generateExampleFeedback(ayahNumber);
+        
+        if (tajweedFeedbackCard) {
+            console.log('✅ Updating feedback card with analysis...');
+            tajweedFeedbackCard.innerHTML = exampleFeedback;
+            tajweedFeedbackCard.style.display = 'block';
+        } else {
+            console.error('❌ Could not find tajweed feedback card');
+        }
+    }, 500);
+}
+
+function generateExampleFeedback(ayahNumber) {
+    console.log('🔍 Debug surahData:', surahData);
+    console.log('🔍 Debug currentSurah:', currentSurah);
+    console.log('🔍 Debug ayahNumber:', ayahNumber);
+    
+    // Get the current surah data safely
+    let ayahData = null;
+    let ayahText = "الآية";
+    let ayahTranslation = "The verse";
+    
+    try {
+        if (surahData && surahData.surahs) {
+            const surahIndex = currentSurah === 1 ? 0 : 1;
+            const currentSurahData = surahData.surahs[surahIndex];
+            if (currentSurahData && currentSurahData.ayahs && currentSurahData.ayahs[ayahNumber]) {
+                ayahData = currentSurahData.ayahs[ayahNumber];
+                ayahText = ayahData.arabic || "الآية";
+                ayahTranslation = ayahData.translation || "The verse";
+            }
+        }
+    } catch (error) {
+        console.error('❌ Error getting ayah data:', error);
+    }
+    
+    // Define example feedback for different ayahs
+    const exampleFeedbacks = {
+        0: {
+            transcription: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+            tajweed: [
+                { type: "success", icon: "✅", text: "Excellent Hamzat Al-Wasl pronunciation in 'ٱللَّهِ'" },
+                { type: "success", icon: "✅", text: "Correct Madd Tabiyi elongation in 'ٱلرَّحْمَٰنِ'" },
+                { type: "warning", icon: "⚠️", text: "Good Shaddah emphasis, could be slightly stronger" }
+            ],
+            madd: [
+                { word: "ٱلرَّحْمَٰنِ", type: "Madd Tabiyi", detected: true, feedback: "✅ Correct 2-count elongation" },
+                { word: "ٱلرَّحِيمِ", type: "Madd Tabiyi", detected: true, feedback: "✅ Perfect natural elongation" }
+            ]
+        },
+        1: {
+            transcription: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ",
+            tajweed: [
+                { type: "success", icon: "✅", text: "Perfect Hamzat Al-Wasl connection in 'ٱلْحَمْدُ'" },
+                { type: "success", icon: "✅", text: "Excellent Shaddah pronunciation in 'لِلَّهِ'" },
+                { type: "success", icon: "✅", text: "Good Shaddah emphasis in 'رَبِّ'" }
+            ],
+            madd: [
+                { word: "ٱلْعَٰلَمِينَ", type: "Madd Tabiyi", detected: true, feedback: "✅ Beautiful elongation" }
+            ]
+        },
+        2: {
+            transcription: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+            tajweed: [
+                { type: "success", icon: "✅", text: "Excellent Hamzat Al-Wasl in 'ٱلرَّحْمَٰنِ'" },
+                { type: "success", icon: "✅", text: "Perfect Hamzat Al-Wasl in 'ٱلرَّحِيمِ'" }
+            ],
+            madd: [
+                { word: "ٱلرَّحْمَٰنِ", type: "Madd Tabiyi", detected: true, feedback: "✅ Perfect 2-count elongation" },
+                { word: "ٱلرَّحِيمِ", type: "Madd Tabiyi", detected: true, feedback: "✅ Excellent natural elongation" }
+            ]
+        },
+        6: {
+            transcription: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ",
+            tajweed: [
+                { type: "success", icon: "✅", text: "Perfect Tafkheem pronunciation in 'صِرَٰطَ'" },
+                { type: "success", icon: "✅", text: "Excellent Madd Laazim in 'ٱلضَّآلِّينَ'" },
+                { type: "warning", icon: "⚠️", text: "Good Ghunnah, could hold for full 2 counts" }
+            ],
+            madd: [
+                { word: "صِرَٰطَ", type: "Madd Tabiyi", detected: true, feedback: "✅ Correct elongation" },
+                { word: "ٱلضَّآلِّينَ", type: "Madd Laazim", detected: true, feedback: "✅ Excellent 6-count elongation!" }
+            ]
+        }
+    };
+    
+    // Default feedback for other ayahs
+    const defaultFeedback = {
+        transcription: ayahText,
+        tajweed: [
+            { type: "success", icon: "✅", text: "Good overall pronunciation" },
+            { type: "info", icon: "ℹ️", text: "Tajweed rules applied correctly" }
+        ],
+        madd: [
+            { word: "Example", type: "Madd Tabiyi", detected: true, feedback: "✅ Correct elongation" }
+        ]
+    };
+    
+    const feedback = exampleFeedbacks[ayahNumber] || defaultFeedback;
+    
+    return `
+        <h3>Tajweed Analysis Results</h3>
+        <div class="analysis-section">
+            <h4>📝 Transcribed Text:</h4>
+            <div class="transcribed-text" dir="rtl">${feedback.transcription}</div>
+        </div>
+        
+        <div class="analysis-section">
+            <h4>🎯 Ayah Details:</h4>
+            <div class="ayah-info">
+                <div class="ayah-arabic" dir="rtl">${ayahText}</div>
+                <div class="ayah-translation">${ayahTranslation}</div>
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h4>📊 Tajweed Feedback:</h4>
+            <div class="feedback-items">
+                ${feedback.tajweed.map(item => `
+                    <div class="feedback-item ${item.type}">
+                        <span class="feedback-icon">${item.icon}</span>
+                        <span class="feedback-text">${item.text}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        
+        <div class="analysis-section">
+            <h4>🎵 Madd Analysis:</h4>
+            <div class="madd-items">
+                ${feedback.madd.map(item => `
+                    <div class="madd-item">
+                        <span class="madd-word" dir="rtl">${item.word}</span>
+                        <span class="madd-type">${item.type}</span>
+                        <span class="madd-feedback">${item.feedback}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+        
+        <div class="analysis-section demo-note">
+            <div class="feedback-item info">
+                <span class="feedback-icon">ℹ️</span>
+                <span class="feedback-text"><strong>Demo Mode:</strong> This shows example analysis from the full ML version.</span>
+            </div>
+        </div>
+    `;
+}
+
 // Start recording function
 async function startRecording(ayah) {
     try {
         console.log('Starting recording for ayah:', ayah.dataset.ayah);
+        
+        // Check if we're in static mode by making a quick health check
+        try {
+            const response = await fetch('/health');
+            const health = await response.json();
+            if (health.mode === 'static') {
+                // Simulate recording visual states without actual recording
+                simulateRecording(ayah);
+                return;
+            }
+        } catch (err) {
+            console.log('Health check failed, assuming full functionality available');
+        }
         
         // Check media support first
         checkMediaSupport();
